@@ -1,0 +1,1629 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Elkhart Life · Strengths &amp; Gifts</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Public+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#F6F4EC;--paper-2:#EFEBDF;--ink:#211C33;--ink-soft:#4B4560;--ink-faint:#7A7490;
+  --card:#FFFFFF;--line:#E3DECF;--gold:#B5872A;--gold-soft:#E9DCBB;--focus:#2F7E76;
+  --c-notice:#C0912B;--c-dream:#7A5EA6;--c-weigh:#2F7E76;--c-rally:#C25A6B;--c-help:#5A8A57;--c-finish:#3E6699;
+  --radius:14px;--shadow:0 1px 2px rgba(33,28,51,.05),0 10px 30px rgba(33,28,51,.06);
+  --shadow-lift:0 2px 6px rgba(33,28,51,.08),0 18px 44px rgba(33,28,51,.12);--maxw:1080px;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:"Public Sans",system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;font-size:17px;line-height:1.55;-webkit-font-smoothing:antialiased}
+h1,h2,h3,h4{font-family:"Fraunces","Public Sans",Georgia,serif;font-weight:600;line-height:1.15;margin:0;color:var(--ink)}
+p{margin:0 0 1em}
+a{color:var(--ink)}
+button{font-family:inherit;font-size:inherit;cursor:pointer}
+img,svg{max-width:100%}
+.wrap{max-width:var(--maxw);margin:0 auto;padding:0 20px}
+.app-header{position:sticky;top:0;z-index:20;background:rgba(246,244,236,.86);backdrop-filter:saturate(1.2) blur(8px);border-bottom:1px solid var(--line)}
+.app-header .wrap{display:flex;align-items:center;gap:14px;height:64px}
+.brand{display:flex;align-items:center;gap:11px;text-decoration:none;flex:0 0 auto}
+.brand .mark{width:30px;height:30px;flex:0 0 auto}
+.brand b{font-family:"Fraunces",serif;font-weight:600;font-size:18px;letter-spacing:.2px}
+.brand span{color:var(--ink-faint);font-size:13px;display:block;line-height:1;margin-top:2px;font-family:"Public Sans",sans-serif;font-weight:500}
+.nav{margin-left:auto;display:flex;gap:2px;align-items:center;flex-wrap:wrap}
+.nav button{background:transparent;border:1px solid transparent;color:var(--ink-soft);padding:8px 11px;border-radius:9px;font-weight:500;font-size:15px}
+.nav button:hover{color:var(--ink);background:var(--paper-2)}
+.nav button.active{color:var(--ink);background:#fff;border-color:var(--line);box-shadow:var(--shadow)}
+main{padding:40px 0 90px;min-height:60vh}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:9px;border-radius:11px;border:1px solid var(--ink);background:var(--ink);color:#fff;padding:13px 22px;font-weight:600;transition:transform .08s ease,box-shadow .15s ease;text-decoration:none}
+.btn:hover{box-shadow:var(--shadow-lift);transform:translateY(-1px)}
+.btn:active{transform:translateY(0)}
+.btn.gold{background:var(--gold);border-color:var(--gold)}
+.btn.ghost{background:transparent;color:var(--ink);border-color:var(--line)}
+.btn.ghost:hover{background:#fff;border-color:var(--ink-faint)}
+.btn.sm{padding:9px 14px;border-radius:9px;font-size:14px}
+.btn[disabled]{opacity:.45;cursor:not-allowed;transform:none;box-shadow:none}
+.eyebrow{font-family:"Public Sans",sans-serif;text-transform:uppercase;letter-spacing:.16em;font-size:12px;font-weight:700;color:var(--gold)}
+.muted{color:var(--ink-faint)}
+.hero{display:grid;grid-template-columns:1.15fr .85fr;gap:44px;align-items:center;margin-bottom:20px}
+.hero h1{font-size:clamp(34px,5vw,56px);letter-spacing:-.01em}
+.hero h1 em{font-style:italic;color:var(--gold)}
+.hero p.lead{font-size:19px;color:var(--ink-soft);max-width:46ch;margin-top:18px}
+.hero .verse{margin-top:22px;padding-left:16px;border-left:3px solid var(--gold-soft);color:var(--ink-soft);font-style:italic;font-family:"Fraunces",serif}
+.hero .verse cite{display:block;font-style:normal;font-size:13px;letter-spacing:.02em;color:var(--ink-faint);margin-top:4px;font-family:"Public Sans",sans-serif}
+.hero-cta{margin-top:26px;display:flex;gap:12px;flex-wrap:wrap}
+.window{width:100%;max-width:360px;margin:0 auto;filter:drop-shadow(0 22px 40px rgba(33,28,51,.16))}
+.pane{transition:opacity .9s ease,transform .9s ease}
+@media (prefers-reduced-motion:reduce){.pane{transition:none}}
+.sec-head{display:flex;align-items:flex-end;justify-content:space-between;gap:16px;margin:54px 0 20px;flex-wrap:wrap}
+.sec-head h2{font-size:clamp(24px,3.4vw,32px)}
+.sec-head p{margin:6px 0 0;color:var(--ink-soft);max-width:64ch}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:20px}
+.tcard{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:24px;box-shadow:var(--shadow);display:flex;flex-direction:column;position:relative;overflow:hidden}
+.tcard .swatches{display:flex;gap:5px;margin-bottom:16px}
+.tcard .swatches i{width:22px;height:8px;border-radius:4px;display:block}
+.tcard h3{font-size:22px}
+.tcard .sub{color:var(--gold);font-weight:600;font-size:14px;margin-top:2px}
+.tcard p.desc{color:var(--ink-soft);font-size:15px;margin:12px 0 18px}
+.tcard .meta{color:var(--ink-faint);font-size:13px;margin-bottom:16px;display:flex;gap:14px;flex-wrap:wrap}
+.tcard .row{margin-top:auto;display:flex;gap:10px;align-items:center}
+.tcard .tag{position:absolute;top:16px;right:16px;font-size:11px;letter-spacing:.08em;text-transform:uppercase;font-weight:700;color:var(--ink-faint);background:var(--paper-2);padding:4px 9px;border-radius:20px}
+.tcard.add{border-style:dashed;background:transparent}
+.tcard.add:hover{background:#fff}
+.panel{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);padding:30px}
+.narrow{max-width:720px;margin:0 auto}
+label.field{display:block;margin:0 0 18px}
+label.field .lab{font-weight:600;font-size:14px;margin-bottom:7px;display:block}
+input[type=text],input[type=number],textarea,select{width:100%;padding:12px 14px;border:1px solid var(--line);border-radius:10px;background:#fff;color:var(--ink);font-family:inherit;font-size:16px}
+textarea{min-height:70px;resize:vertical}
+input:focus,textarea:focus,select:focus,button:focus-visible,a:focus-visible{outline:3px solid var(--focus);outline-offset:2px}
+.hint{color:var(--ink-faint);font-size:13px;margin-top:6px}
+.progress{height:8px;background:var(--paper-2);border-radius:20px;overflow:hidden;margin:0 0 4px}
+.progress i{display:block;height:100%;background:var(--gold);width:0;transition:width .3s ease;border-radius:20px}
+.q{padding:22px 0;border-bottom:1px solid var(--line)}
+.q:last-child{border-bottom:0}
+.q .qtext{font-size:18px;font-weight:500;margin-bottom:14px}
+.q .qnum{color:var(--gold);font-weight:700;margin-right:8px}
+.scale{display:grid;grid-template-columns:repeat(5,1fr);gap:8px}
+.scale button{border:1px solid var(--line);background:#fff;border-radius:10px;padding:12px 6px;color:var(--ink-soft);font-weight:600;display:flex;flex-direction:column;align-items:center;gap:6px;font-size:13px;line-height:1.2}
+.scale button .dot{width:18px;height:18px;border-radius:50%;border:2px solid var(--line)}
+.scale button:hover{border-color:var(--ink-faint)}
+.scale button.on{border-color:var(--gold);color:var(--ink)}
+.scale button.on .dot{background:var(--gold);border-color:var(--gold)}
+.report-head{display:grid;grid-template-columns:300px 1fr;gap:36px;align-items:center}
+.report-head .win{max-width:280px}
+.report-head h2{font-size:clamp(26px,3.6vw,36px)}
+.lead-types{display:flex;gap:10px;flex-wrap:wrap;margin-top:10px}
+.chip{display:inline-flex;align-items:center;gap:8px;background:#fff;border:1px solid var(--line);border-radius:30px;padding:7px 14px 7px 10px;font-weight:600;font-size:14px}
+.chip .sw{width:12px;height:12px;border-radius:50%}
+.bars{margin:8px 0 0}
+.bar{display:grid;grid-template-columns:130px 1fr 44px;align-items:center;gap:14px;margin:12px 0}
+.bar .name{font-weight:600;font-size:14px}
+.bar .track{height:12px;background:var(--paper-2);border-radius:20px;overflow:hidden}
+.bar .fill{height:100%;border-radius:20px;width:0;transition:width .8s ease}
+.bar .pct{font-variant-numeric:tabular-nums;color:var(--ink-faint);font-size:13px;text-align:right}
+.tblocks{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:8px}
+.tblock{border:1px solid var(--line);border-radius:var(--radius);padding:20px;background:#fff;border-top:5px solid var(--line)}
+.tblock h4{font-size:19px;display:flex;align-items:center;gap:9px}
+.tblock .tagline{color:var(--ink-faint);font-size:13px;font-style:italic;margin:3px 0 12px;font-family:"Fraunces",serif}
+.tblock dl{margin:0}
+.tblock dt{font-size:12px;letter-spacing:.08em;text-transform:uppercase;font-weight:700;color:var(--gold);margin-top:12px}
+.tblock dd{margin:3px 0 0;font-size:14.5px;color:var(--ink-soft)}
+.tblock .verse{margin-top:14px;padding-top:12px;border-top:1px dashed var(--line);font-family:"Fraunces",serif;font-style:italic;font-size:14px;color:var(--ink-soft)}
+.tblock .verse cite{display:block;font-style:normal;font-family:"Public Sans",sans-serif;font-size:12px;color:var(--ink-faint);margin-top:3px}
+.team-stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:14px;margin-bottom:8px}
+.stat{background:#fff;border:1px solid var(--line);border-radius:var(--radius);padding:16px 18px;box-shadow:var(--shadow)}
+.stat .n{font-family:"Fraunces",serif;font-size:30px;font-weight:600;line-height:1}
+.stat .l{color:var(--ink-faint);font-size:13px;margin-top:4px}
+.cov-row{display:grid;grid-template-columns:130px 1fr auto;align-items:center;gap:14px;padding:11px 0;border-bottom:1px solid var(--line)}
+.cov-row:last-child{border-bottom:0}
+.cov-row .cname{font-weight:600;font-size:14px;display:flex;align-items:center;gap:8px}
+.cov-row .sw{width:12px;height:12px;border-radius:50%;flex:0 0 auto}
+.dots{display:flex;gap:5px;flex-wrap:wrap}
+.dots .p{width:26px;height:26px;border-radius:50%;background:var(--paper-2);color:var(--ink-soft);font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;border:1px solid var(--line)}
+.cov-flag{font-size:12px;font-weight:700;letter-spacing:.05em;text-transform:uppercase}
+.cov-flag.gap{color:var(--c-rally)}
+.cov-flag.ok{color:var(--c-help)}
+.people{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:14px;margin-top:8px}
+.pcard{background:#fff;border:1px solid var(--line);border-radius:var(--radius);padding:16px 18px;box-shadow:var(--shadow)}
+.pcard .pn{font-weight:700}
+.pcard .pr{color:var(--ink-faint);font-size:13px;margin-bottom:10px}
+.pcard .pl{display:flex;gap:6px;flex-wrap:wrap}
+.pcard .mini{font-size:12px;font-weight:600;padding:4px 9px;border-radius:20px;color:#fff}
+.type-editor,.q-editor{border:1px solid var(--line);border-radius:12px;padding:16px;margin-bottom:12px;background:var(--paper)}
+.type-editor .top{display:grid;grid-template-columns:32px 1fr auto;gap:10px;align-items:center;margin-bottom:10px}
+.swatch-pick{width:32px;height:32px;border-radius:8px;border:1px solid rgba(0,0,0,.12);padding:0}
+.q-editor{display:grid;grid-template-columns:1fr 190px auto;gap:10px;align-items:start}
+.mini-x{background:none;border:0;color:var(--c-rally);font-weight:700;font-size:20px;line-height:1;padding:4px 8px}
+.toolbar{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-bottom:22px}
+.spacer{flex:1}
+.empty{text-align:center;padding:56px 20px;color:var(--ink-faint)}
+.empty svg{opacity:.5;margin-bottom:12px}
+.callout{background:var(--gold-soft);border:1px solid #E0CE9E;border-radius:12px;padding:16px 18px;font-size:14.5px;color:#5c4a1e}
+.callout b{color:#42340f}
+.callout.warn{background:#f7e2e2;border-color:#e3b3b3;color:#7a2b2b}
+.callout.warn b{color:#5e1f1f}
+.callout.info{background:#e6eef0;border-color:#bcd3d6;color:#2b4d52}
+.callout.info b{color:#1d3a3e}
+.back{background:none;border:0;color:var(--ink-soft);font-weight:600;padding:0;margin-bottom:18px;display:inline-flex;gap:6px;align-items:center}
+.back:hover{color:var(--ink)}
+.footer{border-top:1px solid var(--line);margin-top:40px;padding:26px 0;color:var(--ink-faint);font-size:13px;text-align:center}
+.spin{display:inline-block;width:18px;height:18px;border:2px solid var(--line);border-top-color:var(--gold);border-radius:50%;animation:sp .8s linear infinite;vertical-align:-3px;margin-right:8px}
+@keyframes sp{to{transform:rotate(360deg)}}
+@media (prefers-reduced-motion:reduce){.spin{animation:none}}
+.syn h3{font-size:21px;margin:26px 0 6px}
+.syn .lede{font-size:18px;color:var(--ink-soft);font-family:"Fraunces",serif;line-height:1.5}
+.balance{display:flex;height:34px;border-radius:10px;overflow:hidden;border:1px solid var(--line);margin:10px 0 4px}
+.balance div{display:flex;align-items:center;justify-content:center;color:#fff;font-weight:600;font-size:13px;min-width:40px}
+.rec{border-left:3px solid var(--gold);padding:2px 0 2px 16px;margin:14px 0}
+.rec b{display:block;margin-bottom:2px}
+@media (max-width:820px){
+  .hero{grid-template-columns:1fr;gap:26px}.window{max-width:280px}
+  .report-head{grid-template-columns:1fr;gap:20px}.report-head .win{max-width:220px;margin:0 auto}
+  .tblocks{grid-template-columns:1fr}.q-editor{grid-template-columns:1fr}.bar{grid-template-columns:104px 1fr 40px}
+}
+@media print{.app-header,.nav,.hero-cta,.report-actions,.footer,.back,.toolbar{display:none!important}body{background:#fff}.panel{box-shadow:none;border-color:#ccc}}
+</style>
+</head>
+<body>
+<header class="app-header">
+  <div class="wrap">
+    <a class="brand" href="#" onclick="goHome();return false;" aria-label="Home">
+      <svg class="mark" viewBox="0 0 40 40" fill="none" aria-hidden="true">
+        <path d="M20 2 L34 10 V26 L20 38 L6 26 V10 Z" fill="#fff" stroke="#211C33" stroke-width="1.5"/>
+        <path d="M20 2 L34 10 V26 L20 38 L6 26 V10 Z" fill="url(#g)" opacity="0.9"/>
+        <line x1="20" y1="2" x2="20" y2="38" stroke="#211C33" stroke-width="1"/>
+        <line x1="6" y1="10" x2="34" y2="26" stroke="#211C33" stroke-width="1" opacity=".4"/>
+        <line x1="34" y1="10" x2="6" y2="26" stroke="#211C33" stroke-width="1" opacity=".4"/>
+        <defs><linearGradient id="g" x1="6" y1="2" x2="34" y2="38" gradientUnits="userSpaceOnUse">
+          <stop stop-color="#C0912B" stop-opacity=".35"/><stop offset="1" stop-color="#7A5EA6" stop-opacity=".35"/>
+        </linearGradient></defs>
+      </svg>
+      <span id="brandText"><b>Church Strengths</b><span>Many members, one body</span></span>
+    </a>
+    <nav class="nav" id="nav"></nav>
+  </div>
+</header>
+<main><div class="wrap" id="app"></div></main>
+<div class="footer"><div class="wrap" id="footText">Church Strengths · <span class="muted">Assessments for ministry teams</span></div></div>
+
+<script>
+/* ============================================================
+   CONFIG — central storage (Supabase)
+   These keys are safe to ship in a web page (the "publishable" key).
+   Access is controlled by row-level security on the database.
+============================================================ */
+const SUPA={
+  url:"https://mchifjmaakwjtfxdamtz.supabase.co",
+  key:"sb_publishable_7299SQkKN0CFTkheEaWuOA_9dNIQ1Kp",
+  results:"assessment_results",
+  tests:"assessments",
+  churches:"churches"
+};
+const CLOUD = !!(SUPA.url && SUPA.key);
+const PRICE="$100";
+
+/* ============================================================
+   BUILT-IN ASSESSMENT
+============================================================ */
+const BUILT_IN_TESTS=[{
+  id:"working-strengths",
+  name:"Working Strengths",
+  subtitle:"Six ways people move work forward",
+  description:"Every good work moves through six stages — someone notices the need, someone imagines a way, someone weighs what's wise, someone rallies people, someone helps carry it, and someone finishes it. This assessment shows which of those six come most naturally to you, so a team can see how its members fit together.",
+  minutes:"6–8 min · 30 questions",builtIn:true,
+  scale:{min:1,max:5,lowLabel:"Not like me",highLabel:"Very like me"},
+  phases:[{name:"Envisioning",color:"var(--c-dream)",types:["notice","dream","weigh"],
+           lean:"we're strong at seeing and shaping what could be",
+           otherRisk:"without that, good ideas can stall before they land"},
+          {name:"Activating",color:"var(--c-finish)",types:["rally","help","finish"],
+           lean:"we're strong at getting things moving and done",
+           otherRisk:"without that, we risk building fast rather than building the right thing"}],
+  phaseBalanced:"The team is well balanced between envisioning and activating — ideas and execution are both represented. Keep both voices at the table.",
+  types:[
+    {id:"notice",name:"The Noticer",color:"var(--c-notice)",tagline:"Sees the need before it's spoken.",
+     bring:"A watchful eye for gaps, needs, and the people others overlook. You sense when something is off and name it early.",
+     team:"You keep the team honest about reality — surfacing the questions and needs that would otherwise be missed.",
+     watch:"Others can hear your questions as criticism. Pair your noticing with encouragement so it lands as care.",
+     verse:"That the members should have the same care one for another.",verseRef:"1 Corinthians 12:25 (KJV)"},
+    {id:"dream",name:"The Dreamer",color:"var(--c-dream)",tagline:"Imagines what could be.",
+     bring:"Fresh ideas and new possibilities. You see past 'how it's always been done' toward what could be.",
+     team:"You give the team vision and options — the raw material other strengths can shape into a plan.",
+     watch:"Ideas come faster than they can be carried out. Trust the Weighers and Finishers to help you choose and land them.",
+     verse:"Where there is no vision, the people perish.",verseRef:"Proverbs 29:18 (KJV)"},
+    {id:"weigh",name:"The Weigher",color:"var(--c-weigh)",tagline:"Knows what's wise and what's not.",
+     bring:"Discernment and good judgment. You sense which ideas will work, what the risks are, and when the timing is right.",
+     team:"You help the team choose well — separating the good idea from the merely exciting one.",
+     watch:"Your caution can slow momentum. Say what you see plainly and early, then let the Ralliers move.",
+     verse:"The heart of the prudent getteth knowledge.",verseRef:"Proverbs 18:15 (KJV)"},
+    {id:"rally",name:"The Rallier",color:"var(--c-rally)",tagline:"Gets people moving.",
+     bring:"Energy, invitation, and momentum. You stir people to act and help them say yes.",
+     team:"You turn a plan into motion — gathering people and getting the work actually started.",
+     watch:"Momentum can outrun readiness. Check with the Weighers before you rally the room.",
+     verse:"He exhorted them all, that with purpose of heart they would cleave unto the Lord.",verseRef:"Acts 11:23 (KJV)"},
+    {id:"help",name:"The Helper",color:"var(--c-help)",tagline:"Comes alongside and carries it.",
+     bring:"A ready willingness to serve wherever needed. You make other people's work possible and lighter.",
+     team:"You are the glue — meeting practical needs so the whole team can keep going.",
+     watch:"You may say yes until you're depleted. Let the team notice your needs too.",
+     verse:"As every man hath received the gift, even so minister the same one to another.",verseRef:"1 Peter 4:10 (KJV)"},
+    {id:"finish",name:"The Finisher",color:"var(--c-finish)",tagline:"Sees it all the way through.",
+     bring:"Steady follow-through. You keep going until it's truly done and nothing slips through the cracks.",
+     team:"You get results — turning good intentions into finished work others can count on.",
+     watch:"You can feel weighed down finishing what others started. Ask for help before the load gets heavy.",
+     verse:"Let us not be weary in well doing: for in due season we shall reap, if we faint not.",verseRef:"Galatians 6:9 (KJV)"}
+  ],
+  questions:[
+    {text:"I quickly sense when something is missing or not quite right.",typeId:"notice"},
+    {text:"I notice people or needs that others tend to overlook.",typeId:"notice"},
+    {text:"I ask a lot of questions about why things are the way they are.",typeId:"notice"},
+    {text:"I often spot a problem before anyone else names it.",typeId:"notice"},
+    {text:"I pay close attention to how people are really doing.",typeId:"notice"},
+    {text:"I love imagining new ideas and possibilities.",typeId:"dream"},
+    {text:"Conversations that start with \u201cwhat if we tried\u2026\u201d energize me.",typeId:"dream"},
+    {text:"I often suggest a fresh approach no one else considered.",typeId:"dream"},
+    {text:"I'd rather invent something new than repeat what's been done.",typeId:"dream"},
+    {text:"New ideas come to me easily, sometimes faster than I can share them.",typeId:"dream"},
+    {text:"I can usually tell which ideas are wise and which won't work.",typeId:"weigh"},
+    {text:"People come to me to help them think a decision through.",typeId:"weigh"},
+    {text:"I have a good instinct for timing \u2014 when to act and when to wait.",typeId:"weigh"},
+    {text:"I can spot the flaw or risk in a plan others are excited about.",typeId:"weigh"},
+    {text:"I trust my read on whether something is right.",typeId:"weigh"},
+    {text:"I enjoy getting people excited about a goal.",typeId:"rally"},
+    {text:"I naturally rally others to join in and take action.",typeId:"rally"},
+    {text:"I bring energy and momentum to a group.",typeId:"rally"},
+    {text:"People tend to say yes when I invite them to help.",typeId:"rally"},
+    {text:"I'm comfortable being the one who says \u201clet's go.\u201d",typeId:"rally"},
+    {text:"I'm quick to jump in and help wherever I'm needed.",typeId:"help"},
+    {text:"I feel satisfied when I've made someone else's work easier.",typeId:"help"},
+    {text:"I'd rather support the team than be out front.",typeId:"help"},
+    {text:"I respond readily when someone asks me for a hand.",typeId:"help"},
+    {text:"I notice what people need to succeed and try to provide it.",typeId:"help"},
+    {text:"I keep going until a job is completely done.",typeId:"finish"},
+    {text:"I follow up to make sure nothing falls through the cracks.",typeId:"finish"},
+    {text:"I feel unsettled leaving something unfinished.",typeId:"finish"},
+    {text:"People can count on me to deliver what I said I would.",typeId:"finish"},
+    {text:"I take satisfaction in crossing the last item off the list.",typeId:"finish"}
+  ]
+},
+/* ---------------- Ministry Leadership Practices ---------------- */
+{
+  id:"ministry-leadership",
+  name:"Ministry Leadership Practices",
+  subtitle:"Six practices of a leader people follow",
+  description:"Leadership isn't a personality — it's a set of things you actually do, or don't. This assessment asks how often you practice six habits that shape a ministry leader people are glad to follow. It measures frequency, not talent: every one of these can be grown.",
+  minutes:"5–6 min · 24 questions",builtIn:true,allowObserver:true,
+  observerLead:"Rate how often you've actually seen this leader do each of the following. Rate what you've observed — it's fine to go on your honest impression.",
+  scale:{min:1,max:5,lowLabel:"Rarely",highLabel:"Almost always"},
+  types:[
+    {id:"anchor",name:"The Anchor",color:"#3E6699",tagline:"Leads from a full well, not an empty one.",
+     bring:"You stay grounded. Prayer, Scripture, and rest come before the work rather than after whatever's left of it.",
+     team:"Your steadiness under pressure gives everyone else something solid to stand on.",
+     watch:"When the calendar fills, this is the first thing to quietly disappear — and the last thing anyone notices is gone. Guard it on purpose.",
+     verse:"Abide in me, and I in you… for without me ye can do nothing.",verseRef:"John 15:4–5 (KJV)"},
+    {id:"example",name:"The Example",color:"#5A8A57",tagline:"Lives it before saying it.",
+     bring:"Your life matches your message. People can trust what you say because they've watched you do it.",
+     team:"You set the standard by living it — which is the only way a standard ever really sticks.",
+     watch:"Being the example can slide into being the martyr. Let people see you rest and receive help, too.",
+     verse:"Be thou an example of the believers, in word, in conversation, in charity, in spirit, in faith, in purity.",verseRef:"1 Timothy 4:12 (KJV)"},
+    {id:"vision",name:"The Vision",color:"#7A5EA6",tagline:"Helps people see where we're going.",
+     bring:"You can put words to where we're headed and why it matters, so people can actually picture it.",
+     team:"You keep the team pointed the same direction and remind them what the work is for.",
+     watch:"A vision only you can see isn't shared yet. Ask people to say it back in their own words.",
+     verse:"Write the vision, and make it plain upon tables, that he may run that readeth it.",verseRef:"Habakkuk 2:2 (KJV)"},
+    {id:"venture",name:"The Venture",color:"#C25A6B",tagline:"Willing to try, learn, and change.",
+     bring:"You'll try something new, admit what isn't working, and change course without treating it as a defeat.",
+     team:"You keep the ministry from calcifying — you make it safe to experiment and to fail small.",
+     watch:"Change costs people something, even good change. Bring the careful and the steady with you rather than around them.",
+     verse:"Be strong and of a good courage; be not afraid, neither be thou dismayed.",verseRef:"Joshua 1:9 (KJV)"},
+    {id:"handoff",name:"The Handoff",color:"#2F7E76",tagline:"Gives the work away.",
+     bring:"You equip and entrust other people instead of holding the work yourself.",
+     team:"You multiply the team. Every person you train is a ministry that outlasts you.",
+     watch:"Handing off isn't dumping. Send authority and support along with the task, not just the task.",
+     verse:"The things that thou hast heard of me… the same commit thou to faithful men, who shall be able to teach others also.",verseRef:"2 Timothy 2:2 (KJV)"},
+    {id:"blessing",name:"The Blessing",color:"#C0912B",tagline:"Names what's good, out loud.",
+     bring:"You notice what people did well and you say it. You thank, and you celebrate.",
+     team:"You keep people going. Volunteers stay where they're seen.",
+     watch:"Praise that's vague or automatic stops landing. Be specific, and mean it.",
+     verse:"Comfort yourselves together, and edify one another, even as also ye do.",verseRef:"1 Thessalonians 5:11 (KJV)"}
+  ],
+  questions:[
+    {text:"I pray about a decision before I make it.",observerText:"They pray about a decision before making it.",typeId:"anchor"},
+    {text:"I spend time with God for my own sake, not only to prepare something for others.",observerText:"They seem grounded in God, not just busy with tasks.",typeId:"anchor"},
+    {text:"I keep a rhythm of rest, even in a busy season.",observerText:"They keep a healthy rhythm of rest, even in a busy season.",typeId:"anchor"},
+    {text:"I lead out of fullness rather than running on fumes.",observerText:"They lead out of fullness rather than running on empty.",typeId:"anchor"},
+    {text:"I do what I said I would do, even when no one would notice if I didn't.",observerText:"They do what they said they would do.",typeId:"example"},
+    {text:"I own my mistakes in front of the people I lead.",observerText:"They own their mistakes in front of the people they lead.",typeId:"example"},
+    {text:"I hold myself to the same standard I ask of others.",observerText:"They hold themselves to the same standard they ask of others.",typeId:"example"},
+    {text:"The way I act in private matches the way I act up front.",observerText:"The way they act one-on-one matches the way they act up front.",typeId:"example"},
+    {text:"I talk about where our ministry is going, not just what's next on the calendar.",observerText:"They talk about where our ministry is going, not just what's next.",typeId:"vision"},
+    {text:"I explain why the work matters, not only what needs doing.",observerText:"They explain why the work matters, not only what needs doing.",typeId:"vision"},
+    {text:"I describe our direction clearly enough that people can repeat it back.",observerText:"They describe our direction clearly enough that I could repeat it.",typeId:"vision"},
+    {text:"I connect someone's small task to the bigger purpose behind it.",observerText:"They connect my task to the bigger purpose behind it.",typeId:"vision"},
+    {text:"I'm willing to try something we've never done before.",observerText:"They're willing to try something we've never done before.",typeId:"venture"},
+    {text:"I ask what isn't working, and then actually change it.",observerText:"They ask what isn't working, and then actually change it.",typeId:"venture"},
+    {text:"I let people experiment without punishing them when it flops.",observerText:"They let people experiment without punishing them when it flops.",typeId:"venture"},
+    {text:"I question a practice we've kept mainly because it's familiar.",observerText:"They question a practice we've kept mainly because it's familiar.",typeId:"venture"},
+    {text:"I give real responsibility away instead of keeping it.",observerText:"They give real responsibility away instead of keeping it.",typeId:"handoff"},
+    {text:"I train someone to do a task rather than just doing it myself.",observerText:"They train people rather than just doing things themselves.",typeId:"handoff"},
+    {text:"I let people make the call in the area I've entrusted to them.",observerText:"They let me make the call in the area they've entrusted to me.",typeId:"handoff"},
+    {text:"I'm looking for the next person to raise up, not just the next job to fill.",observerText:"They're looking for people to raise up, not just jobs to fill.",typeId:"handoff"},
+    {text:"I tell people specifically what they did well.",observerText:"They tell people specifically what they did well.",typeId:"blessing"},
+    {text:"I thank the people who serve where no one sees them.",observerText:"They thank the people who serve where no one sees them.",typeId:"blessing"},
+    {text:"I celebrate wins publicly as a team.",observerText:"They celebrate wins publicly as a team.",typeId:"blessing"},
+    {text:"I notice when someone is discouraged, and I say something.",observerText:"They notice when someone is discouraged, and say something.",typeId:"blessing"}
+  ]
+},
+/* ---------------- Four Colors ---------------- */
+{
+  id:"four-colors",
+  name:"Four Colors",
+  subtitle:"The four classic temperaments, in color",
+  description:"For 2,400 years people have described human temperament in four broad types — the ancients called them sanguine, choleric, melancholic, and phlegmatic. Colors are simply an easier way to remember them. Everyone is a blend of all four; most of us lead with one or two. This is about how you're wired, not what you're good at.",
+  minutes:"4–5 min · 20 questions",builtIn:true,
+  scale:{min:1,max:5,lowLabel:"Not like me",highLabel:"Very like me"},
+  phases:[{name:"Outgoing",color:"#C0392B",types:["scarlet","amber"],
+           lean:"there's no shortage of energy, initiative, or voice in the room",
+           otherRisk:"without enough steadiness and reflection, the quickest opinion can carry the day"},
+          {name:"Reserved",color:"#4C51BF",types:["indigo","evergreen"],
+           lean:"we're thoughtful, steady, and calm under pressure",
+           otherRisk:"without enough outward energy, good things can go unsaid and unstarted"}],
+  phaseBalanced:"The team is well balanced between outgoing and reserved temperaments — there's energy in the room and ballast underneath it. That mix is worth protecting.",
+  types:[
+    {id:"scarlet",name:"Scarlet",color:"#C0392B",tagline:"Decides, moves, gets it done. (Classically: the choleric.)",
+     bring:"Drive and decisiveness. You'd rather make the call and adjust than sit in indecision.",
+     team:"You push things forward and are willing to make the hard call when everyone else is hesitating.",
+     watch:"Your speed can run people over without your meaning to. Slow down enough to bring them with you.",
+     verse:"Whatsoever thy hand findeth to do, do it with thy might.",verseRef:"Ecclesiastes 9:10 (KJV)"},
+    {id:"amber",name:"Amber",color:"#D69E2E",tagline:"Warms the room and draws people in. (Classically: the sanguine.)",
+     bring:"Warmth, optimism, and easy connection. People feel welcome around you.",
+     team:"You keep morale up and make the ministry a place people want to come back to.",
+     watch:"Enthusiasm can outrun follow-through. Let the steady ones help you land what you start.",
+     verse:"A merry heart doeth good like a medicine.",verseRef:"Proverbs 17:22 (KJV)"},
+    {id:"indigo",name:"Indigo",color:"#4C51BF",tagline:"Thinks deeply and does it right. (Classically: the melancholic.)",
+     bring:"Depth, care, and high standards. You notice what others gloss over and you feel things deeply.",
+     team:"You bring thoroughness and conscience — the quality control the rest of us need.",
+     watch:"High standards can turn heavy, on you first and then on everyone else. Grace isn't the enemy of excellence.",
+     verse:"Study to shew thyself approved unto God, a workman that needeth not to be ashamed.",verseRef:"2 Timothy 2:15 (KJV)"},
+    {id:"evergreen",name:"Evergreen",color:"#3E7C59",tagline:"Calm, constant, and hard to rattle. (Classically: the phlegmatic.)",
+     bring:"Steadiness, patience, and peace. You're the same person on a hard day as an easy one.",
+     team:"You're the calm in the storm. You keep the peace and you stay when others drift away.",
+     watch:"Keeping the peace can quietly mean avoiding a conversation that needs to happen. Your voice matters here.",
+     verse:"Blessed are the peacemakers: for they shall be called the children of God.",verseRef:"Matthew 5:9 (KJV)"}
+  ],
+  questions:[
+    {text:"I make decisions quickly and move on.",typeId:"scarlet"},
+    {text:"I'd rather take charge than wait for someone else to.",typeId:"scarlet"},
+    {text:"I get impatient when things move slowly.",typeId:"scarlet"},
+    {text:"I'm comfortable telling people what I really think.",typeId:"scarlet"},
+    {text:"I stay focused on the goal, even when it costs me some comfort.",typeId:"scarlet"},
+    {text:"I get energy from being around people.",typeId:"amber"},
+    {text:"I'm usually the one who starts the conversation.",typeId:"amber"},
+    {text:"I'd rather things be warm and fun than formal.",typeId:"amber"},
+    {text:"I stay optimistic even when things look rough.",typeId:"amber"},
+    {text:"I talk things out to figure out what I think.",typeId:"amber"},
+    {text:"I think things through carefully before I act.",typeId:"indigo"},
+    {text:"Details matter to me — I notice when something is off.",typeId:"indigo"},
+    {text:"I hold high standards for myself and my work.",typeId:"indigo"},
+    {text:"I need time alone to recharge.",typeId:"indigo"},
+    {text:"I feel things deeply, even when I don't show it.",typeId:"indigo"},
+    {text:"I stay calm when other people are upset.",typeId:"evergreen"},
+    {text:"I'd rather keep the peace than win an argument.",typeId:"evergreen"},
+    {text:"I'm patient with people who take a while.",typeId:"evergreen"},
+    {text:"I prefer a steady routine over constant change.",typeId:"evergreen"},
+    {text:"People tell me I'm easy to be around.",typeId:"evergreen"}
+  ]
+},
+/* ---------------- Serving Strengths (original three-tier gifts assessment) ---------------- */
+{
+  id:"serving-strengths",
+  name:"Serving Strengths",
+  subtitle:"Where you come alive in serving",
+  description:"You can be good at something that still wears you out. This assessment sorts six ways of serving into three honest tiers — where you come alive, where you can serve well, and where it's wiser to lean on someone else. 42 short questions; answer for how you really are.",
+  minutes:"5–7 min · 42 questions",builtIn:true,typeWord:"gifts",
+  scale:{min:1,max:3,lowLabel:"Not me",highLabel:"That's me",labels:["Oh no, definitely not","Sometimes / somewhat","Oh yeah, definitely"]},
+  tiers:[
+    {ids:"top2",name:"Where You Come Alive",meaning:"Serve here often — this is where your joy and energy live."},
+    {ids:"mid2",name:"Where You Can Serve Well",meaning:"Capable and steady, though not your deepest source of energy."},
+    {ids:"low2",name:"Where to Lean on Others",meaning:"Draining over time — a great place to let another gift shine."}
+  ],
+  types:[
+    {id:"seeker",name:"The Seeker",color:"#6a4fa3",tagline:"Asks the questions others rush past.",
+     bring:"You're drawn to the big 'why.' You notice when something could be better and you're content to sit with a question instead of forcing a quick answer.",
+     team:"You keep the team from settling — surfacing what's worth rethinking before everyone charges ahead.",
+     watch:"Not every question needs answering today. Trust the Sparkers and Completers to move once you've named what matters.",
+     verse:"It is the glory of God to conceal a thing: but the honour of kings is to search out a matter.",verseRef:"Proverbs 25:2 (KJV)"},
+    {id:"maker",name:"The Maker",color:"#c0392b",tagline:"Starts from a blank page.",
+     bring:"Fresh, original ideas come easily to you — often before anyone asks. You'd rather build something new than patch up what's there.",
+     team:"You give the team new possibilities and approaches nobody else would have thought of.",
+     watch:"Ideas outpace hands. Let the Sifters test them and the Completers land them.",
+     verse:"Behold, I will do a new thing; now it shall spring forth.",verseRef:"Isaiah 43:19 (KJV)"},
+    {id:"sifter",name:"The Sifter",color:"#1f7a8c",tagline:"Reads people and ideas by instinct.",
+     bring:"You have a reliable gut for what's sound and what's off, even without every detail. People come to you to think things through.",
+     team:"You help the team choose well — telling the strong idea from the merely exciting one.",
+     watch:"Your read is usually right, but say it plainly and early so it guides rather than stalls.",
+     verse:"The heart of the prudent getteth knowledge.",verseRef:"Proverbs 18:15 (KJV)"},
+    {id:"sparker",name:"The Sparker",color:"#c08a2d",tagline:"Gets people moving.",
+     bring:"Your enthusiasm is contagious. You stir people to jump in and you keep momentum alive when energy dips.",
+     team:"You turn a good idea into motion — gathering people and getting things actually started.",
+     watch:"Momentum can outrun readiness. Check with the Sifters before you rally the room.",
+     verse:"He exhorted them all, that with purpose of heart they would cleave unto the Lord.",verseRef:"Acts 11:23 (KJV)"},
+    {id:"responder",name:"The Responder",color:"#2f7d5b",tagline:"First to say yes.",
+     bring:"You're quick and glad to meet a need in front of you. Coming alongside people is genuinely fulfilling, on their terms as much as yours.",
+     team:"You're the one people can count on to pitch in without being asked twice.",
+     watch:"You'll say yes until you're empty. Let the team notice your needs too.",
+     verse:"As every man hath received the gift, even so minister the same one to another.",verseRef:"1 Peter 4:10 (KJV)"},
+    {id:"completer",name:"The Completer",color:"#3a4a63",tagline:"Carries it across the line.",
+     bring:"You see things through to the finish at a high standard, and crossing the line gives you energy rather than draining it.",
+     team:"You get results — turning good intentions into finished work others can rely on.",
+     watch:"You can feel stuck finishing what others started. Ask for help before the load gets heavy.",
+     verse:"Let us not be weary in well doing: for in due season we shall reap, if we faint not.",verseRef:"Galatians 6:9 (KJV)"}
+  ],
+  questions:[
+    {text:"I often catch myself wondering why things are the way they are.",typeId:"seeker"},
+    {text:"When something matters to me, I naturally encourage others to join in.",typeId:"sparker"},
+    {text:"I can usually tell whether an idea is good or bad before I have all the details.",typeId:"sifter"},
+    {text:"Fresh ideas come to me easily, even when no one asked for them.",typeId:"maker"},
+    {text:"I get real satisfaction from seeing something all the way through to the finish.",typeId:"completer"},
+    {text:"I'm usually one of the first to say yes when someone needs help.",typeId:"responder"},
+    {text:"I hold myself to high standards and don't like leaving loose ends.",typeId:"completer"},
+    {text:"I notice when something could be better, even when everyone else seems content.",typeId:"seeker"},
+    {text:"I love starting with a blank page and making something brand new.",typeId:"maker"},
+    {text:"I find real joy in supporting others and meeting their needs.",typeId:"responder"},
+    {text:"I'm good at rallying people to jump in and get started.",typeId:"sparker"},
+    {text:"My gut sense about people and situations tends to be right.",typeId:"sifter"},
+    {text:"I have a knack for spotting what's really going on beneath the surface.",typeId:"sifter"},
+    {text:"People know they can count on me to pitch in without being asked twice.",typeId:"responder"},
+    {text:"I'm happy to sit with a question for a long time without needing a quick answer.",typeId:"seeker"},
+    {text:"I get excited about a good idea and can't help but get others excited too.",typeId:"sparker"},
+    {text:"I'd rather create something original than fix up something that already exists.",typeId:"maker"},
+    {text:"Crossing tasks off a clear list gives me energy.",typeId:"completer"},
+    {text:"I often think of a new approach while others are still working on the last one.",typeId:"maker"},
+    {text:"I rarely let a deadline or commitment slip.",typeId:"completer"},
+    {text:"I enjoy stirring people to action and building momentum.",typeId:"sparker"},
+    {text:"Big questions about life and purpose pull at me more than they do most people.",typeId:"seeker"},
+    {text:"Serving and hospitality feel like a natural part of who I am.",typeId:"responder"},
+    {text:"I can weigh a plan and sense whether it will actually work.",typeId:"sifter"},
+    {text:"I'm happy to help on someone else's terms rather than my own.",typeId:"responder"},
+    {text:"I can tell when something feels off, even if I can't fully explain why.",typeId:"sifter"},
+    {text:"I stay with a job until it's fully done, even when it gets tedious.",typeId:"completer"},
+    {text:"Coming up with creative solutions gives me energy.",typeId:"maker"},
+    {text:"I find myself dreaming about how things around me could be different.",typeId:"seeker"},
+    {text:"People often follow my lead when I'm enthusiastic about something.",typeId:"sparker"},
+    {text:"I don't mind nudging others to move on something worth doing.",typeId:"sparker"},
+    {text:"People would describe me as an idea person.",typeId:"maker"},
+    {text:"Those close to me might say I get lost in my own thoughts.",typeId:"seeker"},
+    {text:"People come to me for advice because I tend to see things clearly.",typeId:"sifter"},
+    {text:"I want the things I take on to have clear goals and a clear finish line.",typeId:"completer"},
+    {text:"Coming alongside people in whatever they need is deeply fulfilling to me.",typeId:"responder"},
+    {text:"I'd rather explore what an idea could mean than rush past it.",typeId:"seeker"},
+    {text:"I respond quickly and gladly when there's a need right in front of me.",typeId:"responder"},
+    {text:"I pick up on patterns and small cues that others miss.",typeId:"sifter"},
+    {text:"People would say I'm relentless about getting things across the line.",typeId:"completer"},
+    {text:"When energy is low, I like being the one who reenergizes the group.",typeId:"sparker"},
+    {text:"When there's a problem, my first instinct is to invent a new way around it.",typeId:"maker"}
+  ]
+}];
+const SWATCH_CHOICES=["#C0912B","#7A5EA6","#2F7E76","#C25A6B","#5A8A57","#3E6699","#B5872A","#9A6A3A","#4B4560"];
+
+/* ============================================================
+   AUTH + CHURCH CONTEXT + DATA LAYER (multi-tenant)
+   - Church admins authenticate (Supabase Auth); their JWT scopes
+     every read to their own church via row-level security.
+   - Congregants submit anonymously (write-only) tagged to a church.
+============================================================ */
+const AUTH={session:null};
+const CHURCH={id:null,slug:null,name:null,owner:false};
+const store={custom:[], resultsCache:null, cloudErr:null};
+
+function _lset(k,v){try{localStorage.setItem(k,JSON.stringify(v));}catch(e){}}
+function _lget(k,f){try{const v=localStorage.getItem(k);return v?JSON.parse(v):f;}catch(e){return f;}}
+
+function loggedIn(){return !!(AUTH.session&&AUTH.session.access_token);}
+function mode(){return loggedIn()?"admin":(CHURCH.id?"congregant":"marketing");}
+function bearer(){return loggedIn()?AUTH.session.access_token:SUPA.key;}
+function H(extra){return Object.assign({apikey:SUPA.key,Authorization:"Bearer "+bearer(),"Content-Type":"application/json"},extra||{});}
+
+/* ---- Supabase Auth ---- */
+async function authFetch(path,body){
+  const r=await fetch(SUPA.url+"/auth/v1/"+path,{method:"POST",headers:{apikey:SUPA.key,"Content-Type":"application/json"},body:JSON.stringify(body)});
+  const d=await r.json().catch(()=>({}));
+  if(!r.ok){const e=new Error(d.error_description||d.msg||d.error||("auth error "+r.status));e.status=r.status;e.code=d.error_code||d.error;throw e;}
+  return d;
+}
+function storeSession(d){
+  if(!d||!d.access_token)return null;
+  AUTH.session={access_token:d.access_token,refresh_token:d.refresh_token,user:d.user,expires_at:Date.now()+((d.expires_in||3600)*1000)};
+  _lset("elc_session",AUTH.session);return AUTH.session;
+}
+async function signUp(email,password){return authFetch("signup",{email,password});}
+async function signIn(email,password){return storeSession(await authFetch("token?grant_type=password",{email,password}));}
+async function refreshSession(){
+  const s=_lget("elc_session",null);if(!s)return null;AUTH.session=s;
+  if(Date.now()<s.expires_at-60000)return s;
+  try{return storeSession(await authFetch("token?grant_type=refresh_token",{refresh_token:s.refresh_token}));}
+  catch(e){signOut();return null;}
+}
+function signOut(){AUTH.session=null;try{localStorage.removeItem("elc_session");}catch(e){}CHURCH.id=CHURCH.slug=CHURCH.name=null;CHURCH.owner=false;store.custom=[];store.resultsCache=null;}
+
+/* ---- churches ---- */
+function setChurch(c,owner){CHURCH.id=c.id;CHURCH.slug=c.slug;CHURCH.name=c.name;CHURCH.owner=!!owner;}
+function slugify(s){return (s||"").toLowerCase().replace(/[^a-z0-9]+/g,"-").replace(/^-+|-+$/g,"").slice(0,40)||"church";}
+async function fetchChurchBySlug(slug){
+  const rows=await cloudSelect(SUPA.churches,"slug=eq."+encodeURIComponent(slug)+"&select=*");
+  return Array.isArray(rows)&&rows[0]?rows[0]:null;
+}
+async function fetchMyChurch(){
+  const rows=await cloudSelect(SUPA.churches,"owner=eq."+AUTH.session.user.id+"&select=*&limit=1");
+  return Array.isArray(rows)&&rows[0]?rows[0]:null;
+}
+async function createChurch(name){
+  let base=slugify(name),slug=base;
+  for(let i=0;i<5;i++){
+    try{const rows=await cloudInsert(SUPA.churches,{name:name.trim(),slug,owner:AUTH.session.user.id});return rows[0];}
+    catch(e){ if(e.status===409||/duplicate|unique/i.test(e.message)){slug=base+"-"+Math.random().toString(36).slice(2,5);continue;} throw e; }
+  }
+  throw new Error("Couldn't create a unique link for that name.");
+}
+
+/* ---- generic REST (auth-aware headers) ---- */
+async function cloudSelect(table,q){const r=await fetch(SUPA.url+"/rest/v1/"+table+"?"+(q||"select=*"),{headers:H()});if(!r.ok)throw new Error("read "+r.status+": "+await r.text());return r.json();}
+async function cloudInsert(table,row){const r=await fetch(SUPA.url+"/rest/v1/"+table,{method:"POST",headers:H({Prefer:"return=representation"}),body:JSON.stringify(row)});if(!r.ok){const t=await r.text();const e=new Error("insert "+r.status+": "+t);e.status=r.status;throw e;}return r.json();}
+async function cloudDelete(table,q){const r=await fetch(SUPA.url+"/rest/v1/"+table+"?"+q,{method:"DELETE",headers:H()});if(!r.ok)throw new Error("delete "+r.status+": "+await r.text());return true;}
+
+function getTests(){return [...BUILT_IN_TESTS.map(t=>({...t})), ...store.custom];}
+function findTest(id){return getTests().find(t=>t.id===id);}
+
+async function refreshTests(){
+  store.custom=[];
+  if(!CLOUD||!CHURCH.id)return;
+  try{
+    const rows=await cloudSelect(SUPA.tests,"church_id=eq."+CHURCH.id+"&select=*&order=created_at.asc");
+    store.custom=rows.map(r=>({...r.definition,builtIn:false}));
+  }catch(e){}
+}
+async function saveCustomTest(test){
+  store.custom.push(test);
+  await cloudInsert(SUPA.tests,{id:test.id,definition:test,church_id:CHURCH.id});
+}
+async function deleteCustomTest(id){
+  store.custom=store.custom.filter(t=>t.id!==id);
+  await cloudDelete(SUPA.tests,"id=eq."+encodeURIComponent(id));
+}
+
+function rowToResult(r){return {id:r.client_id,dbId:r.id,testId:r.test_id,testName:r.test_name,name:r.person_name,role:r.role||"",kind:r.kind||"self",subject:r.subject_name||null,date:r.created_at,pct:r.scores,ranking:r.ranking,leading:r.leading_types,quiet:r.quiet_types};}
+function resultToRow(r){return {client_id:r.id,test_id:r.testId,test_name:r.testName,person_name:r.name,role:r.role||null,kind:r.kind||"self",subject_name:(r.kind==="observer"?r.subject:null),church_id:CHURCH.id,scores:r.pct,ranking:r.ranking,leading_types:r.leading,quiet_types:r.quiet};}
+
+async function fetchResults(){ // admin-only; RLS returns just this church's rows
+  const rows=await cloudSelect(SUPA.results,"select=*&order=created_at.desc");
+  store.cloudErr=null;
+  return rows.map(rowToResult);
+}
+async function saveResultCloud(r){ // congregant or admin submitting; stamped with church_id
+  if(!CHURCH.id) return {ok:false,error:"No church selected."};
+  try{await cloudInsert(SUPA.results,resultToRow(r));return {ok:true};}
+  catch(e){ if(e.status===409) return {ok:true,duplicate:true}; return {ok:false,error:e.message}; }
+}
+async function deleteResultCloud(dbId){ if(dbId) await cloudDelete(SUPA.results,"id=eq."+encodeURIComponent(dbId)); }
+
+/* ============================================================
+   SCORING + SYNTHESIS
+============================================================ */
+function scoreTest(test,answers){
+  const totals={},counts={};
+  test.types.forEach(t=>{totals[t.id]=0;counts[t.id]=0;});
+  test.questions.forEach((q,i)=>{const a=answers[i];if(typeof a==="number"){totals[q.typeId]+=a;counts[q.typeId]++;}});
+  const s=test.scale,pct={},raw={},rawMax={};
+  test.types.forEach(t=>{
+    const mx=counts[t.id]*s.max,mn=counts[t.id]*s.min;
+    pct[t.id]=mx>mn?Math.round(((totals[t.id]-mn)/(mx-mn))*100):0;
+    raw[t.id]=totals[t.id];rawMax[t.id]=mx;
+  });
+  // Rank by normalized score, high to low; ties break by the order types are declared.
+  // (With equal items per type this equals ranking by raw sum; normalizing keeps
+  //  uneven custom tests fair.)
+  const order={};test.types.forEach((t,i)=>order[t.id]=i);
+  const ranking=[...test.types].map(t=>t.id).sort((a,b)=> pct[b]-pct[a] || order[a]-order[b]);
+  return {pct,raw,rawMax,ranking,leading:ranking.slice(0,2),quiet:ranking.slice(-2)};
+}
+
+function synthesize(test,results){
+  const rel=results.filter(r=>r.testId===test.id);
+  const people=rel.length;
+  const names=[...new Set(rel.map(r=>r.name))];
+  const per={};
+  test.types.forEach(t=>{per[t.id]={type:t,leaders:[],avg:0,sum:0};});
+  rel.forEach(r=>{
+    r.leading.forEach(id=>{if(per[id])per[id].leaders.push(r.name);});
+    test.types.forEach(t=>{per[t.id].sum += (r.pct[t.id]||0);});
+  });
+  test.types.forEach(t=>{per[t.id].avg = people? Math.round(per[t.id].sum/people):0;});
+  const ranked=test.types.map(t=>per[t.id]).sort((a,b)=>b.leaders.length-a.leaders.length);
+  const gaps=ranked.filter(x=>x.leaders.length===0);
+  const covered=ranked.filter(x=>x.leaders.length>0);
+  const topConc=ranked[0];
+  const overConc = people>=3 && topConc.leaders.length > people*0.5 ? topConc : null;
+  // find best growth candidate for a gap: person (not already leading it) with highest pct in that type
+  function growthFor(typeId){
+    const cand=rel.filter(r=>!r.leading.includes(typeId)).sort((a,b)=>(b.pct[typeId]||0)-(a.pct[typeId]||0))[0];
+    return cand? {name:cand.name,pct:cand.pct[typeId]||0}:null;
+  }
+  // phase balance (built-in only)
+  let phase=null;
+  if(test.phases){
+    phase=test.phases.map(ph=>{
+      let leaderSlots=0;
+      rel.forEach(r=>{r.leading.forEach(id=>{if(ph.types.includes(id))leaderSlots++;});});
+      return {...ph,slots:leaderSlots};
+    });
+  }
+  return {test,people,names:names.length,rel,per,ranked,gaps,covered,topConc,overConc,growthFor,phase};
+}
+
+/* ============================================================
+   COMBINED PROFILE ENGINE — weaves all assessments together
+   Working Strengths & Serving Strengths share one underlying
+   "contribution spine"; Colors adds temperament; Ministry
+   Leadership adds leadership practices.
+============================================================ */
+const SPINE=[
+  {id:"noticing", label:"Noticing",  blurb:"sees needs and asks why",   color:"#C0912B"},
+  {id:"imagining",label:"Imagining", blurb:"brings new ideas",          color:"#7A5EA6"},
+  {id:"discerning",label:"Discerning",blurb:"weighs what's wise",       color:"#2F7E76"},
+  {id:"rallying", label:"Rallying",  blurb:"gets people moving",        color:"#C25A6B"},
+  {id:"helping",  label:"Helping",   blurb:"comes alongside",           color:"#5A8A57"},
+  {id:"finishing",label:"Finishing", blurb:"sees it through",           color:"#3E6699"}
+];
+const SPINE_MAP={
+  "working-strengths":{notice:"noticing",dream:"imagining",weigh:"discerning",rally:"rallying",help:"helping",finish:"finishing"},
+  "serving-strengths":{seeker:"noticing",maker:"imagining",sifter:"discerning",sparker:"rallying",responder:"helping",completer:"finishing"}
+};
+const COLOR_WORD={scarlet:"drive",amber:"warmth",indigo:"depth",evergreen:"steadiness"};
+
+function spineLabel(id){return (SPINE.find(s=>s.id===id)||{}).label||id;}
+function personResults(name,all){return all.filter(r=>r.kind!=="observer"&&r.name.toLowerCase()===name.toLowerCase());}
+function allPeople(all){
+  const seen=new Map();
+  all.filter(r=>r.kind!=="observer").forEach(r=>{const k=r.name.toLowerCase();if(!seen.has(k))seen.set(k,r.name);});
+  return [...seen.values()].sort((a,b)=>a.localeCompare(b));
+}
+
+// Merge a person's spine scores across whichever spine tests they took (average pct per role)
+function personSpine(rs){
+  const acc={},cnt={},contributors={};SPINE.forEach(s=>{acc[s.id]=0;cnt[s.id]=0;contributors[s.id]=[];});
+  const spineTests=[];
+  rs.forEach(r=>{const map=SPINE_MAP[r.testId];if(!map)return;spineTests.push(r.testId);
+    Object.keys(map).forEach(typeId=>{const role=map[typeId];acc[role]+=(r.pct[typeId]||0);cnt[role]++;});});
+  if(spineTests.length===0)return null;
+  const avg={};SPINE.forEach(s=>{avg[s.id]=cnt[s.id]?Math.round(acc[s.id]/cnt[s.id]):0;});
+  const ranked=SPINE.map(s=>s.id).sort((a,b)=>avg[b]-avg[a]||SPINE.findIndex(s=>s.id===a)-SPINE.findIndex(s=>s.id===b));
+  // agreement between the two spine tests, if both taken
+  let agreement=null;
+  const ws=rs.find(r=>r.testId==="working-strengths"),ss=rs.find(r=>r.testId==="serving-strengths");
+  if(ws&&ss){
+    const top=r=>r.leading.map(id=>SPINE_MAP[r.testId][id]);
+    const a=top(ws),b=top(ss);const overlap=a.filter(x=>b.includes(x)).length;
+    agreement=overlap===2?"strong":overlap===1?"partial":"low";
+  }
+  return {avg,ranked,top:ranked.slice(0,2),spineTests:[...new Set(spineTests)],agreement};
+}
+function personColor(rs){
+  const r=rs.find(x=>x.testId==="four-colors");if(!r)return null;
+  const t=findTest("four-colors");const top=r.leading[0];const ty=t.types.find(x=>x.id===top);
+  return {id:top,name:ty?ty.name:top,word:COLOR_WORD[top]||"",color:ty?ty.color:"#888",second:r.leading[1]};
+}
+function personLeadership(rs){
+  const r=rs.find(x=>x.testId==="ministry-leadership");if(!r)return null;
+  const t=findTest("ministry-leadership");
+  return {top:r.leading.map(id=>{const ty=t.types.find(x=>x.id===id);return ty?ty.name:id;})};
+}
+function combinePerson(name,all){
+  const rs=personResults(name,all);
+  return {name,taken:rs.map(r=>({id:r.testId,name:r.testName})),spine:personSpine(rs),color:personColor(rs),leadership:personLeadership(rs),results:rs};
+}
+function personNarrative(P){
+  const bits=[];
+  if(P.spine){
+    const [a,b]=P.spine.top;
+    bits.push(`${P.name.split(/\s+/)[0]} contributes most through ${spineLabel(a)} and ${spineLabel(b)} — ${(SPINE.find(s=>s.id===a)||{}).blurb} and ${(SPINE.find(s=>s.id===b)||{}).blurb}.`);
+    if(P.spine.agreement==="strong")bits.push("Both strengths assessments agree closely, so that's a dependable read.");
+    else if(P.spine.agreement==="low")bits.push("The two strengths assessments point in different directions — worth a conversation about which fits better.");
+  }
+  if(P.color)bits.push(`Temperament leans ${P.color.name}${P.color.word?" ("+P.color.word+")":""}.`);
+  if(P.leadership)bits.push(`In leadership, strongest at ${listJoin(P.leadership.top)}.`);
+  return bits.join(" ");
+}
+
+// Whole-team combined picture
+function combineTeam(all){
+  const people=allPeople(all);
+  const profiles=people.map(n=>combinePerson(n,all));
+  // spine coverage: a person "leads" a role if it's in their merged top-2
+  const spineCov=SPINE.map(s=>{
+    const leaders=profiles.filter(p=>p.spine&&p.spine.top.includes(s.id)).map(p=>p.name);
+    return {role:s,leaders};
+  }).sort((a,b)=>b.leaders.length-a.leaders.length);
+  const spineGaps=spineCov.filter(x=>x.leaders.length===0 && profiles.some(p=>p.spine));
+  // temperament mix
+  const colorMix={};profiles.forEach(p=>{if(p.color){colorMix[p.color.id]=colorMix[p.color.id]||{name:p.color.name,color:p.color.color,people:[]};colorMix[p.color.id].people.push(p.name);}});
+  const outgoing=(colorMix.scarlet?colorMix.scarlet.people.length:0)+(colorMix.amber?colorMix.amber.people.length:0);
+  const reserved=(colorMix.indigo?colorMix.indigo.people.length:0)+(colorMix.evergreen?colorMix.evergreen.people.length:0);
+  // leadership profiles present
+  const leaders=profiles.filter(p=>p.leadership).map(p=>p.name);
+  // complementary pairing: strongest imaginer + strongest finisher (by merged avg)
+  function strongestIn(role){let best=null;profiles.forEach(p=>{if(p.spine){const v=p.spine.avg[role];if(best===null||v>best.v)best={name:p.name,v};}});return best;}
+  const pair=(()=>{const im=strongestIn("imagining"),fi=strongestIn("finishing");
+    if(im&&fi&&im.name!==fi.name)return {a:im.name,b:fi.name};return null;})();
+  return {profiles,spineCov,spineGaps,colorMix,outgoing,reserved,leaders,pair,
+    hasSpine:profiles.some(p=>p.spine),hasColor:profiles.some(p=>p.color)};
+}
+function teamNarrative(T){
+  const bits=[];
+  const strong=T.spineCov.filter(x=>x.leaders.length>0).slice(0,2).map(x=>x.role.label);
+  if(strong.length)bits.push(`Across our strengths assessments, the team is richest in ${listJoin(strong)}.`);
+  if(T.spineGaps.length)bits.push(`No one currently leads in ${listJoin(T.spineGaps.map(x=>x.role.label))} — a place to grow or invite others in.`);
+  if(T.hasColor){
+    if(T.outgoing>T.reserved*1.6)bits.push("Temperament skews outgoing — plenty of energy and initiative; make room for the quieter, steadier voices.");
+    else if(T.reserved>T.outgoing*1.6)bits.push("Temperament skews reserved — thoughtful and steady; lean on your outgoing members to start and rally.");
+    else if(T.outgoing+T.reserved>0)bits.push("Temperament is balanced between outgoing and reserved — energy and ballast both present.");
+  }
+  return bits.join(" ");
+}
+
+/* ---- Whole Picture screen ---- */
+function renderCombined(){
+  app().innerHTML=`<div class="sec-head"><div><h2>Whole Picture</h2><p>Every assessment, woven together — for each person, and for the body as a whole.</p></div></div>
+    <div class="panel"><p><span class="spin"></span>Gathering everyone's results…</p></div>`;
+  loadCombined();
+}
+async function loadCombined(){
+  let all;
+  try{all=await fetchResults();}catch(e){return app().innerHTML=`<div class="sec-head"><div><h2>Whole Picture</h2></div></div><div class="panel"><div class="callout warn"><b>Couldn't reach the central store.</b><br>${esc(e.message)}</div><button class="btn" style="margin-top:16px" onclick="renderCombined()">Try again</button></div>`;}
+  store.resultsCache=all;
+  const people=allPeople(all);
+  if(people.length===0){
+    app().innerHTML=`<div class="sec-head"><div><h2>Whole Picture</h2></div></div><div class="panel empty"><svg width="54" height="54" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="8" r="3.5"/><path d="M5 20c0-3.5 3-6 7-6s7 2.5 7 6"/></svg><p>No results yet.<br>Once your team takes the assessments, their combined picture appears here.</p><button class="btn" onclick="go('home')" style="margin-top:6px">Go to assessments</button></div>`;return;
+  }
+  if(COMBINED_MODE==="person"&&(!COMBINED_PERSON||!people.some(n=>n.toLowerCase()===COMBINED_PERSON.toLowerCase())))COMBINED_PERSON=people[0];
+  const toggle=`<div class="toolbar"><button class="btn sm ${COMBINED_MODE==='team'?'':'ghost'}" onclick="setCombined('team')">Whole team</button><button class="btn sm ${COMBINED_MODE==='person'?'':'ghost'}" onclick="setCombined('person')">Each person</button><div class="spacer"></div><button class="btn sm ghost" onclick="window.print()">Print / Save PDF</button></div>`;
+  const body=COMBINED_MODE==="team"?combinedTeamHTML(all,people):combinedPersonHTML(all,people);
+  app().innerHTML=`<div class="sec-head"><div><h2>Whole Picture</h2><p>Every assessment, woven together — many members, one body.</p></div></div>${toggle}${body}`;
+  requestAnimationFrame(()=>{document.querySelectorAll('.fill').forEach(f=>{setTimeout(()=>f.style.width=f.dataset.w+"%",60);});});
+}
+function setCombined(mode){COMBINED_MODE=mode;renderCombined();}
+function pickPerson(name){COMBINED_PERSON=name;COMBINED_MODE="person";renderCombined();}
+
+function combinedTeamHTML(all,people){
+  const T=combineTeam(all);
+  const totalAssess=all.filter(r=>r.kind!=="observer").length;
+  const spineBars=T.hasSpine?`<h3>How the team contributes</h3>
+    <p class="hint" style="margin-top:0">Working Strengths and Serving Strengths, merged onto one set of roles. Bar = people who lead here (their top two).</p>
+    <div class="bars">${T.spineCov.map(x=>`<div class="bar"><div class="name">${esc(x.role.label)}</div><div class="track"><div class="fill" data-w="${people.length?Math.round(x.leaders.length/people.length*100):0}" style="background:${x.role.color}"></div></div><div class="pct">${x.leaders.length}</div></div>`).join("")}</div>`:"";
+  const colorMix=T.hasColor?`<h3>Temperament mix</h3><div class="coverage">${["scarlet","amber","indigo","evergreen"].filter(id=>T.colorMix[id]).map(id=>{const c=T.colorMix[id];return `<div class="cov-row"><div class="cname"><span class="sw" style="background:${c.color}"></span>${esc(c.name)}</div><div class="dots">${c.people.map(n=>`<span class="p" title="${esc(n)}">${initials(n)}</span>`).join("")}</div><span class="cov-flag ok">${c.people.length}</span></div>`;}).join("")}</div>`:"";
+  const lead=T.leaders.length?`<h3>Leadership</h3><p class="muted">${listJoin(T.leaders)} ${T.leaders.length===1?"has":"have"} a leadership profile. <a href="#" onclick="go('leaders');return false;">See 360° feedback &rarr;</a></p>`:"";
+  const pairing=T.pair?`<div class="rec"><b>A complementary pairing</b>${esc(T.pair.a)} (strongest at Imagining) and ${esc(T.pair.b)} (strongest at Finishing) make a natural idea-to-done pair — put them on the same project.</div>`:"";
+  const roster=`<h3>The people</h3><div class="people">${people.map(n=>{const P=combinePerson(n,all);
+    const chips=(P.spine?P.spine.top.map(id=>`<span class="mini" style="background:${(SPINE.find(s=>s.id===id)||{}).color||'#888'}">${esc(spineLabel(id))}</span>`).join(""):"")+(P.color?`<span class="mini" style="background:${P.color.color}">${esc(P.color.name)}</span>`:"");
+    return `<button class="pcard" style="text-align:left;cursor:pointer;border:1px solid var(--line)" onclick="pickPerson('${esc(n).replace(/'/g,"\\'")}')"><div class="pn">${esc(n)}</div><div class="pr">${P.taken.length} assessment${P.taken.length===1?"":"s"}</div><div class="pl">${chips}</div></button>`;}).join("")}</div>`;
+  return `<div class="team-stats"><div class="stat"><div class="n">${people.length}</div><div class="l">people</div></div><div class="stat"><div class="n">${totalAssess}</div><div class="l">assessments taken</div></div><div class="stat"><div class="n">${Math.round(totalAssess/people.length*10)/10}</div><div class="l">avg per person</div></div></div>
+    <div class="panel syn" style="margin-top:18px"><p class="lede">${esc(teamNarrative(T))||"As people complete more than one assessment, the woven picture grows richer."}</p>
+    ${spineBars}${colorMix}${lead}${pairing?'<h3>What this means for the team</h3>'+pairing:""}${roster}</div>`;
+}
+
+function combinedPersonHTML(all,people){
+  const picker=`<div class="toolbar" style="margin-bottom:14px">${people.map(n=>`<button class="btn sm ${COMBINED_PERSON&&COMBINED_PERSON.toLowerCase()===n.toLowerCase()?'':'ghost'}" onclick="pickPerson('${esc(n).replace(/'/g,"\\'")}')">${esc(n)}</button>`).join("")}</div>`;
+  const P=combinePerson(COMBINED_PERSON,all);
+  const takenChips=P.taken.map(t=>`<span class="chip">${esc(t.name)}</span>`).join("")||'<span class="muted">No assessments yet</span>';
+  const windows=P.results.map(r=>{const t=findTest(r.testId);if(!t)return"";return `<div style="width:110px;text-align:center"><div style="max-width:110px">${windowSVG(t,r.pct)}</div><div class="hint" style="margin-top:4px">${esc(t.name)}</div></div>`;}).join("");
+  const spine=P.spine?`<h3>How ${esc(P.name.split(/\s+/)[0])} contributes</h3>
+    <div class="bars">${P.spine.ranked.map(id=>{const s=SPINE.find(x=>x.id===id),lead=P.spine.top.includes(id);return `<div class="bar"><div class="name" style="${lead?'font-weight:700':''}">${esc(s.label)}</div><div class="track"><div class="fill" data-w="${P.spine.avg[id]}" style="background:${s.color};opacity:${lead?1:.5}"></div></div><div class="pct">${P.spine.avg[id]}%</div></div>`;}).join("")}</div>
+    ${P.spine.agreement?`<p class="hint">${P.spine.agreement==="strong"?"Both strengths assessments agree closely — a dependable read.":P.spine.agreement==="partial"?"The two strengths assessments mostly agree.":"The two strengths assessments point different directions — worth reflecting on which fits."}</p>`:P.spine.spineTests.length===1?'<p class="hint">Based on one strengths assessment. Taking the other would sharpen this.</p>':""}`:"";
+  const color=P.color?`<h3>Temperament</h3><p><span class="chip"><span class="sw" style="background:${P.color.color}"></span>${esc(P.color.name)}</span> ${P.color.word?`<span class="muted">— brings ${esc(P.color.word)}</span>`:""}</p>`:"";
+  const leadership=P.leadership?`<h3>Leadership</h3><p class="muted">Strongest at ${listJoin(P.leadership.top)}. <a href="#" onclick="go('feedback',{fbSubject:'${esc(P.name).replace(/'/g,"\\'")}',fbTest:'ministry-leadership'});return false;">360° feedback &rarr;</a></p>`:"";
+  return `${picker}<div class="panel syn">
+    <div class="report-head" style="grid-template-columns:1fr">
+      <div><div class="eyebrow">Combined profile</div><h2 style="font-size:30px">${esc(P.name)}</h2>
+      <div class="lead-types" style="margin-top:10px">${takenChips}</div></div>
+    </div>
+    <p class="lede" style="margin-top:16px">${esc(personNarrative(P))||"Complete an assessment to begin this profile."}</p>
+    ${windows?`<div style="display:flex;gap:16px;flex-wrap:wrap;justify-content:center;margin:18px 0">${windows}</div>`:""}
+    ${spine}${color}${leadership}
+  </div>`;
+}
+
+/* ============================================================
+   ROUTER / STATE
+============================================================ */
+let STATE={screen:"home",testId:null,answers:[],person:null,result:null,builder:null,saveState:null};
+let PAGE_IDX=0,TEAM_FILTER="all",SYN_TEST=null,COMBINED_MODE="team",COMBINED_PERSON=null;
+const app=()=>document.getElementById("app");
+function go(screen,opts={}){STATE.screen=screen;Object.assign(STATE,opts);window.scrollTo({top:0});render();}
+function goHome(){go(mode()==="marketing"?"marketing":"home");}
+
+const ADMIN_ONLY=["team","synth","combined","leaders","feedback","builder"];
+const NAV_ADMIN=[{id:"home",label:"Home"},{id:"combined",label:"Whole Picture"},{id:"synth",label:"Team Synthesis"},{id:"team",label:"Team View"},{id:"leaders",label:"For Leaders"}];
+
+function renderChrome(){
+  const bt=document.getElementById("brandText"), ft=document.getElementById("footText"), nav=document.getElementById("nav");
+  const m=mode();
+  if(m==="admin"||m==="congregant"){
+    bt.innerHTML=`<b>${esc(CHURCH.name||"Church")}</b><span>Strengths &amp; Gifts</span>`;
+    ft.innerHTML=`${esc(CHURCH.name||"")} · <span class="muted">Powered by Church Strengths</span>`;
+  }else{
+    bt.innerHTML=`<b>Church Strengths</b><span>Many members, one body</span>`;
+    ft.innerHTML=`Church Strengths · <span class="muted">Assessments for ministry teams</span>`;
+  }
+  if(m==="admin"){
+    const active=({start:"home",take:"home",report:"home",builder:"leaders",feedback:"leaders"})[STATE.screen]||STATE.screen;
+    nav.innerHTML=NAV_ADMIN.map(n=>`<button class="${active===n.id?'active':''}" onclick="go('${n.id}')">${n.label}</button>`).join("")
+      +`<button onclick="doSignOut()" title="Sign out" style="color:var(--ink-faint)">Sign out</button>`;
+  }else if(m==="congregant"){
+    nav.innerHTML=`<button onclick="go('login')" style="color:var(--ink-faint)">Church admin</button>`;
+  }else{
+    nav.innerHTML=`<button onclick="go('login')">Log in</button><button class="active" onclick="go('signup')">Sign your church up</button>`;
+  }
+}
+
+function render(){
+  // gate admin-only screens
+  if(ADMIN_ONLY.includes(STATE.screen)&&mode()!=="admin"){STATE.screen=CHURCH.id?"home":"login";}
+  renderChrome();
+  const s=STATE.screen;
+  if(s==="marketing")return renderMarketing();
+  if(s==="signup")return renderSignup();
+  if(s==="login")return renderLogin();
+  if(s==="newchurch")return renderNewChurch();
+  if(s==="home")return renderHome();
+  if(s==="start")return renderStart();
+  if(s==="take")return renderTake();
+  if(s==="report")return renderReport();
+  if(s==="team")return renderTeam();
+  if(s==="synth")return renderSynth();
+  if(s==="combined")return renderCombined();
+  if(s==="leaders")return renderLeaders();
+  if(s==="feedback")return renderFeedback();
+  if(s==="builder")return renderBuilder();
+  goHome();
+}
+
+/* ---- auth screens ---- */
+function authShell(title,sub,inner){
+  return `<button class="back" onclick="go('marketing')">&larr; Church Strengths</button>
+  <div class="panel narrow"><div class="eyebrow">${esc(sub)}</div><h2 style="font-size:30px;margin:6px 0 14px">${esc(title)}</h2>${inner}<p class="hint" id="authmsg"></p></div>`;
+}
+function renderSignup(){
+  app().innerHTML=authShell("Sign your church up","New church account",`
+    <div class="callout" style="margin-bottom:18px">${PRICE} per church. Create your account, name your church, and share your assessments with your congregation.</div>
+    <label class="field"><span class="lab">Church name</span><input type="text" id="s_church" placeholder="e.g. Elkhart Life Church"></label>
+    <label class="field"><span class="lab">Your email</span><input type="text" id="s_email" placeholder="you@church.org" autocomplete="email"></label>
+    <label class="field"><span class="lab">Password</span><input type="password" id="s_pass" placeholder="At least 8 characters" autocomplete="new-password"></label>
+    <div style="display:flex;gap:12px;flex-wrap:wrap"><button class="btn gold" id="s_btn" onclick="doSignup()">Create account</button><button class="btn ghost" onclick="go('login')">I already have one</button></div>`);
+  setTimeout(()=>{const e=document.getElementById("s_church");if(e)e.focus();},50);
+}
+async function doSignup(){
+  const church=(v("s_church")||"").trim(),email=(v("s_email")||"").trim(),pass=v("s_pass")||"";
+  const msg=document.getElementById("authmsg"),btn=document.getElementById("s_btn");
+  if(!church)return flag(msg,"Please enter your church's name.");
+  if(!/.+@.+\..+/.test(email))return flag(msg,"Please enter a valid email.");
+  if(pass.length<8)return flag(msg,"Password must be at least 8 characters.");
+  btn.disabled=true;btn.innerHTML='<span class="spin"></span>Creating…';
+  try{
+    await signUp(email,pass);
+    let sess=null; try{sess=await signIn(email,pass);}catch(e){}
+    if(!sess){ // email confirmation required
+      btn.disabled=false;btn.innerHTML="Create account";
+      msg.innerHTML=`<span style="color:var(--c-weigh)">Account created. Please check <b>${esc(email)}</b> to confirm your address, then <a href="#" onclick="go('login');return false;">log in</a> to finish setting up ${esc(church)}.</span>`;
+      _lset("elc_pending_church",church);return;
+    }
+    const c=await createChurch(church); setChurch(c,true); await refreshTests();
+    go("home");
+  }catch(e){ btn.disabled=false;btn.innerHTML="Create account";
+    flag(msg, /already registered|exists/i.test(e.message)?"That email already has an account — try logging in.":e.message); }
+}
+function renderLogin(){
+  app().innerHTML=authShell("Church admin login","Welcome back",`
+    <label class="field"><span class="lab">Email</span><input type="text" id="l_email" placeholder="you@church.org" autocomplete="email"></label>
+    <label class="field"><span class="lab">Password</span><input type="password" id="l_pass" placeholder="Your password" autocomplete="current-password"></label>
+    <div style="display:flex;gap:12px;flex-wrap:wrap"><button class="btn" id="l_btn" onclick="doLogin()">Log in</button><button class="btn ghost" onclick="go('signup')">Sign my church up</button></div>`);
+  setTimeout(()=>{const e=document.getElementById("l_email");if(e)e.focus();},50);
+}
+async function doLogin(){
+  const email=(v("l_email")||"").trim(),pass=v("l_pass")||"";
+  const msg=document.getElementById("authmsg"),btn=document.getElementById("l_btn");
+  if(!email||!pass)return flag(msg,"Enter your email and password.");
+  btn.disabled=true;btn.innerHTML='<span class="spin"></span>Logging in…';
+  try{
+    await signIn(email,pass);
+    let mine=await fetchMyChurch();
+    if(!mine){ const pending=_lget("elc_pending_church",null);
+      if(pending){ mine=await createChurch(pending); try{localStorage.removeItem("elc_pending_church");}catch(e){} } }
+    if(mine){ setChurch(mine,true); await refreshTests(); go("home"); }
+    else { go("newchurch"); }
+  }catch(e){ btn.disabled=false;btn.innerHTML="Log in";
+    flag(msg, /confirm/i.test(e.message)?"Please confirm your email first (check your inbox), then log in.":/invalid/i.test(e.message)?"Email or password is incorrect.":e.message); }
+}
+function renderNewChurch(){
+  app().innerHTML=authShell("Name your church","One more step",`
+    <p class="muted">You're logged in. Give your church a name — this appears at the top of your page and in the link you share with your congregation.</p>
+    <label class="field"><span class="lab">Church name</span><input type="text" id="n_church" placeholder="e.g. Elkhart Life Church"></label>
+    <div style="display:flex;gap:12px"><button class="btn gold" id="n_btn" onclick="doNewChurch()">Create my church</button><button class="btn ghost" onclick="doSignOut()">Sign out</button></div>`);
+  setTimeout(()=>{const e=document.getElementById("n_church");if(e)e.focus();},50);
+}
+async function doNewChurch(){
+  const name=(v("n_church")||"").trim(),msg=document.getElementById("authmsg"),btn=document.getElementById("n_btn");
+  if(!name)return flag(msg,"Please enter your church's name.");
+  btn.disabled=true;btn.innerHTML='<span class="spin"></span>Creating…';
+  try{const c=await createChurch(name);setChurch(c,true);await refreshTests();go("home");}
+  catch(e){btn.disabled=false;btn.innerHTML="Create my church";flag(msg,e.message);}
+}
+function doSignOut(){signOut();go("marketing");}
+function v(id){const e=document.getElementById(id);return e?e.value:"";}
+function flag(msg,text){if(msg)msg.innerHTML=`<span style="color:var(--c-rally)">${esc(text)}</span>`;}
+function shareLink(){return location.origin+location.pathname+"?church="+encodeURIComponent(CHURCH.slug||"");}
+
+/* window signature */
+/* A stained-glass window whose panes are the test's strengths.
+   Pane brightness = how strongly that strength shows up. Adapts to 2–8 types. */
+function windowSVG(test,pcts){
+  const types=test.types.slice(0,8),n=types.length;
+  const cols=n<=2?n:(n<=4?2:3),rows=Math.ceil(n/cols);
+  const L=22,T=24,R=314,B=320,gap=10,W=R-L,H=B-T;
+  const pw=(W-gap*(cols-1))/cols, ph=(H-gap*(rows-1))/rows;
+  let panes="";
+  for(let i=0;i<n;i++){
+    const row=Math.floor(i/cols), idx=i-row*cols;
+    const inRow=Math.min(cols,n-row*cols);
+    const rowW=inRow*pw+gap*(inRow-1);
+    const x=(L+(W-rowW)/2+idx*(pw+gap)).toFixed(1), y=(T+row*(ph+gap)).toFixed(1);
+    const p=pcts?Math.max(0.18,(pcts[types[i].id]||0)/100):0.62;
+    panes+=`<rect class="pane" x="${x}" y="${y}" width="${pw.toFixed(1)}" height="${ph.toFixed(1)}" rx="8" fill="${types[i].color}" opacity="${p.toFixed(2)}"><title>${esc(types[i].name)}</title></rect>
+      <rect x="${x}" y="${y}" width="${pw.toFixed(1)}" height="${ph.toFixed(1)}" rx="8" fill="none" stroke="#211C33" stroke-width="2" opacity=".5"/>`;
+  }
+  return `<svg class="window" viewBox="0 0 336 340" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Stained-glass window of ${n} strengths">
+    <path d="M20 20 Q20 8 32 8 H304 Q316 8 316 20 V320 Q316 330 306 330 H30 Q20 330 20 320 Z" fill="#EFEBDF" stroke="#211C33" stroke-width="3"/>${panes}</svg>`;
+}
+
+/* HOME (admin dashboard or congregant assessment page) */
+function renderHome(){
+  const admin=mode()==="admin";
+  const tests=getTests();
+  const cards=tests.map(t=>`<div class="tcard">
+      ${admin?(t.builtIn?'<span class="tag">Built in</span>':'<span class="tag">Your test</span>'):''}
+      <div class="swatches">${t.types.slice(0,6).map(x=>`<i style="background:${x.color}"></i>`).join("")}</div>
+      <h3>${esc(t.name)}</h3><div class="sub">${esc(t.subtitle||"")}</div>
+      <p class="desc">${esc(clip(t.description,150))}</p>
+      <div class="meta"><span>${t.types.length} ${t.typeWord||(t.id==="ministry-leadership"?"practices":"strengths")}</span><span>${t.minutes||t.questions.length+" questions"}</span>${t.allowObserver?'<span style="color:var(--gold);font-weight:600">360° feedback</span>':''}</div>
+      <div class="row"><button class="btn" onclick="go('start',{testId:'${t.id}',mode:null})">Take assessment</button>${t.allowObserver?`<button class="btn ghost sm" onclick="go('start',{testId:'${t.id}',mode:'observer'})">Rate a leader</button>`:''}</div>
+    </div>`).join("");
+  const adminTools=admin?`
+    <div class="panel" style="margin-bottom:26px;display:flex;gap:20px;flex-wrap:wrap;align-items:center;justify-content:space-between">
+      <div style="flex:1;min-width:240px"><div class="eyebrow">Your congregation link</div>
+        <p style="margin:6px 0 0;color:var(--ink-soft)">Share this so your people can take the assessments. Their results come back to you privately.</p>
+        <code style="display:inline-block;margin-top:8px;background:var(--paper-2);padding:8px 12px;border-radius:8px;font-size:13px;word-break:break-all">${esc(shareLink())}</code></div>
+      <div style="display:flex;gap:10px;flex-wrap:wrap">
+        <button class="btn sm" onclick="copyShare(this)">Copy link</button>
+        <button class="btn sm ghost" onclick="go('combined')">Whole picture</button>
+        <button class="btn sm ghost" onclick="go('synth')">Team synthesis</button>
+      </div>
+    </div>`:"";
+  const heroCTA=admin?`
+        <button class="btn gold" onclick="go('start',{testId:'${tests[0].id}',mode:null})">Take an assessment</button>
+        <button class="btn ghost" onclick="go('combined')">The whole picture</button>`
+    :`<button class="btn gold" onclick="go('start',{testId:'${tests[0].id}',mode:null})">Begin an assessment</button>`;
+  const heroLead=admin
+    ?`Your dashboard for ${esc(CHURCH.name||"your church")}. Share the link, gather results, and see how your team fits together.`
+    :`Welcome. Take an assessment below to discover your strengths — your results go to ${esc(CHURCH.name||"your church")}'s leaders to help the whole team serve well together.`;
+  app().innerHTML=`
+  <section class="hero">
+    <div>
+      <div class="eyebrow">${admin?"Church dashboard":esc(CHURCH.name||"")}</div>
+      <h1>Many members,<br><em>one body.</em></h1>
+      <p class="lead">${heroLead}</p>
+      <blockquote class="verse">For the body is not one member, but many.<cite>1 Corinthians 12:14 (KJV)</cite></blockquote>
+      <div class="hero-cta">${heroCTA}</div>
+    </div>
+    <div>${windowSVG(BUILT_IN_TESTS[0],null)}</div>
+  </section>
+  ${adminTools}
+  <div class="sec-head"><div><h2>Assessments</h2><p>${admin?"Everyone's results save privately to your church.":"Choose one to begin."}</p></div></div>
+  <div class="grid">${cards}
+    ${admin?`<div class="tcard add"><div class="swatches"><i style="background:var(--line)"></i><i style="background:var(--line)"></i><i style="background:var(--line)"></i></div>
+      <h3>Add an assessment</h3><p class="desc">Build your own strengths or gifts test for the team to take.</p>
+      <div class="row"><button class="btn ghost" onclick="go('builder',{builder:null})">Create a test</button></div></div>`:""}
+  </div>`;
+  requestAnimationFrame(()=>{document.querySelectorAll('.hero .pane').forEach((p,i)=>{const o=p.getAttribute("opacity");p.style.opacity="0";p.style.transform="translateY(6px)";setTimeout(()=>{p.style.opacity=o;p.style.transform="none";},120+i*90);});});
+}
+function copyShare(btn){const link=shareLink();try{navigator.clipboard.writeText(link);btn.textContent="Copied ✓";setTimeout(()=>btn.textContent="Copy link",1500);}catch(e){btn.textContent="Copy failed";}}
+
+/* MARKETING landing (the ad) */
+function renderMarketing(){
+  const A=BUILT_IN_TESTS;
+  const cards=A.map(t=>`<div class="tcard">
+      <div class="swatches">${t.types.slice(0,6).map(x=>`<i style="background:${x.color}"></i>`).join("")}</div>
+      <h3>${esc(t.name)}</h3><div class="sub">${esc(t.subtitle||"")}</div>
+      <p class="desc">${esc(clip(t.description,140))}</p>
+      <div class="meta"><span>${t.types.length} ${t.typeWord||(t.id==="ministry-leadership"?"practices":"strengths")}</span><span>${t.minutes||""}</span>${t.allowObserver?'<span style="color:var(--gold);font-weight:600">360° feedback</span>':''}</div>
+    </div>`).join("");
+  app().innerHTML=`
+  <section class="hero">
+    <div>
+      <div class="eyebrow">For churches &amp; ministry teams</div>
+      <h1>Know your people.<br><em>Build your team.</em></h1>
+      <p class="lead">A suite of strengths, temperament, and leadership assessments — woven into one picture of each person and your whole team. Rooted in “many members, one body.”</p>
+      <div class="hero-cta">
+        <button class="btn gold" onclick="go('signup')">Sign your church up — ${PRICE}</button>
+        <button class="btn ghost" onclick="go('login')">Admin login</button>
+      </div>
+      <p class="hint" style="margin-top:12px">${PRICE} per church · unlimited people · your data stays yours</p>
+    </div>
+    <div>${windowSVG(BUILT_IN_TESTS[0],null)}</div>
+  </section>
+
+  <div class="sec-head"><div><h2>Five assessments, one body</h2><p>Each is original and church-grounded — take one, or all of them.</p></div></div>
+  <div class="grid">${cards}</div>
+
+  <div class="sec-head" style="margin-top:48px"><div><h2>Woven together</h2><p>Where this goes beyond a single quiz.</p></div></div>
+  <div class="grid">
+    <div class="panel"><div class="eyebrow">For each person</div><h3 style="margin:6px 0 8px">A whole-person profile</h3><p class="muted" style="font-size:15px">Every assessment a person takes is merged into one view — their working strengths, temperament, and leadership, with a plain-language read of how they're wired and even whether two assessments agree.</p></div>
+    <div class="panel"><div class="eyebrow">For the whole team</div><h3 style="margin:6px 0 8px">A team you can see</h3><p class="muted" style="font-size:15px">An automatic synthesis shows where your team is strong, where the gaps are, how temperaments balance, and which people complement each other — so you can build teams that actually fit together.</p></div>
+    <div class="panel"><div class="eyebrow">For leaders</div><h3 style="margin:6px 0 8px">360° feedback</h3><p class="muted" style="font-size:15px">Leaders see their own self-rating beside how their team experiences them — surfacing blind spots and hidden strengths, in a spirit of grace.</p></div>
+  </div>
+
+  <div class="panel" style="margin-top:40px;text-align:center;padding:44px 24px">
+    <div class="eyebrow">Simple pricing</div>
+    <div style="font-family:'Fraunces',serif;font-size:54px;font-weight:600;line-height:1;margin:10px 0">${PRICE}<span style="font-size:20px;color:var(--ink-faint)"> / church</span></div>
+    <p class="muted" style="max-width:44ch;margin:0 auto 20px">One flat price for your whole congregation — every assessment, unlimited people, your own branded page and private results.</p>
+    <button class="btn gold" onclick="go('signup')">Sign your church up</button>
+  </div>`;
+  requestAnimationFrame(()=>{document.querySelectorAll('.hero .pane').forEach((p,i)=>{const o=p.getAttribute("opacity");p.style.opacity="0";p.style.transform="translateY(6px)";setTimeout(()=>{p.style.opacity=o;p.style.transform="none";},120+i*90);});});
+}
+
+/* START */
+function renderStart(){
+  const t=findTest(STATE.testId);if(!t)return go("home");
+  // For observer-enabled tests, offer a choice first.
+  if(t.allowObserver && !STATE.mode){
+    app().innerHTML=`
+    <button class="back" onclick="go('home')">&larr; All assessments</button>
+    <div class="panel narrow">
+      <div class="eyebrow">${esc(t.subtitle||"Assessment")}</div>
+      <h2 style="font-size:32px;margin:6px 0 10px">${esc(t.name)}</h2>
+      <p class="muted" style="font-size:16px">${esc(t.description)}</p>
+      <p style="margin:22px 0 10px;font-weight:600">Who are you rating?</p>
+      <div class="grid" style="grid-template-columns:1fr 1fr;gap:14px">
+        <button class="tcard" style="cursor:pointer;text-align:left" onclick="go('start',{testId:'${t.id}',mode:'self'})">
+          <h3 style="font-size:19px">Myself</h3><p class="desc" style="margin-top:8px">Rate your own leadership and get your profile.</p></button>
+        <button class="tcard" style="cursor:pointer;text-align:left" onclick="go('start',{testId:'${t.id}',mode:'observer'})">
+          <h3 style="font-size:19px">A leader I follow</h3><p class="desc" style="margin-top:8px">Give honest feedback on someone who leads you. It joins their 360° picture.</p></button>
+      </div>
+    </div>`;
+    return;
+  }
+  const observer=STATE.mode==="observer";
+  app().innerHTML=`
+  <button class="back" onclick="${t.allowObserver?`go('start',{testId:'${t.id}',mode:null})`:`go('home')`}">&larr; Back</button>
+  <div class="panel narrow">
+    <div class="eyebrow">${esc(t.name)}${observer?" · Rating a leader":""}</div>
+    <h2 style="font-size:32px;margin:6px 0 10px">${observer?"Rate a leader you follow":esc(t.name)}</h2>
+    <p class="muted" style="font-size:16px">${observer?esc(t.observerLead||"Rate how often you've seen this leader do each of the following."):esc(t.description)}</p>
+    <div class="callout" style="margin:18px 0 22px">${observer?"Your honest feedback is a gift. Answers are combined with others' — leaders see the group picture, not who said what.":"Answer honestly about how you naturally <b>are</b>, not how you think you should be. There are no better or worse strengths — the body needs every part."}</div>
+    ${observer?`
+      <label class="field"><span class="lab">Leader you're rating</span><input type="text" id="psubject" placeholder="The name of the person who leads you" autocomplete="off"></label>
+      <label class="field"><span class="lab">Your name <span class="muted">(kept private from the leader)</span></span><input type="text" id="pname" placeholder="First and last name" autocomplete="name"></label>
+    `:`
+      <label class="field"><span class="lab">Your name</span><input type="text" id="pname" placeholder="First and last name" autocomplete="name"></label>
+      <label class="field"><span class="lab">Ministry or role <span class="muted">(optional)</span></span><input type="text" id="prole" placeholder="e.g. Youth, Ushers, Worship, Sunday School"></label>
+    `}
+    <div style="display:flex;gap:12px;margin-top:8px;flex-wrap:wrap"><button class="btn ${observer?'gold':''}" onclick="beginTest()">Begin &rarr;</button><button class="btn ghost" onclick="go('home')">Cancel</button></div>
+  </div>`;
+  setTimeout(()=>{const el=document.getElementById(observer?"psubject":"pname");if(el)el.focus();},50);
+}
+function beginTest(){
+  const t=findTest(STATE.testId);const observer=STATE.mode==="observer";
+  const el=document.getElementById("pname");const name=(el.value||"").trim();
+  if(!name){el.focus();el.style.borderColor="var(--c-rally)";return;}
+  let subject=null;
+  if(observer){
+    const sel=document.getElementById("psubject");subject=(sel.value||"").trim();
+    if(!subject){sel.focus();sel.style.borderColor="var(--c-rally)";return;}
+  }
+  STATE.answers=new Array(t.questions.length).fill(null);
+  STATE.person={name,role:observer?"":(document.getElementById("prole").value||"").trim()};
+  STATE.kind=observer?"observer":"self";STATE.subject=subject;
+  PAGE_IDX=0;go("take");
+}
+
+/* TAKE */
+const PAGE=6;
+function renderTake(){
+  const t=findTest(STATE.testId);if(!t)return go("home");
+  const total=t.questions.length,start=PAGE_IDX*PAGE,end=Math.min(start+PAGE,total);
+  const answered=STATE.answers.filter(a=>a!==null).length,pct=Math.round(answered/total*100),s=t.scale;
+  const observer=STATE.kind==="observer";
+  const qtextOf=q=>observer?(q.observerText||q.text.replace(/^I /,"They ").replace(/\bmy\b/g,"their").replace(/\bme\b/g,"them")):q.text;
+  let qhtml="";
+  for(let i=start;i<end;i++){const q=t.questions[i];
+    qhtml+=`<div class="q"><div class="qtext"><span class="qnum">${i+1}.</span>${esc(qtextOf(q))}</div><div class="scale" style="grid-template-columns:repeat(${s.max-s.min+1},1fr)">${
+      Array.from({length:s.max-s.min+1},(_,k)=>{const val=s.min+k;const on=STATE.answers[i]===val?"on":"";
+      const lbl=(s.labels&&s.labels[k]!=null)?s.labels[k]:(val===s.min?s.lowLabel:(val===s.max?s.highLabel:""));
+      return `<button class="${on}" onclick="answer(${i},${val})" aria-pressed="${on?'true':'false'}"><span class="dot"></span><span>${lbl||val}</span></button>`;}).join("")
+    }</div></div>`;}
+  const lastPage=end>=total,pageDone=t.questions.slice(start,end).every((_,i)=>STATE.answers[start+i]!==null);
+  app().innerHTML=`
+  <button class="back" onclick="takeBack()">&larr; Back</button>
+  <div class="panel narrow">
+    ${observer?`<div class="callout info" style="margin-bottom:16px">You're rating <b>${esc(STATE.subject)}</b>. Answers are combined with other people's.</div>`:""}
+    <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:8px"><div class="eyebrow">${esc(t.name)}</div><div class="muted" style="font-size:14px">${answered} of ${total}</div></div>
+    <div class="progress"><i style="width:${pct}%"></i></div>
+    <div style="margin:20px 0 6px">${qhtml}</div>
+    <div style="display:flex;gap:12px;justify-content:space-between;margin-top:20px;flex-wrap:wrap">
+      <button class="btn ghost" onclick="pageStep(-1)" ${PAGE_IDX===0?'disabled':''}>Previous</button>
+      ${lastPage?`<button class="btn gold" onclick="finishTest()" ${answered<total?'disabled':''}>See my report &rarr;</button>`:`<button class="btn" onclick="pageStep(1)" ${!pageDone?'disabled':''}>Next &rarr;</button>`}
+    </div>
+    ${!pageDone&&!lastPage?'<p class="hint" style="text-align:right">Answer each question to continue.</p>':''}
+    ${lastPage&&answered<total?'<p class="hint" style="text-align:right">A few questions are still blank — scroll up to finish them.</p>':''}
+  </div>`;
+}
+function answer(i,v){STATE.answers[i]=v;renderTake();}
+function takeBack(){if(PAGE_IDX>0)pageStep(-1);else go('start',{testId:STATE.testId});}
+function pageStep(d){const t=findTest(STATE.testId);const mp=Math.ceil(t.questions.length/PAGE)-1;PAGE_IDX=Math.max(0,Math.min(mp,PAGE_IDX+d));window.scrollTo({top:0});renderTake();}
+function finishTest(){
+  const t=findTest(STATE.testId);const res=scoreTest(t,STATE.answers);
+  STATE.result={id:"r_"+Date.now()+"_"+Math.random().toString(36).slice(2,7),testId:t.id,testName:t.name,name:STATE.person.name,role:STATE.person.role,kind:STATE.kind||"self",subject:STATE.subject||null,date:new Date().toISOString(),...res};
+  STATE.saveState="idle";go("report");
+}
+
+/* REPORT */
+function renderReport(){
+  const r=STATE.result;if(!r)return go("home");
+  const t=findTest(r.testId),by=id=>t.types.find(x=>x.id===id);
+  const bars=r.ranking.map(id=>{const ty=by(id),p=r.pct[id];return `<div class="bar"><div class="name">${esc(ty.name)}</div><div class="track"><div class="fill" data-w="${p}" style="background:${ty.color}"></div></div><div class="pct">${p}%</div></div>`;}).join("");
+  const win=windowSVG(t,r.pct);
+
+  if(r.kind==="observer"){
+    app().innerHTML=`
+    <button class="back" onclick="go('home')">&larr; Home</button>
+    <div class="panel">
+      <div class="report-head">
+        <div class="win">${win}</div>
+        <div><div class="eyebrow">${esc(t.name)} · Your feedback</div><h2>How you rated ${esc(r.subject)}</h2>
+          <p style="margin:14px 0 0;color:var(--ink-soft)">Here's the picture your answers paint. When you submit, it's combined with other people's — ${esc(r.subject)} sees the group average, never individual answers.</p></div>
+      </div>
+      <div class="sec-head" style="margin:30px 0 6px"><div><h2 style="font-size:24px">Your ratings, practice by practice</h2></div></div>
+      <div class="bars">${bars}</div>
+      <div class="report-actions" style="display:flex;gap:12px;flex-wrap:wrap;margin-top:26px;align-items:center">
+        <button class="btn gold" id="saveBtn" onclick="addToTeam()">Submit feedback</button>
+        <button class="btn ghost" onclick="go('home')">Cancel</button>
+      </div>
+      <p class="hint" id="savemsg"></p>
+    </div>`;
+    requestAnimationFrame(()=>{document.querySelectorAll('.fill').forEach(f=>{setTimeout(()=>f.style.width=f.dataset.w+"%",60);});});
+    return;
+  }
+
+  const leadChips=r.leading.map(id=>{const ty=by(id);return `<span class="chip"><span class="sw" style="background:${ty.color}"></span>${esc(ty.name)}</span>`;}).join("");
+  const leadBlocks=r.leading.map(id=>typeBlock(by(id))).join("");
+  const quietNames=r.quiet.map(id=>esc(by(id).name)).join(" and ");
+  const canGet360=t.allowObserver;
+  const tiered=t.tiers;
+  const scoreOf=id=>(r.raw&&r.rawMax)?`${r.raw[id]} of ${r.rawMax[id]}`:null;
+  const tierSection=(tier,ids)=>`<div class="sec-head" style="margin:30px 0 6px"><div><h2 style="font-size:22px">${esc(tier.name)}</h2><p>${esc(tier.meaning)}</p></div></div><div class="tblocks">${ids.map(id=>typeBlock(by(id),scoreOf(id))).join("")}</div>`;
+  const tiersHTML=tiered?(tierSection(t.tiers[0],r.leading)+tierSection(t.tiers[1],[r.ranking[2],r.ranking[3]])+tierSection(t.tiers[2],r.quiet)):"";
+  app().innerHTML=`
+  <button class="back" onclick="go('home')">&larr; Home</button>
+  <div class="panel">
+    <div class="report-head">
+      <div class="win">${win}</div>
+      <div><div class="eyebrow">${esc(t.name)} · Profile</div><h2>${esc(r.name)}</h2>
+        ${r.role?`<p class="muted" style="margin:2px 0 0">${esc(r.role)}</p>`:""}
+        <p style="margin:14px 0 6px;color:var(--ink-soft)">${tiered?"Where you come alive:":"Your leading strengths:"}</p><div class="lead-types">${leadChips}</div></div>
+    </div>
+    <div class="sec-head" style="margin:34px 0 6px"><div><h2 style="font-size:24px">The full picture</h2><p>${tiered?"Your six gifts, ranked by how strongly each showed up.":"Every strength is present in you — these show which come most naturally."}</p></div></div>
+    <div class="bars">${bars}</div>
+    ${tiered?tiersHTML:`
+    <div class="sec-head" style="margin:34px 0 6px"><div><h2 style="font-size:24px">Your leading strengths</h2></div></div>
+    <div class="tblocks">${leadBlocks}</div>
+    <div class="callout" style="margin-top:22px"><b>Your quieter strengths: ${quietNames}.</b> These aren't weaknesses — they're where you'll shine brightest alongside teammates who lead there. A healthy body needs every part.</div>`}
+    ${canGet360?`<div class="callout info" style="margin-top:14px"><b>Want to see how your team experiences your leadership?</b> Ask the people you lead to open ${esc(t.name)}, choose “A leader I follow,” and enter your name. Their feedback appears beside this self-rating under <a href="#" onclick="go('leaders');return false;">For Leaders → Leader feedback</a>.</div>`:""}
+    <div class="report-actions" style="display:flex;gap:12px;flex-wrap:wrap;margin-top:26px;align-items:center">
+      <button class="btn gold" id="saveBtn" onclick="addToTeam()">${mode()==="admin"?"Add me to the team":"Send to my church"}</button>
+      <button class="btn ghost" onclick="window.print()">Print / Save PDF</button>
+      <button class="btn ghost" onclick="downloadResult()">Download my copy</button>
+      <button class="btn ghost" onclick="go('start',{testId:'${t.id}',mode:null})">Retake</button>
+    </div>
+    <p class="hint" id="savemsg"></p>
+  </div>`;
+  requestAnimationFrame(()=>{document.querySelectorAll('.fill').forEach(f=>{setTimeout(()=>f.style.width=f.dataset.w+"%",60);});});
+}
+function typeBlock(ty,scoreLabel){
+  return `<div class="tblock" style="border-top-color:${ty.color}">
+    <h4><span style="display:inline-block;width:12px;height:12px;border-radius:50%;background:${ty.color}"></span>${esc(ty.name)}${scoreLabel?`<span style="margin-left:auto;font-family:'Public Sans',sans-serif;font-size:12px;font-weight:700;color:var(--ink-faint)">${esc(scoreLabel)}</span>`:""}</h4>
+    <div class="tagline">${esc(ty.tagline||"")}</div>
+    <dl>${ty.bring?`<dt>You bring</dt><dd>${esc(ty.bring)}</dd>`:""}${ty.team?`<dt>On a team</dt><dd>${esc(ty.team)}</dd>`:""}${ty.watch?`<dt>Gentle watch-out</dt><dd>${esc(ty.watch)}</dd>`:""}</dl>
+    ${ty.verse?`<div class="verse">\u201c${esc(ty.verse)}\u201d<cite>${esc(ty.verseRef||"")}</cite></div>`:""}</div>`;
+}
+async function addToTeam(){
+  const btn=document.getElementById("saveBtn"),msg=document.getElementById("savemsg");
+  const observer=STATE.result.kind==="observer", admin=mode()==="admin";
+  btn.disabled=true;btn.innerHTML='<span class="spin"></span>'+(observer?"Submitting…":"Saving…");
+  const res=await saveResultCloud(STATE.result);
+  store.resultsCache=null;
+  if(res.ok){
+    if(observer){
+      btn.innerHTML=res.duplicate?"Already submitted":"Feedback submitted ✓";
+      msg.innerHTML=`Thank you. Your feedback for ${esc(STATE.result.subject)} was recorded and combined with others'.`;
+    }else if(admin){
+      btn.innerHTML=res.duplicate?"Already saved":"Saved to the team ✓";
+      msg.innerHTML=`${esc(STATE.result.name)} is now part of the team. <a href="#" onclick="go('synth');return false;">View the team synthesis &rarr;</a>`;
+    }else{
+      btn.innerHTML=res.duplicate?"Already sent":"Sent to your church ✓";
+      msg.innerHTML=`Thank you, ${esc((STATE.result.name||"").split(/\s+/)[0])}. Your result was sent to ${esc(CHURCH.name||"your church")}'s leaders. You can print or download your own copy above.`;
+    }
+  }else{
+    btn.disabled=false;btn.innerHTML=observer?"Submit feedback":(admin?"Add me to the team":"Send to my church");
+    msg.innerHTML=`<span style="color:var(--c-rally)">Couldn't reach the server. ${observer?"Please try again in a moment.":"Try again, or use “Download my copy.”"}</span>`;
+  }
+}
+function downloadResult(){const r=STATE.result;dl(`${r.name.replace(/\s+/g,'_')}_${r.testId}.json`,JSON.stringify(r,null,2));}
+
+/* TEAM VIEW */
+function renderTeam(){
+  app().innerHTML=`<div class="sec-head"><div><h2>Team View</h2><p>Everyone who has completed an assessment and joined the team.</p></div></div>
+    <div class="panel"><p><span class="spin"></span>Loading the team…</p></div>`;
+  loadTeam();
+}
+async function loadTeam(){
+  let all;
+  try{all=await fetchResults();}catch(e){store.cloudErr=e.message;return renderTeamError(e.message);}
+  store.resultsCache=all;
+  const results=all.filter(r=>r.kind!=="observer"); // team picture = self-profiles only
+  const tests=getTests();
+  const used=tests.filter(t=>results.some(r=>r.testId===t.id));
+  if(TEAM_FILTER!=="all"&&!used.some(t=>t.id===TEAM_FILTER))TEAM_FILTER="all";
+  const scoped=TEAM_FILTER==="all"?results:results.filter(r=>r.testId===TEAM_FILTER);
+  if(results.length===0){
+    app().innerHTML=`<div class="sec-head"><div><h2>Team View</h2><p>Everyone who completes an assessment and taps “Add me to the team” shows up here.</p></div></div>
+    <div class="panel empty"><svg width="54" height="54" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="9" cy="8" r="3.2"/><circle cx="17" cy="9" r="2.6"/><path d="M3.5 19c0-3 2.6-5 5.5-5s5.5 2 5.5 5"/><path d="M15.5 14c2.4.2 4 2 4 4"/></svg><p>No team members yet.<br>Have your team take the assessment.</p><button class="btn" onclick="go('home')" style="margin-top:6px">Go to assessments</button></div>`;return;
+  }
+  const uniqueNames=new Set(results.map(r=>r.name.toLowerCase())).size;
+  const filterBtns=[`<button class="btn sm ${TEAM_FILTER==='all'?'':'ghost'}" onclick="setFilter('all')">All (${results.length})</button>`]
+    .concat(used.map(t=>`<button class="btn sm ${TEAM_FILTER===t.id?'':'ghost'}" onclick="setFilter('${t.id}')">${esc(t.name)} (${results.filter(r=>r.testId===t.id).length})</button>`)).join("");
+  const covTest=TEAM_FILTER==="all"?getTests()[0]:findTest(TEAM_FILTER);
+  const people=scoped.map(r=>{const t=findTest(r.testId);
+    const chips=r.leading.map(id=>{const ty=t&&t.types.find(x=>x.id===id);return `<span class="mini" style="background:${ty?ty.color:'#999'}">${ty?esc(ty.name):id}</span>`;}).join("");
+    return `<div class="pcard"><div class="pn">${esc(r.name)}</div><div class="pr">${r.role?esc(r.role)+" · ":""}${esc(t?t.name:r.testName)}</div><div class="pl">${chips}</div></div>`;}).join("");
+  app().innerHTML=`
+  <div class="sec-head"><div><h2>Team View</h2><p>A living picture of the strengths on our team — where we're covered, and where we could grow.</p></div></div>
+  <div class="team-stats"><div class="stat"><div class="n">${uniqueNames}</div><div class="l">people</div></div><div class="stat"><div class="n">${results.length}</div><div class="l">assessments taken</div></div><div class="stat"><div class="n">${used.length}</div><div class="l">assessments in use</div></div></div>
+  <div class="toolbar" style="margin-top:22px">${filterBtns}<div class="spacer"></div><button class="btn sm ghost" onclick="exportCSV()">Export CSV</button><button class="btn sm gold" onclick="go('synth',{testId:'${covTest.id}'})">Synthesis report &rarr;</button></div>
+  ${coveragePanel(covTest,scoped.filter(r=>r.testId===covTest.id))}
+  <div class="sec-head" style="margin:30px 0 6px"><div><h2 style="font-size:24px">People</h2></div></div>
+  <div class="people">${people}</div>`;
+}
+function renderTeamError(m){
+  app().innerHTML=`<div class="sec-head"><div><h2>Team View</h2></div></div>
+  <div class="panel"><div class="callout warn"><b>Couldn't reach the central store.</b><br>${esc(m)}</div>
+  <button class="btn" style="margin-top:16px" onclick="renderTeam()">Try again</button></div>`;
+}
+function coveragePanel(test,rel){
+  if(!rel||rel.length===0)return `<div class="callout info">No one has taken <b>${esc(test.name)}</b> yet. Coverage appears once results come in.</div>`;
+  const rows=test.types.map(ty=>{const ppl=rel.filter(r=>r.leading.includes(ty.id));
+    const flag=ppl.length===0?`<span class="cov-flag gap">Gap</span>`:`<span class="cov-flag ok">${ppl.length}</span>`;
+    const dots=ppl.map(p=>`<span class="p" title="${esc(p.name)}">${initials(p.name)}</span>`).join("")||`<span class="muted" style="font-size:13px">No one leads here yet</span>`;
+    return `<div class="cov-row"><div class="cname"><span class="sw" style="background:${ty.color}"></span>${esc(ty.name)}</div><div class="dots">${dots}</div>${flag}</div>`;}).join("");
+  return `<div class="panel" style="margin-top:6px"><div style="display:flex;justify-content:space-between;align-items:baseline;flex-wrap:wrap;gap:8px"><h3 style="font-size:20px">Strength coverage — ${esc(test.name)}</h3><span class="muted" style="font-size:13px">Who leads in each strength (top-2)</span></div><div style="margin-top:6px">${rows}</div></div>`;
+}
+function setFilter(id){TEAM_FILTER=id;renderTeam();}
+function exportCSV(){
+  const results=(store.resultsCache||[]).filter(r=>r.kind!=="observer");const rows=[["Name","Role","Assessment","Leading 1","Leading 2","Date"]];
+  results.forEach(r=>{const t=findTest(r.testId);const nm=id=>{const ty=t&&t.types.find(x=>x.id===id);return ty?ty.name:id;};rows.push([r.name,r.role||"",t?t.name:r.testName,nm(r.leading[0]),nm(r.leading[1]),(r.date||"").slice(0,10)]);});
+  dl("elc_team_results.csv",rows.map(row=>row.map(c=>`"${String(c).replace(/"/g,'""')}"`).join(",")).join("\n"));
+}
+
+/* TEAM SYNTHESIS — the automatic combined report */
+function renderSynth(){
+  app().innerHTML=`<div class="sec-head"><div><h2>Team Synthesis</h2><p>An automatic reading of the whole team, drawn from every saved result.</p></div></div>
+    <div class="panel"><p><span class="spin"></span>Gathering results and synthesizing…</p></div>`;
+  loadSynth();
+}
+async function loadSynth(){
+  let all;
+  try{all=await fetchResults();}catch(e){return app().innerHTML=`<div class="sec-head"><div><h2>Team Synthesis</h2></div></div><div class="panel"><div class="callout warn"><b>Couldn't reach the central store.</b><br>${esc(e.message)}</div><button class="btn" style="margin-top:16px" onclick="renderSynth()">Try again</button></div>`;}
+  store.resultsCache=all;
+  const results=all.filter(r=>r.kind!=="observer"); // synthesis = self-profiles only
+  const tests=getTests();const used=tests.filter(t=>results.some(r=>r.testId===t.id));
+  if(used.length===0){
+    app().innerHTML=`<div class="sec-head"><div><h2>Team Synthesis</h2></div></div><div class="panel empty"><svg width="54" height="54" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 19V5m0 14h16M8 16l3-4 3 2 4-6"/></svg><p>No results yet.<br>Once your team completes assessments, the synthesis appears here.</p><button class="btn" onclick="go('home')" style="margin-top:6px">Go to assessments</button></div>`;return;
+  }
+  if(!SYN_TEST||!used.some(t=>t.id===SYN_TEST))SYN_TEST=(STATE.testId&&used.some(t=>t.id===STATE.testId))?STATE.testId:used[0].id;
+  const test=findTest(SYN_TEST);const S=synthesize(test,results);
+  const picker=used.length>1?`<div class="toolbar">${used.map(t=>`<button class="btn sm ${SYN_TEST===t.id?'':'ghost'}" onclick="setSyn('${t.id}')">${esc(t.name)}</button>`).join("")}</div>`:"";
+  app().innerHTML=`
+  <div class="sec-head"><div><h2>Team Synthesis</h2><p>${esc(test.name)} · drawn from ${S.people} result${S.people===1?"":"s"} across ${S.names} ${S.names===1?"person":"people"}.</p></div>
+    <div style="display:flex;gap:10px"><button class="btn sm ghost" onclick="window.print()">Print / Save PDF</button></div></div>
+  ${picker}
+  <div class="panel syn">
+    <p class="lede">${esc(synthLede(S))}</p>
+    ${S.phase?phaseBlock(S):""}
+    <h3>Strength distribution</h3>
+    <div class="bars">${S.ranked.map(x=>`<div class="bar"><div class="name">${esc(x.type.name)}</div><div class="track"><div class="fill" data-w="${pctOfPeople(x,S)}" style="background:${x.type.color}"></div></div><div class="pct">${x.leaders.length}</div></div>`).join("")}</div>
+    <p class="hint">Bar length = how many people lead in that strength (their top two).</p>
+    <h3>What this means for the team</h3>
+    ${synthRecs(S).map(r=>`<div class="rec"><b>${esc(r.title)}</b>${esc(r.body)}</div>`).join("")}
+    <h3>Coverage at a glance</h3>
+    ${coveragePanelInline(test,S)}
+  </div>`;
+  requestAnimationFrame(()=>{document.querySelectorAll('.fill').forEach(f=>{setTimeout(()=>f.style.width=f.dataset.w+"%",60);});});
+}
+function setSyn(id){SYN_TEST=id;renderSynth();}
+function pctOfPeople(x,S){return S.people?Math.round(x.leaders.length/S.people*100):0;}
+function synthLede(S){
+  const strong=S.ranked.filter(x=>x.leaders.length>0).slice(0,2).map(x=>x.type.name);
+  const gapNames=S.gaps.map(x=>x.type.name);
+  let l=`As a team, our clearest strengths are ${listJoin(strong)}. `;
+  if(gapNames.length) l+=`We currently have no one leading in ${listJoin(gapNames)} — a place to grow or invite others in. `;
+  else l+=`Every strength has at least one leader — a well-rounded body. `;
+  return l.trim();
+}
+function phaseBlock(S){
+  const total=S.phase.reduce((a,b)=>a+b.slots,0)||1;
+  const bars=S.phase.map(ph=>`<div style="background:${ph.color};width:${Math.max(8,Math.round(ph.slots/total*100))}%">${ph.name} ${Math.round(ph.slots/total*100)}%</div>`).join("");
+  const a=S.phase[0],b=S.phase[1];
+  // Within a lagging phase, name only the strengths that are actually thin —
+  // never the ones the team already leads in.
+  function thinNames(ph){
+    const inPhase=ph.types.map(id=>S.per[id]);
+    const min=Math.min(...inPhase.map(x=>x.leaders.length));
+    return inPhase.filter(x=>x.leaders.length===min).map(x=>x.type.name);
+  }
+  function leanNote(lead,other){
+    return `The team leans toward ${lead.name.toLowerCase()} — ${lead.lean}. The thinnest spot on the ${other.name.toLowerCase()} side is ${listJoin(thinNames(other))}; ${lead.otherRisk}.`;
+  }
+  let note;
+  if(a.slots>b.slots*1.6) note=leanNote(a,b);
+  else if(b.slots>a.slots*1.6) note=leanNote(b,a);
+  else note=S.test.phaseBalanced||"The team is well balanced across both sides — keep both voices at the table.";
+  return `<h3>${esc(a.name)} &amp; ${esc(b.name.toLowerCase())}</h3><div class="balance">${bars}</div><p class="muted" style="margin-top:6px">${esc(note)}</p>`;
+}
+function synthRecs(S){
+  const recs=[];
+  const covered=S.covered.slice(0,2).map(x=>x.type.name);
+  if(covered.length)recs.push({title:"Lean into your strengths",body:`Your team is well-supplied in ${listJoin(covered)}. Give these people room to lead where they're gifted, and let others learn from them.`});
+  S.gaps.forEach(g=>{const cand=S.growthFor(g.type.id);
+    recs.push({title:`Gap: ${g.type.name}`,body:`No one currently leads here.${cand&&cand.pct>=55?` ${cand.name} scores highest in this area and could grow into it.`:""} Consider inviting someone with this strength onto the team, or covering it intentionally when you plan.`});});
+  if(S.overConc)recs.push({title:`A lot of ${S.overConc.type.name}s`,body:`Over half the team leads in ${S.overConc.type.name}. That's real horsepower, but ${lower(S.overConc.type.watch||"watch that other strengths still get a voice.")}`});
+  if(S.gaps.length===0&&!S.overConc)recs.push({title:"A balanced body",body:"Every strength is represented and no single one dominates. This is a healthy mix — protect it as the team grows by keeping an eye on which strengths new members bring."});
+  return recs;
+}
+function coveragePanelInline(test,S){
+  const rows=test.types.map(ty=>{const p=S.per[ty.id];const ppl=p.leaders;
+    const flag=ppl.length===0?`<span class="cov-flag gap">Gap</span>`:`<span class="cov-flag ok">${ppl.length}</span>`;
+    const dots=ppl.map(n=>`<span class="p" title="${esc(n)}">${initials(n)}</span>`).join("")||`<span class="muted" style="font-size:13px">No one leads here yet</span>`;
+    return `<div class="cov-row"><div class="cname"><span class="sw" style="background:${ty.color}"></span>${esc(ty.name)} <span class="muted" style="font-weight:400">· team avg ${p.avg}%</span></div><div class="dots">${dots}</div>${flag}</div>`;}).join("");
+  return `<div style="margin-top:6px">${rows}</div>`;
+}
+
+/* LEADERS */
+function renderLeaders(){
+  const tests=getTests();
+  app().innerHTML=`
+  <div class="sec-head"><div><h2>For Leaders</h2><p>Add assessments and manage the ones your team uses.</p></div></div>
+  <div class="panel narrow" style="margin-bottom:20px">
+    <h3 style="font-size:21px;margin-bottom:6px">Add a new assessment</h3>
+    <p class="muted">Build your own strengths or gifts test. It saves to the shared store, so the whole team can take it.</p>
+    <button class="btn gold" onclick="go('builder',{builder:null})">Create a test &rarr;</button>
+  </div>
+  <div class="panel narrow" style="margin-bottom:20px">
+    <h3 style="font-size:21px;margin-bottom:10px">Your assessments</h3>
+    ${tests.map(t=>`<div style="display:flex;justify-content:space-between;align-items:center;gap:12px;padding:12px 0;border-bottom:1px solid var(--line)">
+      <div><b>${esc(t.name)}</b> <span class="muted">· ${t.types.length} strengths · ${t.questions.length} questions</span><br><span class="muted" style="font-size:13px">${t.builtIn?"Built in — always available":"Shared with the team"}</span></div>
+      <div style="display:flex;gap:8px"><button class="btn sm ghost" onclick="go('start',{testId:'${t.id}'})">Preview</button>${t.builtIn?"":`<button class="btn sm ghost" onclick="removeTest('${t.id}')">Delete</button>`}</div></div>`).join("")}
+  </div>
+  <div class="panel narrow" style="margin-bottom:20px" id="feedbackPanel">
+    <h3 style="font-size:21px;margin-bottom:6px">Leader feedback (360°)</h3>
+    <p class="muted">See a leader's self-rating beside how the people they lead experience them. <span id="fbCount"><span class="spin"></span>Loading…</span></p>
+    <div id="fbList"></div>
+  </div>
+  <div class="panel narrow">
+    <h3 style="font-size:21px;margin-bottom:10px">About your data</h3>
+    <p class="muted">Results are stored centrally in your church's Supabase database and combined automatically in the Team Synthesis. Export a spreadsheet backup anytime.</p>
+    <div style="display:flex;gap:10px;flex-wrap:wrap"><button class="btn ghost" onclick="go('team')">Open Team View</button><button class="btn ghost" onclick="go('synth')">Open Synthesis</button></div>
+    <div class="callout" style="margin-top:16px">Anyone with this site's link can view and add results, so keep the link to your team. When you're ready, this can be locked behind a sign-in or team passcode.</div>
+  </div>`;
+  loadFeedbackList();
+}
+async function loadFeedbackList(){
+  const countEl=document.getElementById("fbCount"),listEl=document.getElementById("fbList");
+  if(!countEl)return;
+  let all;
+  try{all=await fetchResults();}catch(e){countEl.innerHTML=`<span style="color:var(--c-rally)">Couldn't load feedback (${esc(e.message)}).</span>`;return;}
+  store.resultsCache=all;
+  const subjects=leadersWithFeedback(all);
+  if(subjects.length===0){
+    countEl.textContent="No feedback has come in yet.";
+    listEl.innerHTML=`<div class="callout info" style="margin-top:12px">To gather 360° feedback: a leader takes <b>Ministry Leadership Practices</b> (rating themselves), then the people they lead open the same assessment, choose <b>“A leader I follow,”</b> and enter that leader's name. Once at least one person responds, the comparison appears here.</div>`;
+    return;
+  }
+  countEl.textContent="";
+  listEl.innerHTML=subjects.map(s=>`<div style="display:flex;justify-content:space-between;align-items:center;gap:12px;padding:12px 0;border-bottom:1px solid var(--line)">
+    <div><b>${esc(s.subject)}</b> <span class="muted">· ${esc(s.testName)}</span><br>
+      <span class="muted" style="font-size:13px">${s.raters} ${s.raters===1?"person has":"people have"} given feedback${s.hasSelf?"":" · no self-rating yet"}</span></div>
+    <button class="btn sm ${s.hasSelf?'gold':'ghost'}" onclick="go('feedback',{fbSubject:'${esc(s.subject).replace(/'/g,"\\'")}',fbTest:'${s.testId}'})">View</button>
+  </div>`).join("");
+}
+async function removeTest(id){
+  if(!confirm("Delete this assessment for everyone? Results already collected stay in the team view."))return;
+  try{await deleteCustomTest(id);}catch(e){alert("Couldn't delete from the shared store: "+e.message);}
+  renderLeaders();
+}
+
+/* ---- 360° feedback ---- */
+function leadersWithFeedback(all){
+  const map={};
+  all.filter(r=>r.kind==="observer"&&r.subject).forEach(r=>{
+    const key=r.testId+"||"+r.subject.toLowerCase();
+    if(!map[key]){const t=findTest(r.testId);map[key]={subject:r.subject,testId:r.testId,testName:t?t.name:r.testName,raters:0,hasSelf:false};}
+    map[key].raters++;
+  });
+  Object.values(map).forEach(s=>{
+    s.hasSelf=all.some(r=>r.kind!=="observer"&&r.testId===s.testId&&r.name.toLowerCase()===s.subject.toLowerCase());
+  });
+  return Object.values(map).sort((a,b)=>b.raters-a.raters);
+}
+function leaderFeedback(testId,subject,all){
+  const t=findTest(testId);
+  const self=all.find(r=>r.kind!=="observer"&&r.testId===testId&&r.name.toLowerCase()===subject.toLowerCase())||null;
+  const obs=all.filter(r=>r.kind==="observer"&&r.testId===testId&&r.subject&&r.subject.toLowerCase()===subject.toLowerCase());
+  const per=t.types.map(ty=>{
+    const selfPct=self?(self.pct[ty.id]||0):null;
+    const obsAvg=obs.length?Math.round(obs.reduce((a,r)=>a+(r.pct[ty.id]||0),0)/obs.length):null;
+    const delta=(selfPct!=null&&obsAvg!=null)?selfPct-obsAvg:null;
+    return {type:ty,selfPct,obsAvg,delta};
+  });
+  const withDelta=per.filter(p=>p.delta!=null);
+  const blind=withDelta.filter(p=>p.delta>=15).sort((a,b)=>b.delta-a.delta);   // rates self higher than others do
+  const hidden=withDelta.filter(p=>p.delta<=-15).sort((a,b)=>a.delta-b.delta);  // others rate higher than self
+  const aligned=withDelta.filter(p=>Math.abs(p.delta)<15);
+  return {test:t,subject,self,obs,per,blind,hidden,aligned};
+}
+function renderFeedback(){
+  app().innerHTML=`<button class="back" onclick="go('leaders')">&larr; For Leaders</button>
+    <div class="panel"><p><span class="spin"></span>Loading feedback…</p></div>`;
+  loadFeedback();
+}
+async function loadFeedback(){
+  let all;
+  try{all=await fetchResults();}catch(e){return app().innerHTML=`<button class="back" onclick="go('leaders')">&larr; For Leaders</button><div class="panel"><div class="callout warn"><b>Couldn't reach the central store.</b><br>${esc(e.message)}</div></div>`;}
+  store.resultsCache=all;
+  const F=leaderFeedback(STATE.fbTest,STATE.fbSubject,all);
+  const raters=F.obs.length;
+  const rows=F.per.map(p=>{
+    const selfW=p.selfPct==null?0:p.selfPct, obsW=p.obsAvg==null?0:p.obsAvg;
+    const deltaTag=p.delta==null?'<span class="muted" style="font-size:12px">—</span>'
+      :(Math.abs(p.delta)<15?`<span class="cov-flag ok">aligned</span>`
+      :(p.delta>0?`<span class="cov-flag gap">+${p.delta} self</span>`:`<span class="cov-flag" style="color:var(--c-help)">+${-p.delta} others</span>`));
+    return `<div style="padding:12px 0;border-bottom:1px solid var(--line)">
+      <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:6px"><b style="font-size:14px">${esc(p.type.name)}</b>${deltaTag}</div>
+      <div style="display:grid;grid-template-columns:64px 1fr 44px;gap:10px;align-items:center;margin:4px 0">
+        <span class="muted" style="font-size:12px">Self</span><div class="track" style="height:12px;background:var(--paper-2);border-radius:20px;overflow:hidden"><div class="fill" data-w="${selfW}" style="height:100%;border-radius:20px;background:${p.type.color};opacity:.55"></div></div><span class="pct">${p.selfPct==null?'—':p.selfPct+'%'}</span>
+        <span class="muted" style="font-size:12px">Team</span><div class="track" style="height:12px;background:var(--paper-2);border-radius:20px;overflow:hidden"><div class="fill" data-w="${obsW}" style="height:100%;border-radius:20px;background:${p.type.color}"></div></div><span class="pct">${p.obsAvg==null?'—':p.obsAvg+'%'}</span>
+      </div></div>`;
+  }).join("");
+  const insight=[];
+  if(!F.self) insight.push({t:"No self-rating yet",b:`${esc(F.subject)} hasn't taken this assessment yet, so there's nothing to compare the team's feedback against. Ask them to complete it and rate themselves.`});
+  if(F.blind.length) insight.push({t:"Possible blind spots",b:`On ${listJoin(F.blind.map(p=>p.type.name))}, ${esc(F.subject)} rates themselves noticeably higher than the team does. Worth a gentle, curious conversation — not a verdict.`});
+  if(F.hidden.length) insight.push({t:"Hidden strengths",b:`On ${listJoin(F.hidden.map(p=>p.type.name))}, the team rates ${esc(F.subject)} higher than they rate themselves. Encouragement to receive, not brush off.`});
+  if(F.self&&!F.blind.length&&!F.hidden.length) insight.push({t:"Closely aligned",b:`${esc(F.subject)}'s self-view and the team's view line up well across the board — a sign of self-awareness. Keep the feedback rhythm going.`});
+  app().innerHTML=`
+  <button class="back" onclick="go('leaders')">&larr; For Leaders</button>
+  <div class="sec-head"><div><div class="eyebrow">${esc(F.test.name)} · 360° feedback</div><h2>${esc(F.subject)}</h2>
+    <p style="margin:6px 0 0" class="muted">Self-rating vs. the average of ${raters} ${raters===1?"person":"people"} who lead${raters===1?"s":""} alongside or under them.</p></div>
+    <div><button class="btn sm ghost" onclick="window.print()">Print / Save PDF</button></div></div>
+  <div class="panel">
+    <div style="display:flex;gap:16px;font-size:13px;color:var(--ink-faint);margin-bottom:10px"><span>▬ lighter = self</span><span>▬ solid = team average</span></div>
+    ${rows}
+    <div class="sec-head" style="margin:24px 0 6px"><div><h2 style="font-size:22px">What stands out</h2></div></div>
+    ${insight.map(i=>`<div class="rec"><b>${esc(i.t)}</b>${i.b}</div>`).join("")}
+    <div class="callout" style="margin-top:18px">Feedback is anonymous by design — this shows the group average, never who said what. Treat gaps as questions to explore together, in a spirit of grace.</div>
+  </div>`;
+  requestAnimationFrame(()=>{document.querySelectorAll('.fill').forEach(f=>{setTimeout(()=>f.style.width=f.dataset.w+"%",60);});});
+}
+
+/* BUILDER */
+function blankBuilder(){return {name:"",subtitle:"",description:"",
+  types:[{id:uid(),name:"",color:SWATCH_CHOICES[0],tagline:"",bring:"",team:"",watch:"",verse:"",verseRef:""},{id:uid(),name:"",color:SWATCH_CHOICES[2],tagline:"",bring:"",team:"",watch:"",verse:"",verseRef:""}],
+  questions:[{text:"",typeId:""}]};}
+function renderBuilder(){
+  if(!STATE.builder)STATE.builder=blankBuilder();const b=STATE.builder;
+  app().innerHTML=`
+  <button class="back" onclick="go('leaders')">&larr; For Leaders</button>
+  <div class="sec-head"><div><h2>Create an assessment</h2><p>Name it, define the strengths it measures, then write questions and assign each to a strength.</p></div></div>
+  <div class="panel" style="margin-bottom:18px"><h3 style="font-size:19px;margin-bottom:14px">1 · About this assessment</h3>
+    <label class="field"><span class="lab">Name</span><input type="text" value="${esc(b.name)}" placeholder="e.g. Spiritual Gifts" oninput="bSet('name',this.value)"></label>
+    <label class="field"><span class="lab">Short subtitle</span><input type="text" value="${esc(b.subtitle)}" placeholder="One line describing it" oninput="bSet('subtitle',this.value)"></label>
+    <label class="field"><span class="lab">Description</span><textarea placeholder="A sentence or two shown before someone begins." oninput="bSet('description',this.value)">${esc(b.description)}</textarea></label>
+  </div>
+  <div class="panel" style="margin-bottom:18px"><h3 style="font-size:19px;margin-bottom:4px">2 · Strengths measured</h3>
+    <p class="muted" style="margin-bottom:14px">These are the categories a person can score in. Add 2–8.</p>
+    <div id="type-list">${b.types.map((t,i)=>typeEditor(t,i)).join("")}</div>
+    <button class="btn sm ghost" onclick="bAddType()">+ Add a strength</button></div>
+  <div class="panel" style="margin-bottom:18px"><h3 style="font-size:19px;margin-bottom:4px">3 · Questions</h3>
+    <p class="muted" style="margin-bottom:14px">Each is a statement people rate from “Not like me” to “Very like me.” Assign each to one strength (aim for 3–5 per strength).</p>
+    <div id="q-list">${b.questions.map((q,i)=>qEditor(q,i)).join("")}</div>
+    <button class="btn sm ghost" onclick="bAddQ()">+ Add a question</button></div>
+  <div id="b-errors"></div>
+  <div style="display:flex;gap:12px;flex-wrap:wrap"><button class="btn gold" id="saveTestBtn" onclick="bSave()">Save assessment</button><button class="btn ghost" onclick="go('leaders')">Cancel</button></div>`;
+}
+function typeEditor(t,i){
+  return `<div class="type-editor" data-i="${i}"><div class="top">
+    <input type="color" class="swatch-pick" value="${t.color}" oninput="bTypeSet(${i},'color',this.value)" aria-label="Color">
+    <input type="text" value="${esc(t.name)}" placeholder="Strength name (e.g. The Encourager)" oninput="bTypeSet(${i},'name',this.value)">
+    ${STATE.builder.types.length>2?`<button class="mini-x" title="Remove" onclick="bDelType(${i})">&times;</button>`:'<span></span>'}</div>
+    <input type="text" value="${esc(t.tagline)}" placeholder="Short tagline (optional)" oninput="bTypeSet(${i},'tagline',this.value)" style="margin-bottom:8px">
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
+      <textarea placeholder="You bring… (their strength)" oninput="bTypeSet(${i},'bring',this.value)">${esc(t.bring)}</textarea>
+      <textarea placeholder="On a team… (how they help)" oninput="bTypeSet(${i},'team',this.value)">${esc(t.team)}</textarea>
+      <textarea placeholder="Gentle watch-out (optional)" oninput="bTypeSet(${i},'watch',this.value)">${esc(t.watch)}</textarea>
+      <div><input type="text" value="${esc(t.verse)}" placeholder="Scripture (optional)" oninput="bTypeSet(${i},'verse',this.value)" style="margin-bottom:8px"><input type="text" value="${esc(t.verseRef)}" placeholder="Reference (e.g. Romans 12:8 KJV)" oninput="bTypeSet(${i},'verseRef',this.value)"></div>
+    </div></div>`;
+}
+function qEditor(q,i){
+  const opts=STATE.builder.types.map(t=>`<option value="${t.id}" ${t.id===q.typeId?'selected':''}>${esc(t.name||"(unnamed)")}</option>`).join("");
+  return `<div class="q-editor" data-i="${i}"><input type="text" value="${esc(q.text)}" placeholder="e.g. I naturally encourage people who are discouraged." oninput="bQSet(${i},'text',this.value)"><select onchange="bQSet(${i},'typeId',this.value)"><option value="">— assign strength —</option>${opts}</select><button class="mini-x" title="Remove" onclick="bDelQ(${i})">&times;</button></div>`;
+}
+function bSet(k,v){STATE.builder[k]=v;}
+function bTypeSet(i,k,v){STATE.builder.types[i][k]=v;if(k==="name")refreshQSelects();}
+function bQSet(i,k,v){STATE.builder.questions[i][k]=v;}
+function bAddType(){if(STATE.builder.types.length>=8)return;STATE.builder.types.push({id:uid(),name:"",color:SWATCH_CHOICES[STATE.builder.types.length%SWATCH_CHOICES.length],tagline:"",bring:"",team:"",watch:"",verse:"",verseRef:""});renderBuilder();}
+function bDelType(i){const rid=STATE.builder.types[i].id;STATE.builder.types.splice(i,1);STATE.builder.questions.forEach(q=>{if(q.typeId===rid)q.typeId="";});renderBuilder();}
+function bAddQ(){STATE.builder.questions.push({text:"",typeId:""});renderBuilder();}
+function bDelQ(i){if(STATE.builder.questions.length>1)STATE.builder.questions.splice(i,1);renderBuilder();}
+function refreshQSelects(){document.querySelectorAll('#q-list .q-editor').forEach(el=>{const i=+el.dataset.i,sel=el.querySelector('select'),cur=STATE.builder.questions[i].typeId;sel.innerHTML=`<option value="">— assign strength —</option>`+STATE.builder.types.map(t=>`<option value="${t.id}" ${t.id===cur?'selected':''}>${esc(t.name||"(unnamed)")}</option>`).join("");});}
+async function bSave(){
+  const b=STATE.builder,errs=[];
+  if(!b.name.trim())errs.push("Give your assessment a name.");
+  const namedTypes=b.types.filter(t=>t.name.trim());
+  if(namedTypes.length<2)errs.push("Add at least two named strengths.");
+  const validQs=b.questions.filter(q=>q.text.trim()&&q.typeId);
+  if(validQs.length<namedTypes.length*2)errs.push("Add at least two questions per strength (and assign each question to a strength).");
+  const covered=new Set(validQs.map(q=>q.typeId));
+  namedTypes.forEach(t=>{if(!covered.has(t.id))errs.push(`“${t.name}” has no questions assigned.`);});
+  if(errs.length){document.getElementById("b-errors").innerHTML=`<div class="callout warn" style="margin-bottom:16px"><b>Please fix:</b><ul style="margin:6px 0 0;padding-left:18px">${errs.map(e=>`<li>${esc(e)}</li>`).join("")}</ul></div>`;window.scrollTo({top:0});return;}
+  const btn=document.getElementById("saveTestBtn");btn.disabled=true;btn.innerHTML='<span class="spin"></span>Saving…';
+  const test={id:"custom_"+Date.now(),name:b.name.trim(),subtitle:b.subtitle.trim(),description:b.description.trim()||b.name.trim(),minutes:validQs.length+" questions",builtIn:false,scale:{min:1,max:5,lowLabel:"Not like me",highLabel:"Very like me"},types:namedTypes.map(t=>({...t,name:t.name.trim()})),questions:validQs.map(q=>({text:q.text.trim(),typeId:q.typeId}))};
+  try{await saveCustomTest(test);STATE.builder=null;go("home");}
+  catch(e){btn.disabled=false;btn.innerHTML="Save assessment";document.getElementById("b-errors").innerHTML=`<div class="callout warn" style="margin-bottom:16px"><b>Couldn't save to the shared store.</b><br>${esc(e.message)}</div>`;}
+}
+
+/* UTIL */
+function esc(s){return String(s==null?"":s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));}
+function clip(s,n){s=String(s||"");return s.length>n?s.slice(0,n-1).trim()+"…":s;}
+function uid(){return "t_"+Math.random().toString(36).slice(2,8);}
+function initials(n){return String(n||"").trim().split(/\s+/).map(w=>w[0]||"").slice(0,2).join("").toUpperCase()||"?";}
+function listJoin(a){a=a.filter(Boolean);if(a.length<=1)return a[0]||"";if(a.length===2)return a[0]+" and "+a[1];return a.slice(0,-1).join(", ")+", and "+a[a.length-1];}
+function lower(s){return s?s.charAt(0).toLowerCase()+s.slice(1):s;}
+function dl(fn,text){const b=new Blob([text],{type:"text/plain"}),u=URL.createObjectURL(b),a=document.createElement("a");a.href=u;a.download=fn;document.body.appendChild(a);a.click();setTimeout(()=>{URL.revokeObjectURL(u);a.remove();},100);}
+
+/* BOOT */
+async function boot(){
+  document.getElementById("nav").innerHTML="";
+  app().innerHTML=`<div class="panel" style="margin-top:40px"><p><span class="spin"></span>Loading…</p></div>`;
+  const slug=new URLSearchParams(location.search).get("church");
+  if(CLOUD){
+    try{
+      const sess=await refreshSession();
+      if(sess){
+        const mine=await fetchMyChurch();
+        if(mine){setChurch(mine,true);await refreshTests();return go("home");}
+        return go("newchurch");
+      }
+    }catch(e){}
+    if(slug){
+      try{const c=await fetchChurchBySlug(slug);if(c){setChurch(c,false);await refreshTests();return go("home");}}catch(e){}
+    }
+  }
+  go("marketing");
+}
+boot();
+</script>
+</body>
+</html>
