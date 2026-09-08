@@ -1,0 +1,1105 @@
+<title>SHAPE Discovery</title>
+<meta name="description" content="An interactive, mobile-friendly way for new members to discover their spiritual gifts, heart, abilities, personality, and experience.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Source+Sans+3:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&display=swap">
+
+<style>
+  :root{
+    --ink:#241F33; --ink-soft:#5B5570; --ink-faint:#8B84A0;
+    --ground:#F3F1F7; --surface:#FFFFFF; --surface-2:#FBFAFD;
+    --border:#E1DEEA; --border-strong:#CFC9DD;
+    --gifts:#B07A22; --gifts-fill:#B07A2214;
+    --heart:#A5405A; --heart-fill:#A5405A14;
+    --abilities:#237A69; --abilities-fill:#237A6914;
+    --personality:#5D4A9C; --personality-fill:#5D4A9C14;
+    --experience:#2E5490; --experience-fill:#2E549014;
+    --accent:#5D4A9C;
+    --shadow: 0 1px 2px rgba(36,31,51,.06), 0 8px 24px -12px rgba(36,31,51,.18);
+    --radius: 18px;
+    color-scheme: light;
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --ink:#ECE9F5; --ink-soft:#B4AEC9; --ink-faint:#7C7594;
+      --ground:#16131F; --surface:#1E1A2B; --surface-2:#241F35;
+      --border:#332C46; --border-strong:#453C5E;
+      --gifts:#E0A94E; --gifts-fill:#E0A94E1F;
+      --heart:#DD7E8E; --heart-fill:#DD7E8E1F;
+      --abilities:#5CC2AC; --abilities-fill:#5CC2AC1F;
+      --personality:#A594E0; --personality-fill:#A594E01F;
+      --experience:#7FA3E0; --experience-fill:#7FA3E01F;
+      --accent:#A594E0;
+      --shadow: 0 1px 2px rgba(0,0,0,.4), 0 12px 32px -16px rgba(0,0,0,.6);
+      color-scheme: dark;
+    }
+  }
+  :root[data-theme="dark"]{
+    --ink:#ECE9F5; --ink-soft:#B4AEC9; --ink-faint:#7C7594;
+    --ground:#16131F; --surface:#1E1A2B; --surface-2:#241F35;
+    --border:#332C46; --border-strong:#453C5E;
+    --gifts:#E0A94E; --gifts-fill:#E0A94E1F;
+    --heart:#DD7E8E; --heart-fill:#DD7E8E1F;
+    --abilities:#5CC2AC; --abilities-fill:#5CC2AC1F;
+    --personality:#A594E0; --personality-fill:#A594E01F;
+    --experience:#7FA3E0; --experience-fill:#7FA3E01F;
+    --accent:#A594E0;
+    --shadow: 0 1px 2px rgba(0,0,0,.4), 0 12px 32px -16px rgba(0,0,0,.6);
+    color-scheme: dark;
+  }
+
+  *{box-sizing:border-box;}
+  body{
+    margin:0; background:var(--ground); color:var(--ink);
+    font-family:"Source Sans 3", ui-sans-serif, system-ui, sans-serif;
+    -webkit-font-smoothing:antialiased;
+  }
+  h1,h2,h3,.display{
+    font-family:"Fraunces", Georgia, serif; font-weight:600; letter-spacing:-.01em;
+    text-wrap:balance;
+  }
+  .mono{ font-family:"IBM Plex Mono", ui-monospace, monospace; }
+  a{ color:inherit; }
+  button{ font-family:inherit; }
+  ::selection{ background:var(--accent); color:var(--surface); }
+
+  .app{ max-width:760px; margin:0 auto; min-height:100vh; display:flex; flex-direction:column; }
+
+  /* ---------- Top bar / rail ---------- */
+  .topbar{ position:sticky; top:0; z-index:5; background:var(--ground); padding:14px 20px 10px; }
+  .topbar-row{ display:flex; align-items:center; justify-content:space-between; gap:12px; }
+  .brand{ display:flex; align-items:center; gap:6px; font-size:.74rem; color:var(--ink-faint); text-transform:uppercase; letter-spacing:.06em; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+  .brand b{ color:var(--ink-soft); font-weight:600; }
+  .step-hint{ flex:none; white-space:nowrap; }
+  @media (max-width:400px){ .brand .church-name{ display:none; } }
+  .progress-track{ height:4px; border-radius:4px; background:var(--border); margin-top:12px; overflow:hidden; }
+  .progress-fill{ height:100%; background:var(--accent); border-radius:4px; transition:width .5s cubic-bezier(.4,0,.2,1); }
+
+  .rail{ display:flex; gap:8px; margin-top:14px; }
+  .rail-dot{
+    flex:1; display:flex; flex-direction:column; align-items:center; gap:6px;
+    font-size:.68rem; color:var(--ink-faint); text-transform:uppercase; letter-spacing:.06em;
+  }
+  .rail-dot .circ{
+    width:30px; height:30px; border-radius:50%; border:2px solid var(--border-strong);
+    display:flex; align-items:center; justify-content:center; font-family:"Fraunces",serif;
+    font-weight:700; font-size:.95rem; color:var(--ink-faint); background:var(--surface);
+    transition:all .3s ease;
+  }
+  .rail-dot.active .circ{ border-color:var(--dot); color:var(--dot); box-shadow:0 0 0 4px var(--dot-fill); }
+  .rail-dot.done .circ{ border-color:var(--dot); background:var(--dot); color:var(--surface); }
+  .rail-dot.active, .rail-dot.done{ color:var(--dot); }
+
+  /* ---------- Stage ---------- */
+  .stage{ flex:1; padding:8px 20px 24px; display:flex; flex-direction:column; }
+  .card{
+    background:var(--surface); border:1px solid var(--border); border-radius:var(--radius);
+    box-shadow:var(--shadow); padding:28px; margin-top:10px;
+  }
+  .eyebrow{ font-size:.72rem; text-transform:uppercase; letter-spacing:.1em; color:var(--facet, var(--accent)); font-weight:700; margin:0 0 6px; }
+  .stage h2{ font-size:1.5rem; margin:0 0 6px; }
+  .lede{ color:var(--ink-soft); margin:0 0 22px; font-size:.98rem; line-height:1.55; max-width:56ch; }
+  .verse{ font-family:"Fraunces",serif; font-style:italic; color:var(--ink-soft); font-size:1rem; }
+
+  /* welcome */
+  .hero-shapes{ display:flex; gap:8px; margin-bottom:20px; }
+  .hero-shapes span{
+    flex:1; height:64px; border-radius:14px; display:flex; align-items:center; justify-content:center;
+    font-family:"Fraunces",serif; font-weight:700; font-size:1.4rem; color:var(--surface);
+  }
+  .facet-list{ list-style:none; padding:0; margin:0 0 22px; display:flex; flex-direction:column; gap:10px; }
+  .facet-list li{ display:flex; gap:12px; align-items:flex-start; font-size:.92rem; color:var(--ink-soft); }
+  .facet-list .tag{ flex:none; width:26px; height:26px; border-radius:8px; color:#fff; font-family:"Fraunces",serif; font-weight:700; font-size:.85rem; display:flex; align-items:center; justify-content:center; }
+
+  .field{ margin-bottom:18px; }
+  .field label{ display:block; font-size:.82rem; font-weight:600; color:var(--ink-soft); margin-bottom:6px; }
+  .field input[type=text], .field textarea{
+    width:100%; padding:12px 14px; border-radius:12px; border:1px solid var(--border-strong);
+    background:var(--surface-2); color:var(--ink); font-size:.98rem; font-family:inherit;
+  }
+  .field textarea{ resize:vertical; min-height:70px; }
+
+  .btnrow{ display:flex; gap:10px; flex-wrap:wrap; margin-top:6px; }
+  .btn{
+    appearance:none; border:none; cursor:pointer; padding:13px 22px; border-radius:100px;
+    font-weight:600; font-size:.95rem; transition:transform .15s ease, opacity .15s ease;
+  }
+  .btn:active{ transform:scale(.97); }
+  .btn-primary{ background:var(--accent); color:var(--surface); }
+  .btn-ghost{ background:transparent; color:var(--ink-soft); border:1px solid var(--border-strong); }
+  .btn:disabled{ opacity:.4; cursor:not-allowed; }
+  .btn:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visible{ outline:2px solid var(--accent); outline-offset:2px; }
+
+  /* gift swipe deck */
+  .deck-wrap{ position:relative; }
+  .deck-counter{ font-size:.78rem; color:var(--ink-faint); margin-bottom:10px; }
+  .gift-card{
+    border-radius:16px; padding:26px 24px; background:var(--facet-fill); border:1px solid var(--border);
+    min-height:150px; display:flex; flex-direction:column; justify-content:center; gap:10px;
+    animation:pop .25s ease;
+  }
+  @keyframes pop{ from{ opacity:0; transform:translateY(8px) scale(.98);} to{opacity:1; transform:none;} }
+  .gift-name{ font-family:"Fraunces",serif; font-weight:700; font-size:1.3rem; color:var(--facet); }
+  .gift-ref{ font-size:.72rem; text-transform:uppercase; letter-spacing:.08em; color:var(--ink-faint); }
+  .gift-desc{ color:var(--ink-soft); font-size:.98rem; line-height:1.5; }
+  .rate-row{ display:grid; grid-template-columns:1fr 1fr 1fr; gap:10px; margin-top:16px; }
+  .rate-btn{
+    border-radius:12px; border:1px solid var(--border-strong); background:var(--surface);
+    padding:12px 6px; font-weight:600; font-size:.82rem; color:var(--ink-soft); cursor:pointer;
+    display:flex; flex-direction:column; align-items:center; gap:4px;
+  }
+  .rate-btn span.ic{ font-size:1.15rem; }
+  .rate-btn.no:hover{ border-color:#B0495344; color:#B04953; }
+  .rate-btn.maybe:hover{ border-color:var(--gifts); color:var(--gifts); }
+  .rate-btn.yes:hover{ border-color:var(--abilities); color:var(--abilities); }
+  .gift-tally{ display:flex; gap:14px; margin-top:16px; font-size:.78rem; color:var(--ink-faint); }
+  .gift-tally b{ color:var(--ink-soft); }
+
+  /* chip grid */
+  .chip-grid{ display:flex; flex-wrap:wrap; gap:9px; }
+  .chip{
+    border:1px solid var(--border-strong); background:var(--surface-2); color:var(--ink-soft);
+    padding:9px 15px; border-radius:100px; font-size:.88rem; cursor:pointer; text-align:left;
+    transition:all .15s ease; line-height:1.3;
+  }
+  .chip small{ display:block; font-size:.74rem; color:var(--ink-faint); font-weight:400; }
+  .chip.sel{ background:var(--facet-fill); border-color:var(--facet); color:var(--facet); font-weight:600; }
+  .chip.sel small{ color:var(--facet); opacity:.8; }
+  .chip:hover{ border-color:var(--facet); }
+  .count-pill{ font-size:.78rem; color:var(--ink-faint); margin-top:16px; }
+  @keyframes shake{ 10%,90%{transform:translateX(-1px);} 20%,80%{transform:translateX(2px);} 30%,50%,70%{transform:translateX(-4px);} 40%,60%{transform:translateX(4px);} }
+  .chip.shake{ animation:shake .4s; border-color:#B04953; color:#B04953; }
+
+  /* personality sliders */
+  .couplet{ margin-bottom:30px; }
+  .couplet:last-child{ margin-bottom:6px; }
+  .pole-row{ display:flex; justify-content:space-between; font-size:.86rem; font-weight:600; margin-bottom:10px; }
+  .pole-row .left{ color:var(--facet); }
+  .pole-row .right{ color:var(--facet); text-align:right; }
+  input[type=range]{
+    width:100%; -webkit-appearance:none; appearance:none; height:6px; border-radius:6px;
+    background:linear-gradient(90deg, var(--facet) 0%, var(--border) 0%);
+    margin:8px 0 10px;
+  }
+  input[type=range]::-webkit-slider-thumb{
+    -webkit-appearance:none; width:24px; height:24px; border-radius:50%; background:var(--facet);
+    border:3px solid var(--surface); box-shadow:0 1px 4px rgba(0,0,0,.25); cursor:pointer; margin-top:-9px;
+  }
+  input[type=range]::-webkit-slider-runnable-track{ height:6px; border-radius:6px; }
+  input[type=range]::-moz-range-thumb{ width:18px; height:18px; border-radius:50%; background:var(--facet); border:3px solid var(--surface); cursor:pointer; }
+  input[type=range]::-moz-range-track{ height:6px; border-radius:6px; background:var(--border); }
+  .lean-desc{ font-size:.85rem; color:var(--ink-soft); background:var(--surface-2); border-radius:10px; padding:10px 12px; }
+
+  /* section switch (experience sub-tabs) */
+  .subnav{ display:flex; gap:6px; margin-bottom:18px; flex-wrap:wrap; }
+  .subnav button{
+    border:1px solid var(--border); background:var(--surface-2); color:var(--ink-faint);
+    padding:6px 12px; border-radius:100px; font-size:.76rem; cursor:pointer; font-weight:600;
+  }
+  .subnav button.on{ background:var(--facet); color:var(--surface); border-color:var(--facet); }
+
+  .privacy-note{
+    display:flex; gap:10px; align-items:flex-start; background:var(--surface-2); border:1px dashed var(--border-strong);
+    border-radius:12px; padding:12px 14px; font-size:.82rem; color:var(--ink-soft); margin-top:16px;
+  }
+
+  /* nav */
+  .nav{ display:flex; justify-content:space-between; align-items:center; margin-top:18px; padding:0 2px; }
+  .step-hint{ font-size:.78rem; color:var(--ink-faint); }
+
+  /* availability */
+  .opt-grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:10px; }
+  .opt-card{
+    border:1px solid var(--border-strong); background:var(--surface-2); border-radius:12px;
+    padding:14px 8px; text-align:center; cursor:pointer; font-weight:600; font-size:.86rem; color:var(--ink-soft);
+  }
+  .opt-card.sel{ background:var(--experience-fill); border-color:var(--experience); color:var(--experience); }
+  .opt-card small{ display:block; font-weight:400; color:var(--ink-faint); font-size:.72rem; margin-top:2px; }
+
+  /* -------- results -------- */
+  .profile-head{
+    text-align:center; padding:34px 20px 28px; border-radius:var(--radius);
+    background:linear-gradient(160deg, var(--surface), var(--surface-2));
+    border:1px solid var(--border); margin-top:10px;
+  }
+  .profile-head .kicker{ font-size:.76rem; text-transform:uppercase; letter-spacing:.14em; color:var(--ink-faint); margin-bottom:10px; }
+  .profile-head h2{ font-size:1.9rem; margin:0 0 8px; }
+  .profile-head .verse{ font-size:.95rem; }
+  .sample-badge{
+    display:inline-block; margin-top:14px; font-size:.72rem; font-weight:700; text-transform:uppercase;
+    letter-spacing:.08em; background:var(--gifts-fill); color:var(--gifts); padding:5px 12px; border-radius:100px;
+  }
+
+  .facet-panel{ border-radius:var(--radius); border:1px solid var(--border); background:var(--surface); padding:22px 24px; margin-top:14px; }
+  .facet-panel .fhead{ display:flex; align-items:center; gap:10px; margin-bottom:14px; }
+  .facet-panel .fhead .tag{ width:32px; height:32px; border-radius:10px; color:#fff; font-family:"Fraunces",serif; font-weight:700; display:flex; align-items:center; justify-content:center; }
+  .facet-panel .fhead h3{ margin:0; font-size:1.1rem; }
+  .facet-panel .fhead .sub{ font-size:.76rem; color:var(--ink-faint); margin-top:2px; }
+  .badge-group{ margin-bottom:12px; }
+  .badge-group:last-child{ margin-bottom:0; }
+  .badge-group .glabel{ font-size:.72rem; text-transform:uppercase; letter-spacing:.06em; color:var(--ink-faint); margin-bottom:7px; font-weight:700; }
+  .badges{ display:flex; flex-wrap:wrap; gap:7px; }
+  .badge{ padding:6px 12px; border-radius:100px; font-size:.82rem; font-weight:600; }
+  .badge.solid{ background:var(--facet); color:#fff; }
+  .badge.outline{ background:var(--facet-fill); color:var(--facet); border:1px solid var(--facet); }
+  .empty-hint{ font-size:.85rem; color:var(--ink-faint); font-style:italic; }
+
+  .dial-row{ margin-bottom:16px; }
+  .dial-row:last-child{ margin-bottom:0; }
+  .dial-labels{ display:flex; justify-content:space-between; font-size:.78rem; color:var(--ink-faint); margin-bottom:6px; }
+  .dial-labels .hi{ color:var(--facet); font-weight:700; }
+  .dial-bar{ position:relative; height:8px; background:var(--border); border-radius:8px; }
+  .dial-bar .fill{ position:absolute; top:0; left:0; height:100%; background:var(--facet); border-radius:8px; opacity:.35; }
+  .dial-bar .mark{ position:absolute; top:50%; width:16px; height:16px; border-radius:50%; background:var(--facet); border:3px solid var(--surface); box-shadow:0 1px 3px rgba(0,0,0,.3); transform:translate(-50%,-50%); }
+
+  .lock-toggle{ display:flex; align-items:center; gap:8px; font-size:.78rem; color:var(--ink-faint); margin-top:10px; cursor:pointer; user-select:none; }
+  .lock-toggle input{ accent-color:var(--experience); }
+
+  .avail-strip{ display:flex; gap:10px; flex-wrap:wrap; margin-top:14px; }
+  .avail-chip{ background:var(--experience-fill); color:var(--experience); padding:7px 14px; border-radius:100px; font-size:.84rem; font-weight:600; }
+
+  .cta-panel{ text-align:center; margin-top:20px; padding:26px 22px; border-radius:var(--radius); background:var(--personality-fill); border:1px solid var(--border); }
+  .cta-panel h3{ margin:0 0 6px; font-size:1.15rem; }
+  .cta-panel p{ margin:0 0 16px; color:var(--ink-soft); font-size:.9rem; max-width:46ch; margin-left:auto; margin-right:auto; }
+
+  footer.note{ text-align:center; font-size:.75rem; color:var(--ink-faint); padding:26px 20px 40px; line-height:1.6; }
+  footer.note a{ text-decoration:underline; }
+
+  @media (max-width:520px){
+    .stage{ padding:8px 14px 20px; } .topbar{ padding:12px 14px 8px; }
+    .card, .facet-panel{ padding:20px 18px; }
+    .rate-row{ gap:7px; }
+    .opt-grid{ grid-template-columns:1fr 1fr 1fr; }
+    .hero-shapes span{ font-size:1.1rem; height:52px; }
+  }
+  @media print{
+    .topbar, .nav, .cta-panel, footer.note{ display:none !important; }
+    body{ background:#fff; }
+  }
+  @media (prefers-reduced-motion: reduce){
+    *{ animation-duration:.001s !important; transition-duration:.001s !important; }
+  }
+</style>
+
+<div class="app">
+  <div class="topbar">
+    <div class="topbar-row">
+      <div class="brand"><span class="church-name">Elkhart Life Church &nbsp;·&nbsp;</span> <b>SHAPE Discovery</b></div>
+      <div class="step-hint mono" id="stepHint"></div>
+    </div>
+    <div class="progress-track"><div class="progress-fill" id="progressFill" style="width:0%"></div></div>
+    <div class="rail" id="rail"></div>
+  </div>
+  <div class="stage" id="stage"></div>
+</div>
+
+<script>
+(function(){
+"use strict";
+
+/* ================= DATA ================= */
+
+var GIFTS = [
+  {n:"Administration", r:"1 Cor. 12", d:"You recognize the gifts of others and organize people, resources, and time for effective ministry."},
+  {n:"Apostleship", r:"1 Cor. 12", d:"You love starting new churches or ministry ventures and shepherding them as they grow."},
+  {n:"Discernment", r:"1 Cor. 12", d:"You sense the difference between truth and error, and can lovingly point out what's off."},
+  {n:"Encouragement", r:"Rom. 12", d:"You motivate people to act on what they know and bring out the best in others."},
+  {n:"Evangelism", r:"Eph. 4", d:"You share the Good News naturally and sense when someone is ready to respond."},
+  {n:"Faith", r:"1 Cor. 12", d:"You trust God for what can't yet be seen and risk failure in pursuit of a God-given vision."},
+  {n:"Giving", r:"Rom. 12", d:"You give generously beyond the tithe and manage money so others can be resourced."},
+  {n:"Healing", r:"1 Cor. 12", d:"You pray boldly for physical, emotional, or spiritual healing and expect God to answer."},
+  {n:"Hospitality", r:"1 Pet. 4", d:"You make strangers feel warmly welcomed and help people belong."},
+  {n:"Leadership", r:"Rom. 12", d:"You cast a clear vision and rally others to work toward it together."},
+  {n:"Mercy", r:"Rom. 12", d:"You show compassionate, cheerful love toward those who are suffering."},
+  {n:"Miracles", r:"1 Cor. 12", d:"You pray in faith for God's supernatural intervention in impossible situations."},
+  {n:"Shepherding", r:"Eph. 4", d:"You care for a group's spiritual needs and nurture their growth over time."},
+  {n:"Praying in the Spirit", r:"1 Cor. 12", d:"You pray in a language known only to God, or interpret that kind of prayer."},
+  {n:"Preaching", r:"Rom. 12", d:"You declare God's Word in a way that convicts, challenges, and comforts."},
+  {n:"Service", r:"Rom. 12", d:"You spot unmet needs and jump in to help quickly and cheerfully, without needing credit."},
+  {n:"Teaching", r:"Eph. 4", d:"You explain and apply the Bible clearly so it sticks, and train others to do the same."},
+  {n:"Wisdom", r:"1 Cor. 12", d:"You see God's perspective on real situations and explain it simply."}
+];
+
+var HEART_ROLES = [
+  {n:"Design / Develop", d:"Make something out of nothing — starting from scratch."},
+  {n:"Pioneer", d:"Test out new ideas — not afraid to risk failure."},
+  {n:"Organize", d:"Bring order to something that's already started."},
+  {n:"Operate / Maintain", d:"Keep something already organized running smoothly."},
+  {n:"Serve / Help", d:"Assist others in their responsibilities so they succeed."},
+  {n:"Acquire / Possess", d:"Shop, collect, or source things — best value for the goal."},
+  {n:"Excel", d:"Be the best and help the team reach the highest standard."},
+  {n:"Influence", d:"Shape how others think, feel, and act."},
+  {n:"Perform", d:"Be on stage and hold people's attention."},
+  {n:"Improve", d:"Take something someone else started and make it better."},
+  {n:"Repair", d:"Fix what's broken or update what's out of date."},
+  {n:"Lead / Be in Charge", d:"Oversee and decide how things get done."},
+  {n:"Persevere", d:"Stick with something until it's finished."},
+  {n:"Follow the Rules", d:"Operate by policy and meet clear expectations."},
+  {n:"Prevail", d:"Fight for what's right and stand against injustice."}
+];
+
+var HEART_PEOPLE = ["Infants / Babies","Toddlers","Preschool Children","Elementary Children","Jr. High Students","High School Students","College / Career","Young Marrieds","Women","Men","Singles","Single Parents","Families","Couples","Older Adults 60+"];
+
+var HEART_CAUSES = ["Parenting","Families / Marriage","At-Risk Youth","Fellowship","Abuse / Violence Recovery","Financial Management","Divorce Recovery","Disabilities & Support","Deafness","Blindness","Law & Justice","Sanctity of Life","Homelessness","Drug & Alcohol Recovery","Compulsive Behavior Recovery","Illness / Injury","Sexuality & Gender Issues","Education","Evangelism","World Evangelization","Children","Mobilizing People for Ministry","Worship","Policy & Politics","Race & Reconciliation","Business & the Economy","Relief Efforts","Ethics","Health & Fitness","Science & Technology","Environment","Global Affairs","Regional / Local Issues","Community & Neighborhood"];
+
+var ABILITIES = [
+  {n:"Entertaining", d:"Perform, act, speak, sing"},
+  {n:"Recruiting", d:"Enlist and motivate people"},
+  {n:"Interviewing", d:"Discover what others are really like"},
+  {n:"Researching", d:"Read, gather information, collect data"},
+  {n:"Artistic", d:"Create or design"},
+  {n:"Graphics", d:"Lay out visual displays or banners"},
+  {n:"Evaluating", d:"Analyze data and draw conclusions"},
+  {n:"Planning", d:"Strategize and organize programs or events"},
+  {n:"Managing", d:"Supervise people and coordinate details"},
+  {n:"Counseling / Encouraging", d:"Listen and guide with sensitivity"},
+  {n:"Athletic", d:"Coach or participate in a sport"},
+  {n:"Teaching", d:"Explain, train, demonstrate, tutor"},
+  {n:"Writing", d:"Articles, letters, books"},
+  {n:"Linguistic", d:"Speak or write another language"},
+  {n:"Editing", d:"Proofread or rewrite"},
+  {n:"Promoting", d:"Advertise events and activities"},
+  {n:"Repairing", d:"Fix, restore, maintain"},
+  {n:"Hobby-related", d:"Work with your hands"},
+  {n:"Feeding", d:"Cook for large or small groups"},
+  {n:"Recall", d:"Remember names and faces"},
+  {n:"Mechanical", d:"Operate equipment or machinery"},
+  {n:"Technical", d:"Operate or repair specialized equipment"},
+  {n:"Resourceful", d:"Find inexpensive materials fast"},
+  {n:"Counting", d:"Work with numbers, data, or money"},
+  {n:"Classifying", d:"File and systematize records"},
+  {n:"Public Relations", d:"Handle complaints with care and maturity"},
+  {n:"Welcoming", d:"Make others feel at home"},
+  {n:"Musical", d:"Sing or play an instrument"},
+  {n:"Landscaping", d:"Garden and work with plants"},
+  {n:"Decorating", d:"Beautify a space for an event"}
+];
+
+var PERSONALITY = [
+  {l:"Extroverted", r:"Introverted", ld:"You gain energy from being around people and a variety of activity.", rd:"You gain energy from quiet reflection and one-on-one conversation."},
+  {l:"Self-expressive", r:"Self-controlled", ld:"You're open and verbal about your thoughts — you enjoy sharing them.", rd:"You tend to keep your thoughts and opinions to yourself."},
+  {l:"Prefers Routine", r:"Prefers Variety", ld:"You like clearly knowing what's expected, with closure before starting something new.", rd:"You're energized by change and don't need to finish one thing before starting another."},
+  {l:"Cooperative", r:"Competitive", ld:"You easily see others' points of view and love being part of a team.", rd:"A sense of challenge increases your effort and helps you push through obstacles."}
+];
+
+var EXP_SPIRITUAL = ["Baptized","Community Outreach","Cross-Cultural Ministry","Led Someone to Christ","Member of a Small Group","Regularly Give Back to God","Regularly Pray","Regularly Read the Bible","Serving in a Ministry"];
+
+var EXP_PAINFUL = ["Abuse","Adoption","Alcoholism","Alzheimer's / Dementia in Family","Bankruptcy","Cancer","Chronic Pain","Crisis Pregnancy","Death / Grief","Depression","Divorce","Drug Abuse / Addiction","Eating Disorder","Extended Court Proceedings","Extended Job Loss","Extended Illness / Injury","Disability","Homelessness","Military / Wartime Service","Miscarriage","Prison","Recovery Program","Remarried","Separated / Restored Marriage","Widowed"];
+
+var EXP_EDUCATION = ["High School Diploma","Associate Degree","Bachelor's Degree","Master's Degree","PhD / Doctoral Degree","Specialized Advanced Training"];
+
+var EXP_WORK = ["Business / Admin","Sales / Marketing","Construction / Trades","Financial Services","Food / Hospitality","Creative Arts / Design","Computer / IT","Engineering","Education","Medical / Healthcare","Military","Public / Civil Service","Legal / Court Services","Homemaker","Retired","Student","Vocational Ministry"];
+
+var EXP_MINISTRY = ["Children's Ministry","Youth Ministry","Worship / Choir","Bible Teacher","Small Group Leader","Greeter / Usher","Hospitality","Prayer Team","Media / Tech / Graphics","Missions / Outreach","Facilities / Set-Up","Administrative Support","Counseling / Care","Drama","Van / Bus Driver","Writing","Security","Discipleship / Mentoring"];
+
+var DEPARTMENTS = [
+  {n:"Outreach", d:"Community & local outreach"},
+  {n:"Teaching", d:"Bible classes & small groups"},
+  {n:"Children", d:"Birth through elementary"},
+  {n:"Youth", d:"Middle & high school students"},
+  {n:"Single Adults", d:"Single adult ministry"},
+  {n:"Married", d:"Married couples ministry"},
+  {n:"Ladies", d:"Women's ministry"},
+  {n:"Worship Ministry", d:"Music & platform team"},
+  {n:"Tech Services", d:"Livestream & church tech support"},
+  {n:"Sound", d:"Live sound board on Sundays"},
+  {n:"Audio/Video", d:"Recording, editing & broadcast"},
+  {n:"Missions", d:"Local & global missions"},
+  {n:"Men", d:"Men's ministry"},
+  {n:"Safety & Security", d:"Keeping our campus safe"},
+  {n:"Hospitality", d:"Guest experience & welcome"}
+];
+
+var AVAIL_HOURS = [{n:"1–2 hrs", s:"per week"},{n:"3–5 hrs", s:"per week"},{n:"6+ hrs", s:"per week"}];
+var AVAIL_TIME = [{n:"Weekday"},{n:"Weeknight"},{n:"Weekend"}];
+
+var FACETS = [
+  {key:"gifts", letter:"S", label:"Spiritual Gifts", color:"var(--gifts)", fill:"var(--gifts-fill)"},
+  {key:"heart", letter:"H", label:"Heart", color:"var(--heart)", fill:"var(--heart-fill)"},
+  {key:"abilities", letter:"A", label:"Abilities", color:"var(--abilities)", fill:"var(--abilities-fill)"},
+  {key:"personality", letter:"P", label:"Personality", color:"var(--personality)", fill:"var(--personality-fill)"},
+  {key:"experience", letter:"E", label:"Experience", color:"var(--experience)", fill:"var(--experience-fill)"}
+];
+
+/* step list: id, facetKey (or null) */
+var STEPS = [
+  {id:"welcome", facet:null},
+  {id:"gifts", facet:"gifts"},
+  {id:"heart-roles", facet:"heart"},
+  {id:"heart-people", facet:"heart"},
+  {id:"heart-causes", facet:"heart"},
+  {id:"abilities", facet:"abilities"},
+  {id:"personality", facet:"personality"},
+  {id:"exp-spiritual", facet:"experience"},
+  {id:"exp-education", facet:"experience"},
+  {id:"exp-work", facet:"experience"},
+  {id:"exp-ministry", facet:"experience"},
+  {id:"exp-painful", facet:"experience"},
+  {id:"departments", facet:null},
+  {id:"availability", facet:null},
+  {id:"results", facet:null}
+];
+
+/* ================= STATE ================= */
+var state = {
+  name:"",
+  email:"",
+  reflection:"",
+  giftIdx:0,
+  giftRatings:{},          // name -> 'yes'|'maybe'|'no'
+  heartRoles:new Set(),
+  heartPeople:new Set(),
+  heartCauses:new Set(),
+  abilities:new Set(),
+  personality:[50,50,50,50],
+  expSpiritual:new Set(),
+  expPainful:new Set(),
+  expEducation:new Set(),
+  expWork:new Set(),
+  expMinistry:new Set(),
+  sharePainful:true,
+  departments:new Set(),
+  departmentOther:"",
+  hours:null,
+  time:null,
+  isSample:false
+};
+
+var cur = 0; // index into STEPS
+
+/* ================= HELPERS ================= */
+function el(tag, cls, html){ var e=document.createElement(tag); if(cls) e.className=cls; if(html!=null) e.innerHTML=html; return e; }
+function facetOf(id){ var s=STEPS.find(function(s){return s.id===id;}); return s?s.facet:null; }
+function facetInfo(key){ return FACETS.find(function(f){return f.key===key;}); }
+
+function toggleSet(set, val){ if(set.has(val)) set.delete(val); else set.add(val); }
+
+function renderChipGrid(container, items, selectedSet, opts){
+  opts = opts || {};
+  var grid = el("div","chip-grid");
+  items.forEach(function(item){
+    var name = typeof item === "string" ? item : item.n;
+    var desc = typeof item === "string" ? null : item.d;
+    var chip = el("button","chip"+(selectedSet.has(name)?" sel":""));
+    chip.type="button";
+    chip.innerHTML = name + (desc ? "<small>"+desc+"</small>" : "");
+    chip.addEventListener("click", function(){
+      toggleSet(selectedSet, name);
+      chip.classList.toggle("sel");
+      if(opts.onChange) opts.onChange();
+    });
+    grid.appendChild(chip);
+  });
+  container.appendChild(grid);
+}
+
+/* ================= RENDER: RAIL / PROGRESS ================= */
+var LAST_FACET_STEP_IDX = (function(){ var last=-1; STEPS.forEach(function(s,i){ if(s.facet) last=i; }); return last; })();
+
+function renderRail(){
+  var rail = document.getElementById("rail");
+  rail.innerHTML = "";
+  var curFacet = facetOf(STEPS[cur].id);
+  var curFacetOrder = curFacet ? FACETS.findIndex(function(f){return f.key===curFacet;}) : -1;
+
+  FACETS.forEach(function(f, i){
+    var dot = el("div","rail-dot");
+    dot.style.setProperty("--dot", f.color);
+    dot.style.setProperty("--dot-fill", f.fill);
+    var state_ = "";
+    if(cur > LAST_FACET_STEP_IDX){ state_ = "done"; } // all facets finished (departments / availability / results)
+    else if(i < curFacetOrder) state_ = "done";
+    else if(i === curFacetOrder) state_ = "active";
+    if(state_) dot.classList.add(state_);
+    dot.innerHTML = '<div class="circ">'+f.letter+'</div>'+f.label.split(" ")[0];
+    rail.appendChild(dot);
+  });
+
+  var pct = Math.round((cur/(STEPS.length-1))*100);
+  document.getElementById("progressFill").style.width = pct+"%";
+  document.getElementById("stepHint").textContent = STEPS[cur].id==="welcome" ? "" : STEPS[cur].id==="results" ? "complete" : (cur)+" / "+(STEPS.length-2);
+}
+
+/* ================= STEP RENDERERS ================= */
+var stage;
+
+function goto(index){
+  cur = Math.max(0, Math.min(STEPS.length-1, index));
+  render();
+  window.scrollTo({top:0, behavior:"smooth"});
+}
+
+function navBar(container, opts){
+  opts = opts || {};
+  var nav = el("div","nav");
+  var back = el("button","btn btn-ghost", "← Back");
+  back.disabled = cur===0;
+  back.addEventListener("click", function(){ goto(cur-1); });
+  var next = el("button","btn btn-primary", opts.nextLabel || "Continue →");
+  next.addEventListener("click", function(){ if(opts.onNext) opts.onNext(); goto(cur+1); });
+  nav.appendChild(back);
+  nav.appendChild(next);
+  container.appendChild(nav);
+}
+
+function renderWelcome(){
+  var card = el("div","card");
+  var shapes = el("div","hero-shapes");
+  FACETS.forEach(function(f){
+    var s = el("span", null, f.letter);
+    s.style.background = f.color;
+    shapes.appendChild(s);
+  });
+  card.appendChild(shapes);
+  card.appendChild(el("h2", null, "Discover how you were SHAPED to serve"));
+  card.appendChild(el("p","lede", "A five-minute, five-part interview that turns the printed SHAPE booklet into something new members can tap through on their phone — and ends with a shareable profile your SHAPE Guide can talk through with them."));
+
+  var list = el("ul","facet-list");
+  var descs = {
+    gifts:"What the Holy Spirit has equipped you to do for others.",
+    heart:"The roles, people, and causes that light you up.",
+    abilities:"The natural talents you were born with.",
+    personality:"How you're wired to work and relate.",
+    experience:"The life you've lived — including the hard parts."
+  };
+  FACETS.forEach(function(f){
+    var li = el("li");
+    var tag = el("span","tag", f.letter);
+    tag.style.background = f.color;
+    li.appendChild(tag);
+    li.appendChild(el("span",null,"<strong>"+f.label+"</strong> — "+descs[f.key]));
+    list.appendChild(li);
+  });
+  card.appendChild(list);
+
+  var field = el("div","field");
+  field.appendChild(el("label",null,"What's your first name?"));
+  var input = el("input"); input.type="text"; input.placeholder="e.g. Jordan"; input.value = state.name;
+  input.addEventListener("input", function(){ state.name = input.value; });
+  field.appendChild(input);
+  card.appendChild(field);
+
+  var emailField = el("div","field");
+  emailField.appendChild(el("label",null,"What's your email address?"));
+  var emailInput = el("input"); emailInput.type="email"; emailInput.placeholder="you@example.com"; emailInput.value = state.email;
+  emailInput.addEventListener("input", function(){ state.email = emailInput.value; });
+  emailField.appendChild(emailInput);
+  var emailHelp = el("div","empty-hint"); emailHelp.style.marginTop="6px";
+  emailHelp.textContent = "So we can send you a copy of your finished profile — the church office gets one too.";
+  emailField.appendChild(emailHelp);
+  card.appendChild(emailField);
+
+  var row = el("div","btnrow");
+  var start = el("button","btn btn-primary","Start My Interview →");
+  start.addEventListener("click", function(){ state.isSample=false; goto(1); });
+  var sample = el("button","btn btn-ghost","See a sample profile");
+  sample.addEventListener("click", function(){ loadSample(); goto(STEPS.length-1); });
+  row.appendChild(start); row.appendChild(sample);
+  card.appendChild(row);
+
+  stage.appendChild(card);
+}
+
+function renderGifts(){
+  var f = facetInfo("gifts");
+  var card = el("div","card"); card.style.setProperty("--facet", f.color); card.style.setProperty("--facet-fill", f.fill);
+  card.appendChild(el("p","eyebrow","S — Spiritual Gifts"));
+  card.appendChild(el("h2",null,"Does this describe you?"));
+  card.appendChild(el("p","lede","Read each gift and be honest — there are no wrong answers. You can have more than one gift, and most people do."));
+
+  var wrap = el("div","deck-wrap");
+  var idx = Math.min(state.giftIdx, GIFTS.length-1);
+  var ratedCount = Object.keys(state.giftRatings).length;
+  wrap.appendChild(el("div","deck-counter mono", "Gift "+(idx+1)+" of "+GIFTS.length+" · "+ratedCount+" rated"));
+
+  var g = GIFTS[idx];
+  var gc = el("div","gift-card");
+  gc.appendChild(el("div","gift-ref",g.r));
+  gc.appendChild(el("div","gift-name",g.n));
+  gc.appendChild(el("div","gift-desc",g.d));
+  wrap.appendChild(gc);
+
+  var rateRow = el("div","rate-row");
+  [["no","✕","Not really"],["maybe","~","Maybe"],["yes","✓","That's me"]].forEach(function(r){
+    var b = el("button","rate-btn "+r[0]);
+    b.innerHTML = '<span class="ic">'+r[1]+'</span>'+r[2];
+    if(state.giftRatings[g.n]===r[0]) b.style.borderColor = "var(--facet)", b.style.color="var(--facet)";
+    b.addEventListener("click", function(){
+      state.giftRatings[g.n] = r[0];
+      if(idx < GIFTS.length-1){ state.giftIdx = idx+1; render(); }
+      else { render(); }
+    });
+    rateRow.appendChild(b);
+  });
+  wrap.appendChild(rateRow);
+
+  var tally = el("div","gift-tally");
+  var yes = Object.values(state.giftRatings).filter(function(v){return v==="yes";}).length;
+  var maybe = Object.values(state.giftRatings).filter(function(v){return v==="maybe";}).length;
+  tally.innerHTML = "<span><b>"+yes+"</b> that's me</span><span><b>"+maybe+"</b> maybe</span><span><b>"+(GIFTS.length-ratedCount)+"</b> left</span>";
+  wrap.appendChild(tally);
+
+  card.appendChild(wrap);
+  stage.appendChild(card);
+  navBar(stage, {});
+}
+
+function heartStepBase(eyebrow, title, lede){
+  var f = facetInfo("heart");
+  var card = el("div","card"); card.style.setProperty("--facet", f.color); card.style.setProperty("--facet-fill", f.fill);
+  card.appendChild(el("p","eyebrow",eyebrow));
+  card.appendChild(el("h2",null,title));
+  card.appendChild(el("p","lede",lede));
+  return card;
+}
+
+function renderHeartRoles(){
+  var card = heartStepBase("H — Heart (1 of 3)", "What do you love to do?", "Tap every role that sounds like you. Your heart points to where you'll serve with joy instead of just duty.");
+  renderChipGrid(card, HEART_ROLES, state.heartRoles, {onChange:updateCountPill});
+  card.appendChild(countPill(state.heartRoles));
+  stage.appendChild(card);
+  navBar(stage, {});
+}
+function renderHeartPeople(){
+  var card = heartStepBase("H — Heart (2 of 3)", "Who do you feel called to?", "Choose the people you feel you can make the greatest impact with.");
+  renderChipGrid(card, HEART_PEOPLE, state.heartPeople, {onChange:updateCountPill});
+  card.appendChild(countPill(state.heartPeople));
+  stage.appendChild(card);
+  navBar(stage, {});
+}
+function renderHeartCauses(){
+  var card = heartStepBase("H — Heart (3 of 3)", "What causes do you care about?", "Circle every cause you'd get excited to champion.");
+  renderChipGrid(card, HEART_CAUSES, state.heartCauses, {onChange:updateCountPill});
+  card.appendChild(countPill(state.heartCauses));
+  stage.appendChild(card);
+  navBar(stage, {});
+}
+function countPill(set){
+  var p = el("div","count-pill mono", set.size+" selected");
+  p.id = "countPill";
+  return p;
+}
+function updateCountPill(){
+  var p = document.getElementById("countPill");
+  if(!p) return;
+  var curId = STEPS[cur].id;
+  var map = {"heart-roles":state.heartRoles,"heart-people":state.heartPeople,"heart-causes":state.heartCauses,
+    "abilities":state.abilities,"exp-spiritual":state.expSpiritual,"exp-education":state.expEducation,
+    "exp-work":state.expWork,"exp-ministry":state.expMinistry,"exp-painful":state.expPainful};
+  var s = map[curId];
+  if(s) p.textContent = s.size+" selected";
+}
+
+function renderAbilities(){
+  var f = facetInfo("abilities");
+  var card = el("div","card"); card.style.setProperty("--facet", f.color); card.style.setProperty("--facet-fill", f.fill);
+  card.appendChild(el("p","eyebrow","A — Abilities"));
+  card.appendChild(el("h2",null,"What are you naturally good at?"));
+  card.appendChild(el("p","lede","These are the talents you were born with — separate from spiritual gifts. Pick every ability that fits; most people have more than they realize."));
+  renderChipGrid(card, ABILITIES, state.abilities, {onChange:updateCountPill});
+  card.appendChild(countPill(state.abilities));
+  stage.appendChild(card);
+  navBar(stage, {});
+}
+
+function renderPersonality(){
+  var f = facetInfo("personality");
+  var card = el("div","card"); card.style.setProperty("--facet", f.color); card.style.setProperty("--facet-fill", f.fill);
+  card.appendChild(el("p","eyebrow","P — Personality"));
+  card.appendChild(el("h2",null,"How are you wired?"));
+  card.appendChild(el("p","lede","There's no right or wrong temperament — the church needs every kind. Slide toward whichever side describes you more."));
+
+  PERSONALITY.forEach(function(c, i){
+    var wrap = el("div","couplet");
+    var poleRow = el("div","pole-row");
+    poleRow.innerHTML = '<span class="left">'+c.l+'</span><span class="right">'+c.r+'</span>';
+    wrap.appendChild(poleRow);
+    var range = el("input"); range.type="range"; range.min=0; range.max=100; range.value=state.personality[i];
+    wrap.appendChild(range);
+    var desc = el("div","lean-desc");
+    function updateDesc(){
+      var v = Number(range.value);
+      range.style.background = "linear-gradient(90deg, var(--facet) "+v+"%, var(--border) "+v+"%)";
+      desc.textContent = v < 50 ? c.ld : (v>50 ? c.rd : "Right in the middle — a bit of both.");
+    }
+    range.addEventListener("input", function(){ state.personality[i] = Number(range.value); updateDesc(); });
+    updateDesc();
+    wrap.appendChild(desc);
+    card.appendChild(wrap);
+  });
+
+  stage.appendChild(card);
+  navBar(stage, {});
+}
+
+var EXP_STEP_MAP = {
+  "exp-spiritual":{title:"Spiritual experiences", lede:"Circle what's true of your walk with God so far.", items:EXP_SPIRITUAL, set:"expSpiritual", sub:"1 of 5"},
+  "exp-education":{title:"Educational experiences", lede:"What's the highest level you've completed or are working toward?", items:EXP_EDUCATION, set:"expEducation", sub:"2 of 5"},
+  "exp-work":{title:"Work experience", lede:"What field(s) have you worked in? Pick every one that applies.", items:EXP_WORK, set:"expWork", sub:"3 of 5"},
+  "exp-ministry":{title:"Ministry experience", lede:"Where have you already served, at this church or another?", items:EXP_MINISTRY, set:"expMinistry", sub:"4 of 5"},
+  "exp-painful":{title:"Painful experiences", lede:"God never wastes a hurt — your hardest seasons are often exactly what equips you to help someone else through theirs. This is optional, and stays private unless you choose to share it.", items:EXP_PAINFUL, set:"expPainful", sub:"5 of 5", sensitive:true}
+};
+
+function renderExperience(stepId){
+  var conf = EXP_STEP_MAP[stepId];
+  var f = facetInfo("experience");
+  var card = el("div","card"); card.style.setProperty("--facet", f.color); card.style.setProperty("--facet-fill", f.fill);
+  card.appendChild(el("p","eyebrow","E — Experience ("+conf.sub+")"));
+  card.appendChild(el("h2",null,conf.title));
+  card.appendChild(el("p","lede",conf.lede));
+  renderChipGrid(card, conf.items, state[conf.set], {onChange:updateCountPill});
+  card.appendChild(countPill(state[conf.set]));
+  if(conf.sensitive){
+    var note = el("div","privacy-note");
+    note.innerHTML = "🔒 <span>Only you and your SHAPE Guide ever see this list, and only if you choose to include it in the summary you share.</span>";
+    card.appendChild(note);
+  }
+  stage.appendChild(card);
+  navBar(stage, {nextLabel:"Continue →"});
+}
+
+function renderDepartments(){
+  var card = el("div","card"); card.style.setProperty("--facet", "var(--accent)"); card.style.setProperty("--facet-fill", "var(--personality-fill)");
+  card.appendChild(el("p","eyebrow","Where you'd like to serve"));
+  card.appendChild(el("h2",null,"Any departments catch your eye?"));
+  card.appendChild(el("p","lede","Pick one or two areas you could see yourself serving in. This isn't a commitment — just a starting point for your SHAPE Guide."));
+
+  var grid = el("div","chip-grid");
+  var hint = el("div","count-pill mono");
+  function updateHint(){ hint.textContent = state.departments.size+" of 2 selected"; }
+
+  DEPARTMENTS.forEach(function(item){
+    var chip = el("button","chip"+(state.departments.has(item.n)?" sel":""));
+    chip.type = "button";
+    chip.innerHTML = item.n + "<small>"+item.d+"</small>";
+    chip.addEventListener("click", function(){
+      if(state.departments.has(item.n)){
+        state.departments.delete(item.n);
+        chip.classList.remove("sel");
+      } else {
+        if(state.departments.size >= 2){
+          chip.classList.remove("shake"); void chip.offsetWidth; chip.classList.add("shake");
+          setTimeout(function(){ chip.classList.remove("shake"); }, 400);
+          return;
+        }
+        state.departments.add(item.n);
+        chip.classList.add("sel");
+      }
+      updateHint();
+    });
+    grid.appendChild(chip);
+  });
+  card.appendChild(grid);
+  updateHint();
+  card.appendChild(hint);
+
+  var field = el("div","field"); field.style.marginTop = "20px";
+  field.appendChild(el("label",null,"Something else you'd like to explore? (optional)"));
+  var input = el("input"); input.type="text"; input.placeholder="e.g. Community garden, prison ministry…"; input.value = state.departmentOther;
+  input.addEventListener("input", function(){ state.departmentOther = input.value; });
+  field.appendChild(input);
+  card.appendChild(field);
+
+  stage.appendChild(card);
+  navBar(stage, {});
+}
+
+function renderAvailability(){
+  var card = el("div","card"); card.style.setProperty("--facet", "var(--experience)"); card.style.setProperty("--facet-fill","var(--experience-fill)");
+  card.appendChild(el("p","eyebrow","Almost there"));
+  card.appendChild(el("h2",null,"When could you serve?"));
+  card.appendChild(el("p","lede","It doesn't take great ability, it takes great availability. Give us a realistic starting point — you can always adjust later."));
+
+  card.appendChild(el("label",null,"Hours per week")).style.cssText="font-size:.82rem;font-weight:600;color:var(--ink-soft);display:block;margin-bottom:8px;";
+  var g1 = el("div","opt-grid");
+  AVAIL_HOURS.forEach(function(h){
+    var c = el("div","opt-card"+(state.hours===h.n?" sel":""));
+    c.innerHTML = h.n+"<small>"+h.s+"</small>";
+    c.addEventListener("click", function(){ state.hours=h.n; render(); });
+    g1.appendChild(c);
+  });
+  card.appendChild(g1);
+
+  var lbl2 = el("label",null,"Best time of week"); lbl2.style.cssText="font-size:.82rem;font-weight:600;color:var(--ink-soft);display:block;margin:20px 0 8px;";
+  card.appendChild(lbl2);
+  var g2 = el("div","opt-grid");
+  AVAIL_TIME.forEach(function(t){
+    var c = el("div","opt-card"+(state.time===t.n?" sel":""));
+    c.textContent = t.n;
+    c.addEventListener("click", function(){ state.time=t.n; render(); });
+    g2.appendChild(c);
+  });
+  card.appendChild(g2);
+
+  var field = el("div","field"); field.style.marginTop="22px";
+  field.appendChild(el("label",null,"What makes you feel most alive when you're serving? (optional)"));
+  var ta = el("textarea"); ta.placeholder="e.g. When I see a new family feel welcomed the moment they walk in…"; ta.value = state.reflection;
+  ta.addEventListener("input", function(){ state.reflection = ta.value; });
+  field.appendChild(ta);
+  card.appendChild(field);
+
+  stage.appendChild(card);
+  navBar(stage, {nextLabel:"See My SHAPE Profile →"});
+}
+
+/* ---------- Results ---------- */
+function badge(text, solid){ return '<span class="badge '+(solid?"solid":"outline")+'">'+text+'</span>'; }
+
+function renderResults(){
+  var head = el("div","profile-head");
+  head.innerHTML = '<div class="kicker">Your SHAPE Profile</div>' +
+    '<h2>'+(state.name?esc(state.name)+"’s":"Your")+' shape for ministry</h2>' +
+    '<div class="verse">“You are wonderfully complex.” — Psalm 139:14</div>' +
+    (state.isSample ? '<div class="sample-badge">Sample profile — try your own above ↺</div>' : '');
+  stage.appendChild(head);
+
+  /* Spiritual Gifts */
+  var yes = Object.keys(state.giftRatings).filter(function(k){return state.giftRatings[k]==="yes";});
+  var maybe = Object.keys(state.giftRatings).filter(function(k){return state.giftRatings[k]==="maybe";});
+  stage.appendChild(panel("gifts","S","Spiritual Gifts", Object.keys(state.giftRatings).length+" of "+GIFTS.length+" reviewed", function(body){
+    body.appendChild(badgeGroup("Strongest fit", yes, true));
+    body.appendChild(badgeGroup("Worth exploring", maybe, false));
+  }));
+
+  /* Heart */
+  stage.appendChild(panel("heart","H","Heart", "Roles, people & causes", function(body){
+    body.appendChild(badgeGroup("Loves to", Array.from(state.heartRoles), true));
+    body.appendChild(badgeGroup("Drawn to", Array.from(state.heartPeople), false));
+    body.appendChild(badgeGroup("Cares about", Array.from(state.heartCauses), false));
+  }));
+
+  /* Abilities */
+  stage.appendChild(panel("abilities","A","Abilities", state.abilities.size+" natural talents", function(body){
+    body.appendChild(badgeGroup("Can do well", Array.from(state.abilities), true));
+  }));
+
+  /* Personality */
+  stage.appendChild(panel("personality","P","Personality", "How you're wired", function(body){
+    PERSONALITY.forEach(function(c,i){
+      var v = state.personality[i];
+      var row = el("div","dial-row");
+      var lead = v<50 ? c.l : (v>50 ? c.r : c.l+" / "+c.r);
+      var pct = v<50 ? (100-v*2) : (v>50 ? (v-50)*2 : 0);
+      row.appendChild(el("div","dial-labels", '<span>'+c.l+'</span><span class="hi">'+(v!==50? lead+" · "+pct+"%":"Balanced")+'</span><span>'+c.r+'</span>'));
+      var bar = el("div","dial-bar");
+      var fill = el("div","fill"); fill.style.width="100%";
+      var mark = el("div","mark"); mark.style.left=v+"%";
+      bar.appendChild(fill); bar.appendChild(mark);
+      row.appendChild(bar);
+      body.appendChild(row);
+    });
+  }));
+
+  /* Experience */
+  stage.appendChild(panel("experience","E","Experience", "Life that shaped you", function(body){
+    body.appendChild(badgeGroup("Spiritual", Array.from(state.expSpiritual), true));
+    body.appendChild(badgeGroup("Education", Array.from(state.expEducation), false));
+    body.appendChild(badgeGroup("Work", Array.from(state.expWork), false));
+    body.appendChild(badgeGroup("Ministry", Array.from(state.expMinistry), false));
+    if(state.sharePainful){
+      body.appendChild(badgeGroup("Can relate to others who've faced", Array.from(state.expPainful), false));
+    }
+    var toggle = el("label","lock-toggle");
+    var cb = el("input"); cb.type="checkbox"; cb.checked = state.sharePainful;
+    cb.addEventListener("change", function(){ state.sharePainful = cb.checked; render(); });
+    toggle.appendChild(cb);
+    toggle.appendChild(document.createTextNode("🔒 Include my painful experiences in what I share with my SHAPE Guide"));
+    body.appendChild(toggle);
+  }));
+
+  /* Department interest */
+  var deptPanel = el("div","facet-panel"); deptPanel.style.setProperty("--facet","var(--accent)"); deptPanel.style.setProperty("--facet-fill","var(--personality-fill)");
+  deptPanel.appendChild(fheadHTML("var(--accent)","D","Serving Interest","Departments they're drawn to"));
+  var deptBody = el("div");
+  deptBody.appendChild(badgeGroup("Top picks", Array.from(state.departments), true));
+  if(state.departmentOther){
+    var otherP = el("p","lede"); otherP.style.marginTop="10px"; otherP.style.marginBottom="0";
+    otherP.innerHTML = "Also interested in: “"+esc(state.departmentOther)+"”";
+    deptBody.appendChild(otherP);
+  }
+  deptPanel.appendChild(deptBody);
+  stage.appendChild(deptPanel);
+
+  /* Availability */
+  var availPanel = el("div","facet-panel");
+  availPanel.appendChild(fheadHTML("var(--experience)","E","Availability","When you can serve"));
+  var strip = el("div","avail-strip");
+  if(state.hours) strip.appendChild(el("span","avail-chip",state.hours+" / week"));
+  if(state.time) strip.appendChild(el("span","avail-chip",state.time));
+  if(!state.hours && !state.time) strip.appendChild(el("span","empty-hint","Not answered yet"));
+  availPanel.appendChild(strip);
+  if(state.reflection){
+    var r = el("p","lede"); r.style.marginTop="14px"; r.style.marginBottom="0"; r.innerHTML = "“"+esc(state.reflection)+"”";
+    availPanel.appendChild(r);
+  }
+  stage.appendChild(availPanel);
+
+  /* CTA */
+  var cta = el("div","cta-panel");
+  cta.innerHTML = '<h3>Next: your SHAPE Discovery Session</h3><p>Bring this profile to a one-on-one conversation with a SHAPE Guide, who will help connect you to 2–3 ministries that fit — usually about an hour, most days of the week.</p>';
+  var row = el("div","btnrow"); row.style.justifyContent="center";
+  var email = el("button","btn btn-primary","Email Me This Profile →");
+  email.addEventListener("click", function(){ sendProfileEmail(); });
+  var print = el("button","btn btn-ghost","Print / Save PDF"); print.addEventListener("click", function(){ window.print(); });
+  var restart = el("button","btn btn-ghost","Start over"); restart.addEventListener("click", function(){ resetState(); goto(0); });
+  row.appendChild(email); row.appendChild(print); row.appendChild(restart);
+  cta.appendChild(row);
+  var emailNote = el("p","empty-hint"); emailNote.style.marginTop="12px"; emailNote.id="emailNote";
+  emailNote.textContent = "Opens your email app with everything filled in, addressed to you with the church office (pastor@elkhartlife.com) cc'd — just hit send.";
+  cta.appendChild(emailNote);
+  stage.appendChild(cta);
+
+  stage.appendChild(el("footer","note","Built from the Elkhart Life Church SHAPE Interview Booklet · Spiritual Gifts, Heart, Abilities, Personality &amp; Experience"));
+}
+
+function fheadHTML(color, letter, title, sub){
+  var d = el("div","fhead");
+  var tag = el("span","tag",letter); tag.style.background=color;
+  var t = el("div"); t.innerHTML = "<h3>"+title+"</h3><div class='sub'>"+sub+"</div>";
+  d.appendChild(tag); d.appendChild(t);
+  return d;
+}
+
+function panel(facetKey, letter, title, sub, fill){
+  var f = facetInfo(facetKey);
+  var p = el("div","facet-panel"); p.style.setProperty("--facet",f.color); p.style.setProperty("--facet-fill",f.fill);
+  p.appendChild(fheadHTML(f.color, letter, title, sub));
+  var body = el("div");
+  fill(body);
+  p.appendChild(body);
+  return p;
+}
+
+function badgeGroup(label, arr, solid){
+  var g = el("div","badge-group");
+  g.appendChild(el("div","glabel",label));
+  var b = el("div","badges");
+  if(arr.length===0){ b.appendChild(el("span","empty-hint","None selected")); }
+  else arr.forEach(function(x){ b.innerHTML += badge(esc(x), solid); });
+  g.appendChild(b);
+  return g;
+}
+
+function esc(s){ var d=document.createElement("div"); d.textContent=s; return d.innerHTML; }
+var PASTOR_EMAIL = "pastor@elkhartlife.com";
+var EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+function listOr(arr, fallback){ return arr.length ? arr.join(", ") : (fallback || "None marked"); }
+
+function buildEmailBody(){
+  var yes = Object.keys(state.giftRatings).filter(function(k){return state.giftRatings[k]==="yes";});
+  var maybe = Object.keys(state.giftRatings).filter(function(k){return state.giftRatings[k]==="maybe";});
+  var lines = [];
+  lines.push((state.name?state.name:"New member")+"'s SHAPE Profile — Elkhart Life Church");
+  lines.push('"You are wonderfully complex." — Psalm 139:14');
+  lines.push("");
+  lines.push("SPIRITUAL GIFTS (S)");
+  lines.push("Strongest fit: "+listOr(yes));
+  if(maybe.length) lines.push("Worth exploring: "+listOr(maybe));
+  lines.push("");
+  lines.push("HEART (H)");
+  lines.push("Loves to: "+listOr(Array.from(state.heartRoles)));
+  lines.push("Drawn to: "+listOr(Array.from(state.heartPeople)));
+  lines.push("Cares about: "+listOr(Array.from(state.heartCauses)));
+  lines.push("");
+  lines.push("ABILITIES (A)");
+  lines.push(listOr(Array.from(state.abilities)));
+  lines.push("");
+  lines.push("PERSONALITY (P)");
+  PERSONALITY.forEach(function(c,i){
+    var v = state.personality[i];
+    var lead = v===50 ? "Balanced" : (v<50 ? c.l : c.r);
+    lines.push(c.l+" / "+c.r+": "+lead);
+  });
+  lines.push("");
+  lines.push("EXPERIENCE (E)");
+  lines.push("Spiritual: "+listOr(Array.from(state.expSpiritual)));
+  lines.push("Education: "+listOr(Array.from(state.expEducation)));
+  lines.push("Work: "+listOr(Array.from(state.expWork)));
+  lines.push("Ministry: "+listOr(Array.from(state.expMinistry)));
+  if(state.sharePainful && state.expPainful.size){
+    lines.push("Can relate to others who've faced: "+listOr(Array.from(state.expPainful)));
+  }
+  lines.push("");
+  lines.push("WHERE THEY'D LIKE TO SERVE");
+  lines.push(listOr(Array.from(state.departments)));
+  if(state.departmentOther) lines.push("Also interested in: "+state.departmentOther);
+  lines.push("");
+  lines.push("AVAILABILITY");
+  lines.push((state.hours||"Not answered")+" · "+(state.time||"Not answered"));
+  if(state.reflection){ lines.push(""); lines.push('"'+state.reflection+'"'); }
+  lines.push("");
+  lines.push("Next step: schedule your SHAPE Discovery Session with a SHAPE Guide.");
+  return lines.join("\n");
+}
+
+function sendProfileEmail(){
+  var note = document.getElementById("emailNote");
+  if(!state.email || !EMAIL_RE.test(state.email)){
+    if(note){ note.textContent = "Add a valid email address on the first screen before sending — tap Back to the start to fill it in."; note.style.color = "#B04953"; }
+    return;
+  }
+  var subject = (state.name?state.name+"’s":"My")+" SHAPE Profile — Elkhart Life Church";
+  var body = buildEmailBody();
+  var href = "mailto:"+encodeURIComponent(state.email)+"?cc="+encodeURIComponent(PASTOR_EMAIL)+"&subject="+encodeURIComponent(subject)+"&body="+encodeURIComponent(body);
+  window.location.href = href;
+}
+
+/* ---------- sample data ---------- */
+function loadSample(){
+  state.isSample = true;
+  state.name = "Jordan";
+  state.email = "jordan@example.com";
+  state.giftRatings = {"Encouragement":"yes","Hospitality":"yes","Service":"yes","Teaching":"maybe","Leadership":"maybe","Mercy":"yes","Administration":"maybe"};
+  state.heartRoles = new Set(["Serve / Help","Organize","Improve"]);
+  state.heartPeople = new Set(["Young Marrieds","Families","College / Career"]);
+  state.heartCauses = new Set(["Families / Marriage","Fellowship","Financial Management"]);
+  state.abilities = new Set(["Welcoming","Counseling / Encouraging","Planning","Feeding","Writing"]);
+  state.personality = [30,60,45,25];
+  state.expSpiritual = new Set(["Regularly Pray","Member of a Small Group","Serving in a Ministry"]);
+  state.expPainful = new Set(["Divorce","Extended Job Loss"]);
+  state.expEducation = new Set(["Bachelor's Degree"]);
+  state.expWork = new Set(["Business / Admin","Sales / Marketing"]);
+  state.expMinistry = new Set(["Hospitality","Greeter / Usher"]);
+  state.sharePainful = true;
+  state.departments = new Set(["Hospitality","Married"]);
+  state.departmentOther = "";
+  state.hours = "3–5 hrs";
+  state.time = "Weeknight";
+  state.reflection = "When a new couple walks in nervous and leaves feeling like they already have friends here.";
+}
+
+function resetState(){
+  state = {
+    name:"", email:"", reflection:"", giftIdx:0, giftRatings:{},
+    heartRoles:new Set(), heartPeople:new Set(), heartCauses:new Set(),
+    abilities:new Set(), personality:[50,50,50,50],
+    expSpiritual:new Set(), expPainful:new Set(), expEducation:new Set(), expWork:new Set(), expMinistry:new Set(),
+    sharePainful:true, departments:new Set(), departmentOther:"", hours:null, time:null, isSample:false
+  };
+}
+
+/* ================= MAIN RENDER ================= */
+function render(){
+  stage.innerHTML = "";
+  renderRail();
+  var id = STEPS[cur].id;
+  if(id==="welcome") renderWelcome();
+  else if(id==="gifts") renderGifts();
+  else if(id==="heart-roles") renderHeartRoles();
+  else if(id==="heart-people") renderHeartPeople();
+  else if(id==="heart-causes") renderHeartCauses();
+  else if(id==="abilities") renderAbilities();
+  else if(id==="personality") renderPersonality();
+  else if(id in EXP_STEP_MAP) renderExperience(id);
+  else if(id==="departments") renderDepartments();
+  else if(id==="availability") renderAvailability();
+  else if(id==="results") renderResults();
+}
+
+document.addEventListener("DOMContentLoaded", function(){
+  stage = document.getElementById("stage");
+  render();
+});
+})();
+</script>
