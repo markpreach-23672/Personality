@@ -52,9 +52,10 @@ main{padding:40px 0 90px;min-height:60vh}
 .hero .verse{margin-top:22px;padding-left:16px;border-left:3px solid var(--gold-soft);color:var(--ink-soft);font-style:italic;font-family:"Fraunces",serif}
 .hero .verse cite{display:block;font-style:normal;font-size:13px;letter-spacing:.02em;color:var(--ink-faint);margin-top:4px;font-family:"Public Sans",sans-serif}
 .hero-cta{margin-top:26px;display:flex;gap:12px;flex-wrap:wrap}
-.window{width:100%;max-width:360px;margin:0 auto;filter:drop-shadow(0 22px 40px rgba(33,28,51,.16))}
+.window{width:100%;max-width:360px;margin:0 auto;filter:drop-shadow(0 22px 40px rgba(33,28,51,.16));animation:winIn .7s ease both}
+@keyframes winIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
 .pane{transition:opacity .9s ease,transform .9s ease}
-@media (prefers-reduced-motion:reduce){.pane{transition:none}}
+@media (prefers-reduced-motion:reduce){.pane{transition:none}.window{animation:none}}
 .sec-head{display:flex;align-items:flex-end;justify-content:space-between;gap:16px;margin:54px 0 20px;flex-wrap:wrap}
 .sec-head h2{font-size:clamp(24px,3.4vw,32px)}
 .sec-head p{margin:6px 0 0;color:var(--ink-soft);max-width:64ch}
@@ -1030,7 +1031,6 @@ function renderHome(){
       <h3>Add an assessment</h3><p class="desc">Build your own strengths or gifts test for the team to take.</p>
       <div class="row"><button class="btn ghost" onclick="go('builder',{builder:null})">Create a test</button></div></div>`:""}
   </div>`;
-  requestAnimationFrame(()=>{document.querySelectorAll('.hero .pane').forEach((p,i)=>{const o=p.getAttribute("opacity");p.style.opacity="0";p.style.transform="translateY(6px)";setTimeout(()=>{p.style.opacity=o;p.style.transform="none";},120+i*90);});});
 }
 function copyShare(btn){const link=shareLink();try{navigator.clipboard.writeText(link);btn.textContent="Copied ✓";setTimeout(()=>btn.textContent="Copy link",1500);}catch(e){btn.textContent="Copy failed";}}
 
@@ -1074,7 +1074,6 @@ function renderMarketing(){
     <p class="muted" style="max-width:44ch;margin:0 auto 20px">One flat price for your whole congregation — every assessment, unlimited people, your own branded page and private results.</p>
     <button class="btn gold" onclick="go('signup')">Sign your church up</button>
   </div>`;
-  requestAnimationFrame(()=>{document.querySelectorAll('.hero .pane').forEach((p,i)=>{const o=p.getAttribute("opacity");p.style.opacity="0";p.style.transform="translateY(6px)";setTimeout(()=>{p.style.opacity=o;p.style.transform="none";},120+i*90);});});
 }
 
 /* START */
