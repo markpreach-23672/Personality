@@ -505,8 +505,141 @@ const BUILT_IN_TESTS=[{
     {text:"When energy is low, I like being the one who reenergizes the group.",typeId:"sparker"},
     {text:"When there's a problem, my first instinct is to invent a new way around it.",typeId:"maker"}
   ]
+},
+/* ---------------- Your SHAPE for Ministry (profile assessment) ---------------- */
+{
+  id:"shape",
+  name:"Your SHAPE for Ministry",
+  subtitle:"Five things God used to make you",
+  description:"Not a ranking, but a portrait. Five parts — your Spiritual gifts, your Heart, your Abilities, your Personality, and your Experiences — combine into one picture of where you'd serve best. You'll get a written profile you can keep and share with your church.",
+  minutes:"7–9 min · 40 questions",builtIn:true,profile:true,typeWord:"parts",
+  scale:{min:1,max:5,lowLabel:"Not me",highLabel:"Very me"},
+  // Top-level "types" are the five letters — used for cards, windows, and team views.
+  types:[
+    {id:"S",name:"Spiritual Gifts",color:"#7A5EA6",tagline:"What God has gifted you to do."},
+    {id:"H",name:"Heart",color:"#C25A6B",tagline:"Who and what you care about most."},
+    {id:"A",name:"Abilities",color:"#C0912B",tagline:"The skills you actually have."},
+    {id:"P",name:"Personality",color:"#2F7E76",tagline:"How you're wired to work."},
+    {id:"E",name:"Experiences",color:"#3E6699",tagline:"What life has shaped in you."}
+  ],
+  sections:[
+    {key:"S",name:"Spiritual Gifts",lead:"Ways God works through you for others.",
+     options:[
+      {id:"teaching",name:"Teaching",desc:"You make truth clear and help people understand."},
+      {id:"shepherding",name:"Shepherding",desc:"You walk with people over time and care for their souls."},
+      {id:"serving",name:"Serving",desc:"You meet practical needs so ministry can happen."},
+      {id:"giving",name:"Giving",desc:"You provide generously and gladly."},
+      {id:"leading",name:"Leading",desc:"You set direction and move people toward it."},
+      {id:"mercy",name:"Mercy",desc:"You're drawn to the hurting and bring comfort."},
+      {id:"encouraging",name:"Encouraging",desc:"You strengthen people with words that land."},
+      {id:"intercession",name:"Intercession",desc:"You carry people to God in sustained prayer."}
+     ],
+     questions:[
+      {text:"I can explain Scripture in a way that makes it click for others.",typeId:"teaching"},
+      {text:"I enjoy walking with the same people over a long stretch of time.",typeId:"shepherding"},
+      {text:"I'd rather set up chairs than be on the platform.",typeId:"serving"},
+      {text:"I give generously without being asked, and it brings me joy.",typeId:"giving"},
+      {text:"People naturally look to me to decide which direction we go.",typeId:"leading"},
+      {text:"I'm drawn toward people who are hurting rather than away from them.",typeId:"mercy"},
+      {text:"I often say the thing that lifts someone back up.",typeId:"encouraging"},
+      {text:"I pray for specific people regularly, on my own, without being reminded.",typeId:"intercession"},
+      {text:"I enjoy preparing a lesson or study more than most people would.",typeId:"teaching"},
+      {text:"I notice when someone has drifted, and I go after them.",typeId:"shepherding"},
+      {text:"Behind-the-scenes work feels satisfying, not thankless, to me.",typeId:"serving"},
+      {text:"I look for chances to meet a need with my own resources.",typeId:"giving"}
+     ]},
+    {key:"H",name:"Heart",lead:"The people and causes that stir you.",
+     options:[
+      {id:"children",name:"Children",desc:"The next generation and their families."},
+      {id:"youth",name:"Youth",desc:"Teens finding their footing and their faith."},
+      {id:"hurting",name:"The Hurting",desc:"People in crisis, grief, addiction, or hardship."},
+      {id:"newcomers",name:"Newcomers",desc:"Guests, seekers, and the not-yet-connected."},
+      {id:"worship",name:"Worship",desc:"Leading the church into God's presence."},
+      {id:"community",name:"The Community",desc:"Elkhart and the neighbors outside our walls."},
+      {id:"discipleship",name:"Discipleship",desc:"Helping believers grow deep and mature."},
+      {id:"missions",name:"Missions",desc:"The gospel going where it hasn't gone."}
+     ],
+     questions:[
+      {text:"My heart comes alive around children.",typeId:"children"},
+      {text:"I care deeply about teenagers and what they're facing.",typeId:"youth"},
+      {text:"I'm burdened for people in crisis or hardship.",typeId:"hurting"},
+      {text:"I notice the visitor standing alone and want to welcome them.",typeId:"newcomers"},
+      {text:"Worship is where I feel most engaged in ministry.",typeId:"worship"},
+      {text:"I think often about the needs of our city, not just our church.",typeId:"community"},
+      {text:"I want to help believers grow past the basics.",typeId:"discipleship"},
+      {text:"The unreached and missions work stir something in me.",typeId:"missions"}
+     ]},
+    {key:"A",name:"Abilities",lead:"Practical skills you can actually offer.",
+     options:[
+      {id:"organizing",name:"Organizing",desc:"Planning, coordinating, keeping things on track."},
+      {id:"hospitality",name:"Hospitality",desc:"Food, welcome, and making people comfortable."},
+      {id:"technical",name:"Technical",desc:"Sound, media, computers, and systems."},
+      {id:"handson",name:"Hands-On",desc:"Building, fixing, maintaining, driving."},
+      {id:"creative",name:"Creative",desc:"Music, art, writing, design."},
+      {id:"speaking",name:"Speaking",desc:"Teaching, presenting, and communicating up front."},
+      {id:"admin",name:"Administrative",desc:"Records, finances, scheduling, details."},
+      {id:"relational",name:"Relational",desc:"Counseling, listening, connecting people."}
+     ],
+     questions:[
+      {text:"I'm good at organizing an event so it runs smoothly.",typeId:"organizing"},
+      {text:"I enjoy cooking, hosting, or making people feel at home.",typeId:"hospitality"},
+      {text:"I'm comfortable with sound, video, computers, or tech.",typeId:"technical"},
+      {text:"I can build, fix, or maintain things with my hands.",typeId:"handson"},
+      {text:"I have musical, artistic, or design skill.",typeId:"creative"},
+      {text:"I'm comfortable speaking in front of a group.",typeId:"speaking"},
+      {text:"I'm careful and accurate with records, numbers, or details.",typeId:"admin"},
+      {text:"People open up to me and I listen well.",typeId:"relational"}
+     ]},
+    {key:"P",name:"Personality",lead:"How you're wired to work best.",
+     pairs:[["upfront","behind"],["structured","flexible"],["team","independent"]],
+     options:[
+      {id:"upfront",name:"Up Front",desc:"Energized by people and visible roles."},
+      {id:"behind",name:"Behind the Scenes",desc:"Steady and effective out of the spotlight."},
+      {id:"structured",name:"Structured",desc:"You want a plan, a schedule, and clear expectations."},
+      {id:"flexible",name:"Flexible",desc:"You thrive when things are fluid and spontaneous."},
+      {id:"team",name:"Team-Oriented",desc:"You do your best work alongside others."},
+      {id:"independent",name:"Independent",desc:"You do your best work given a task and space."}
+     ],
+     questions:[
+      {text:"Being in front of people energizes me rather than draining me.",typeId:"upfront"},
+      {text:"I'd rather serve where no one is watching.",typeId:"behind"},
+      {text:"I want to know the plan and the schedule ahead of time.",typeId:"structured"},
+      {text:"I'm comfortable when plans change at the last minute.",typeId:"flexible"},
+      {text:"I do my best work as part of a team.",typeId:"team"},
+      {text:"Give me a task and space, and I'll get it done on my own.",typeId:"independent"}
+     ]},
+    {key:"E",name:"Experiences",lead:"What life has taught you that others need.",
+     options:[
+      {id:"spiritual",name:"Spiritual Journey",desc:"Your walk with God is something others can learn from."},
+      {id:"hardship",name:"Hardship Endured",desc:"You've come through difficulty and can comfort others in it."},
+      {id:"vocational",name:"Work & Vocation",desc:"Your career skills transfer directly to ministry."},
+      {id:"family",name:"Family Life",desc:"Marriage and parenting have shaped your wisdom."},
+      {id:"ministry",name:"Ministry Service",desc:"You've served before and know how it works."},
+      {id:"education",name:"Training & Study",desc:"Formal study has equipped you to teach or lead."}
+     ],
+     questions:[
+      {text:"My testimony is something God has used to help others.",typeId:"spiritual"},
+      {text:"I've come through a hard season that lets me comfort people in it.",typeId:"hardship"},
+      {text:"My job skills would transfer directly into serving the church.",typeId:"vocational"},
+      {text:"Marriage or parenting has taught me things worth passing on.",typeId:"family"},
+      {text:"I've served in ministry before and know how it works.",typeId:"ministry"},
+      {text:"I've had formal training or study that equips me to teach or lead.",typeId:"education"}
+     ]}
+  ]
 }];
 const SWATCH_CHOICES=["#C0912B","#7A5EA6","#2F7E76","#C25A6B","#5A8A57","#3E6699","#B5872A","#9A6A3A","#4B4560"];
+
+/* Section-based (profile) tests: flatten their sections into one question list,
+   with type ids namespaced as "<sectionKey>:<optionId>". */
+BUILT_IN_TESTS.forEach(t=>{
+  if(!t.sections)return;
+  t.questions=[];t.optionMap={};
+  t.sections.forEach(sec=>{
+    sec.options.forEach(o=>{t.optionMap[sec.key+":"+o.id]={...o,section:sec.key,sectionName:sec.name};});
+    sec.questions.forEach(q=>t.questions.push({text:q.text,typeId:sec.key+":"+q.typeId,section:sec.key}));
+  });
+  t.minutes=t.minutes||(t.questions.length+" questions");
+});
 
 /* ============================================================
    AUTH + CHURCH CONTEXT + DATA LAYER (multi-tenant)
@@ -515,7 +648,7 @@ const SWATCH_CHOICES=["#C0912B","#7A5EA6","#2F7E76","#C25A6B","#5A8A57","#3E6699
    - Congregants submit anonymously (write-only) tagged to a church.
 ============================================================ */
 const AUTH={session:null};
-const CHURCH={id:null,slug:null,name:null,owner:false};
+const CHURCH={id:null,slug:null,name:null,contactEmail:null,owner:false};
 const store={custom:[], resultsCache:null, cloudErr:null};
 
 function _lset(k,v){try{localStorage.setItem(k,JSON.stringify(v));}catch(e){}}
@@ -549,7 +682,7 @@ async function refreshSession(){
 function signOut(){AUTH.session=null;try{localStorage.removeItem("elc_session");}catch(e){}CHURCH.id=CHURCH.slug=CHURCH.name=null;CHURCH.owner=false;store.custom=[];store.resultsCache=null;}
 
 /* ---- churches ---- */
-function setChurch(c,owner){CHURCH.id=c.id;CHURCH.slug=c.slug;CHURCH.name=c.name;CHURCH.owner=!!owner;}
+function setChurch(c,owner){CHURCH.id=c.id;CHURCH.slug=c.slug;CHURCH.name=c.name;CHURCH.contactEmail=c.contact_email||null;CHURCH.owner=!!owner;}
 function slugify(s){return (s||"").toLowerCase().replace(/[^a-z0-9]+/g,"-").replace(/^-+|-+$/g,"").slice(0,40)||"church";}
 async function fetchChurchBySlug(slug){
   const rows=await cloudSelect(SUPA.churches,"slug=eq."+encodeURIComponent(slug)+"&select=*");
@@ -562,7 +695,7 @@ async function fetchMyChurch(){
 async function createChurch(name){
   let base=slugify(name),slug=base;
   for(let i=0;i<5;i++){
-    try{const rows=await cloudInsert(SUPA.churches,{name:name.trim(),slug,owner:AUTH.session.user.id});return rows[0];}
+    try{const rows=await cloudInsert(SUPA.churches,{name:name.trim(),slug,owner:AUTH.session.user.id,contact_email:(AUTH.session.user.email||null)});return rows[0];}
     catch(e){ if(e.status===409||/duplicate|unique/i.test(e.message)){slug=base+"-"+Math.random().toString(36).slice(2,5);continue;} throw e; }
   }
   throw new Error("Couldn't create a unique link for that name.");
@@ -612,6 +745,7 @@ async function deleteResultCloud(dbId){ if(dbId) await cloudDelete(SUPA.results,
    SCORING + SYNTHESIS
 ============================================================ */
 function scoreTest(test,answers){
+  if(test.sections)return scoreProfile(test,answers);
   const totals={},counts={};
   test.types.forEach(t=>{totals[t.id]=0;counts[t.id]=0;});
   test.questions.forEach((q,i)=>{const a=answers[i];if(typeof a==="number"){totals[q.typeId]+=a;counts[q.typeId]++;}});
@@ -627,6 +761,38 @@ function scoreTest(test,answers){
   const order={};test.types.forEach((t,i)=>order[t.id]=i);
   const ranking=[...test.types].map(t=>t.id).sort((a,b)=> pct[b]-pct[a] || order[a]-order[b]);
   return {pct,raw,rawMax,ranking,leading:ranking.slice(0,2),quiet:ranking.slice(-2)};
+}
+
+/* Profile scoring: each section is scored on its own; the person's top picks
+   within each section form the profile. Letter-level scores keep the test
+   compatible with the team views. */
+function scoreProfile(test,answers){
+  const totals={},counts={};
+  test.questions.forEach((q,i)=>{const a=answers[i];
+    if(typeof a==="number"){totals[q.typeId]=(totals[q.typeId]||0)+a;counts[q.typeId]=(counts[q.typeId]||0)+1;}});
+  const s=test.scale,pct={},picks={};
+  Object.keys(test.optionMap).forEach(id=>{
+    const c=counts[id]||0,mx=c*s.max,mn=c*s.min;
+    pct[id]=mx>mn?Math.round(((totals[id]-mn)/(mx-mn))*100):0;
+  });
+  // top picks per section, and a letter-level score = best option in that section
+  test.sections.forEach(sec=>{
+    let chosen;
+    if(sec.pairs){
+      // Opposing traits: report the stronger side of each pair (never both).
+      chosen=sec.pairs.map(([a,b])=>{const ia=sec.key+":"+a,ib=sec.key+":"+b;return pct[ia]>=pct[ib]?ia:ib;});
+    }else{
+      const ids=sec.options.map(o=>sec.key+":"+o.id).sort((a,b)=>pct[b]-pct[a]);
+      const top=pct[ids[0]]||0;
+      // Only surface picks that are genuinely strong and close to the person's best.
+      chosen=ids.filter(id=>pct[id]>=50&&pct[id]>=top-25).slice(0,3);
+      if(!chosen.length)chosen=ids.slice(0,1);
+    }
+    picks[sec.key]=chosen;
+    pct[sec.key]=Math.round(chosen.reduce((a,id)=>a+pct[id],0)/chosen.length);
+  });
+  const ranking=test.types.map(t=>t.id).sort((a,b)=>pct[b]-pct[a]);
+  return {pct,picks,ranking,leading:ranking.slice(0,2),quiet:ranking.slice(-2)};
 }
 
 function synthesize(test,results){
@@ -1114,6 +1280,7 @@ function renderStart(){
       <label class="field"><span class="lab">Your name <span class="muted">(kept private from the leader)</span></span><input type="text" id="pname" placeholder="First and last name" autocomplete="name"></label>
     `:`
       <label class="field"><span class="lab">Your name</span><input type="text" id="pname" placeholder="First and last name" autocomplete="name"></label>
+      ${t.profile?`<label class="field"><span class="lab">Your email <span class="muted">(so we can send you your profile)</span></span><input type="text" id="pemail" placeholder="you@example.com" autocomplete="email"></label>`:""}
       <label class="field"><span class="lab">Ministry or role <span class="muted">(optional)</span></span><input type="text" id="prole" placeholder="e.g. Youth, Ushers, Worship, Sunday School"></label>
     `}
     <div style="display:flex;gap:12px;margin-top:8px;flex-wrap:wrap"><button class="btn ${observer?'gold':''}" onclick="beginTest()">Begin &rarr;</button><button class="btn ghost" onclick="go('home')">Cancel</button></div>
@@ -1129,8 +1296,11 @@ function beginTest(){
     const sel=document.getElementById("psubject");subject=(sel.value||"").trim();
     if(!subject){sel.focus();sel.style.borderColor="var(--c-rally)";return;}
   }
+  const emEl=document.getElementById("pemail");
+  const email=emEl?(emEl.value||"").trim():"";
+  if(t.profile&&email&&!/.+@.+\..+/.test(email)){emEl.focus();emEl.style.borderColor="var(--c-rally)";return;}
   STATE.answers=new Array(t.questions.length).fill(null);
-  STATE.person={name,role:observer?"":(document.getElementById("prole").value||"").trim()};
+  STATE.person={name,email,role:observer?"":(document.getElementById("prole").value||"").trim()};
   STATE.kind=observer?"observer":"self";STATE.subject=subject;
   PAGE_IDX=0;go("take");
 }
@@ -1171,7 +1341,7 @@ function takeBack(){if(PAGE_IDX>0)pageStep(-1);else go('start',{testId:STATE.tes
 function pageStep(d){const t=findTest(STATE.testId);const mp=Math.ceil(t.questions.length/PAGE)-1;PAGE_IDX=Math.max(0,Math.min(mp,PAGE_IDX+d));window.scrollTo({top:0});renderTake();}
 function finishTest(){
   const t=findTest(STATE.testId);const res=scoreTest(t,STATE.answers);
-  STATE.result={id:"r_"+Date.now()+"_"+Math.random().toString(36).slice(2,7),testId:t.id,testName:t.name,name:STATE.person.name,role:STATE.person.role,kind:STATE.kind||"self",subject:STATE.subject||null,date:new Date().toISOString(),...res};
+  STATE.result={id:"r_"+Date.now()+"_"+Math.random().toString(36).slice(2,7),testId:t.id,testName:t.name,name:STATE.person.name,email:STATE.person.email||"",role:STATE.person.role,kind:STATE.kind||"self",subject:STATE.subject||null,date:new Date().toISOString(),...res};
   STATE.saveState="idle";go("report");
 }
 
@@ -1203,6 +1373,7 @@ function renderReport(){
     return;
   }
 
+  if(t.sections)return renderProfileReport(r,t);
   const leadChips=r.leading.map(id=>{const ty=by(id);return `<span class="chip"><span class="sw" style="background:${ty.color}"></span>${esc(ty.name)}</span>`;}).join("");
   const leadBlocks=r.leading.map(id=>typeBlock(by(id))).join("");
   const quietNames=r.quiet.map(id=>esc(by(id).name)).join(" and ");
@@ -1237,6 +1408,88 @@ function renderReport(){
   </div>`;
   requestAnimationFrame(()=>{document.querySelectorAll('.fill').forEach(f=>{setTimeout(()=>f.style.width=f.dataset.w+"%",60);});});
 }
+/* ---- SHAPE profile report ---- */
+function pickName(t,id){const o=t.optionMap[id];return o?o.name:id;}
+function profileNarrative(r,t){
+  const first=(r.name||"").split(/\s+/)[0];
+  const S=(r.picks.S||[]).map(id=>pickName(t,id));
+  const H=(r.picks.H||[]).map(id=>pickName(t,id));
+  const A=(r.picks.A||[]).map(id=>pickName(t,id));
+  const P=(r.picks.P||[]).map(id=>pickName(t,id));
+  const E=(r.picks.E||[]).map(id=>pickName(t,id));
+  const bits=[];
+  if(S.length)bits.push(`${first}'s strongest spiritual gifting shows up in ${listJoin(S)}.`);
+  if(H.length)bits.push(`${first}'s heart leans toward ${listJoin(H)}.`);
+  if(A.length)bits.push(`Practically, ${first} brings ${listJoin(A)}.`);
+  if(P.length)bits.push(`In temperament, ${first} is ${listJoin(P.map(x=>x.toLowerCase()))}.`);
+  if(E.length)bits.push(`Life has shaped ${first} through ${listJoin(E)}.`);
+  if(S.length&&H.length)bits.push(`Put together, a good fit would be a place where ${S[0].toLowerCase()} meets a heart for ${H[0].toLowerCase()}.`);
+  return bits.join(" ");
+}
+function shapeEmailText(r,t){
+  const L=[];
+  L.push(`YOUR SHAPE FOR MINISTRY — ${r.name}`);
+  if(r.role)L.push(r.role);
+  L.push(new Date(r.date).toLocaleDateString());
+  L.push("");
+  L.push(profileNarrative(r,t));
+  L.push("");
+  t.sections.forEach(sec=>{
+    L.push(sec.name.toUpperCase()+" — "+sec.lead);
+    (r.picks[sec.key]||[]).forEach(id=>{
+      const o=t.optionMap[id];
+      L.push("  • "+o.name+" ("+r.pct[id]+"%) — "+o.desc);
+    });
+    L.push("");
+  });
+  L.push("“As every man hath received the gift, even so minister the same one to another.” — 1 Peter 4:10 (KJV)");
+  L.push("");
+  L.push((CHURCH.name||"")+" · Church Strengths");
+  return L.join("\n");
+}
+function emailShape(){
+  const r=STATE.result,t=findTest(r.testId);
+  const to=encodeURIComponent(r.email||"");
+  const cc=CHURCH.contactEmail?"&cc="+encodeURIComponent(CHURCH.contactEmail):"";
+  const subj=encodeURIComponent(`SHAPE for Ministry — ${r.name}`);
+  const body=encodeURIComponent(shapeEmailText(r,t));
+  window.location.href=`mailto:${to}?subject=${subj}${cc}&body=${body}`;
+}
+function copyShapeText(btn){
+  const r=STATE.result,t=findTest(r.testId);
+  try{navigator.clipboard.writeText(shapeEmailText(r,t));btn.textContent="Copied ✓";setTimeout(()=>btn.textContent="Copy my profile",1600);}
+  catch(e){btn.textContent="Copy failed";}
+}
+function renderProfileReport(r,t){
+  const secHTML=t.sections.map(sec=>{
+    const picks=(r.picks[sec.key]||[]).map(id=>{const o=t.optionMap[id];
+      return `<div class="tblock" style="border-top-color:${(t.types.find(x=>x.id===sec.key)||{}).color}">
+        <h4>${esc(o.name)}<span style="margin-left:auto;font-family:'Public Sans',sans-serif;font-size:12px;font-weight:700;color:var(--ink-faint)">${r.pct[id]}%</span></h4>
+        <dl><dd style="margin-top:6px">${esc(o.desc)}</dd></dl></div>`;}).join("");
+    return `<div class="sec-head" style="margin:28px 0 6px"><div><h2 style="font-size:22px">${esc(sec.name)}</h2><p>${esc(sec.lead)}</p></div></div><div class="tblocks">${picks}</div>`;
+  }).join("");
+  app().innerHTML=`
+  <button class="back" onclick="goHome()">&larr; Home</button>
+  <div class="panel">
+    <div class="report-head">
+      <div class="win">${windowSVG(t,r.pct)}</div>
+      <div><div class="eyebrow">Your SHAPE for Ministry</div><h2>${esc(r.name)}</h2>
+        ${r.role?`<p class="muted" style="margin:2px 0 0">${esc(r.role)}</p>`:""}
+        <p class="lede" style="margin-top:14px;font-family:'Fraunces',serif;font-size:17px;color:var(--ink-soft);line-height:1.5">${esc(profileNarrative(r,t))}</p></div>
+    </div>
+    ${secHTML}
+    <div class="callout" style="margin-top:22px">This is a portrait, not a score. No part of it is better than another — together they show where you'd serve with the most joy and the most fruit.</div>
+    <div class="report-actions" style="display:flex;gap:12px;flex-wrap:wrap;margin-top:26px;align-items:center">
+      <button class="btn gold" id="saveBtn" onclick="addToTeam()">${mode()==="admin"?"Add me to the team":"Send to my church"}</button>
+      <button class="btn" onclick="emailShape()">Email my profile</button>
+      <button class="btn ghost" onclick="copyShapeText(this)">Copy my profile</button>
+      <button class="btn ghost" onclick="window.print()">Print / Save PDF</button>
+    </div>
+    <p class="hint" id="savemsg"></p>
+    <p class="hint">“Email my profile” opens your mail app with your profile ready to send${CHURCH.contactEmail?" — your church is copied automatically":""}.</p>
+  </div>`;
+}
+
 function typeBlock(ty,scoreLabel){
   return `<div class="tblock" style="border-top-color:${ty.color}">
     <h4><span style="display:inline-block;width:12px;height:12px;border-radius:50%;background:${ty.color}"></span>${esc(ty.name)}${scoreLabel?`<span style="margin-left:auto;font-family:'Public Sans',sans-serif;font-size:12px;font-weight:700;color:var(--ink-faint)">${esc(scoreLabel)}</span>`:""}</h4>
