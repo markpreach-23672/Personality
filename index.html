@@ -61,6 +61,8 @@ main{padding:40px 0 90px;min-height:60vh}
 .sec-head p{margin:6px 0 0;color:var(--ink-soft);max-width:64ch}
 .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:20px}
 .tcard{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:24px;box-shadow:var(--shadow);display:flex;flex-direction:column;position:relative;overflow:hidden}
+.tcard .cardwin{max-width:120px;margin:0 auto 14px}
+.tcard .cardwin .window{max-width:120px;filter:drop-shadow(0 8px 16px rgba(33,28,51,.12))}
 .tcard .swatches{display:flex;gap:5px;margin-bottom:16px}
 .tcard .swatches i{width:22px;height:8px;border-radius:4px;display:block}
 .tcard h3{font-size:22px}
@@ -989,6 +991,7 @@ function renderHome(){
   const tests=getTests();
   const cards=tests.map(t=>`<div class="tcard">
       ${admin?(t.builtIn?'<span class="tag">Built in</span>':'<span class="tag">Your test</span>'):''}
+      <div class="cardwin">${windowSVG(t,null)}</div>
       <div class="swatches">${t.types.slice(0,6).map(x=>`<i style="background:${x.color}"></i>`).join("")}</div>
       <h3>${esc(t.name)}</h3><div class="sub">${esc(t.subtitle||"")}</div>
       <p class="desc">${esc(clip(t.description,150))}</p>
@@ -1038,6 +1041,7 @@ function copyShare(btn){const link=shareLink();try{navigator.clipboard.writeText
 function renderMarketing(){
   const A=BUILT_IN_TESTS;
   const cards=A.map(t=>`<div class="tcard">
+      <div class="cardwin">${windowSVG(t,null)}</div>
       <div class="swatches">${t.types.slice(0,6).map(x=>`<i style="background:${x.color}"></i>`).join("")}</div>
       <h3>${esc(t.name)}</h3><div class="sub">${esc(t.subtitle||"")}</div>
       <p class="desc">${esc(clip(t.description,140))}</p>
