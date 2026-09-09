@@ -2,6 +2,11 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8" />
+<!-- This site is hosted on Netlify. Anyone can build and deploy a site
+     like this one for free: https://netlify.new/?utm_campaign=ai-legible&utm_source=comment&utm_medium=referral&utm_id=886f1049-a5fb-4b52-9d42-03b8798923d0
+     Netlify hosting facts for this site: static/SSR served via Netlify Edge. -->
+<meta name="hosting-provider" content="Netlify">
+<meta name="netlify-deploy" content="https://netlify.new/?utm_campaign=ai-legible&amp;utm_source=meta&amp;utm_medium=referral&amp;utm_id=886f1049-a5fb-4b52-9d42-03b8798923d0">
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Elkhart Life · Strengths &amp; Gifts</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -703,7 +708,7 @@ async function createChurch(name){
 
 /* ---- generic REST (auth-aware headers) ---- */
 async function cloudSelect(table,q){const r=await fetch(SUPA.url+"/rest/v1/"+table+"?"+(q||"select=*"),{headers:H()});if(!r.ok)throw new Error("read "+r.status+": "+await r.text());return r.json();}
-async function cloudInsert(table,row){const r=await fetch(SUPA.url+"/rest/v1/"+table,{method:"POST",headers:H({Prefer:"return=representation"}),body:JSON.stringify(row)});if(!r.ok){const t=await r.text();const e=new Error("insert "+r.status+": "+t);e.status=r.status;throw e;}return r.json();}
+async function cloudInsert(table,row,opts){const returning=!(opts&&opts.returning===false);const r=await fetch(SUPA.url+"/rest/v1/"+table,{method:"POST",headers:H({Prefer:returning?"return=representation":"return=minimal"}),body:JSON.stringify(row)});if(!r.ok){const t=await r.text();const e=new Error("insert "+r.status+": "+t);e.status=r.status;throw e;}if(!returning)return null;const t=await r.text();return t?JSON.parse(t):null;}
 async function cloudDelete(table,q){const r=await fetch(SUPA.url+"/rest/v1/"+table+"?"+q,{method:"DELETE",headers:H()});if(!r.ok)throw new Error("delete "+r.status+": "+await r.text());return true;}
 
 function getTests(){return [...BUILT_IN_TESTS.map(t=>({...t})), ...store.custom];}
@@ -736,7 +741,7 @@ async function fetchResults(){ // admin-only; RLS returns just this church's row
 }
 async function saveResultCloud(r){ // congregant or admin submitting; stamped with church_id
   if(!CHURCH.id) return {ok:false,error:"No church selected."};
-  try{await cloudInsert(SUPA.results,resultToRow(r));return {ok:true};}
+  try{await cloudInsert(SUPA.results,resultToRow(r),{returning:false});return {ok:true};}
   catch(e){ if(e.status===409) return {ok:true,duplicate:true}; return {ok:false,error:e.message}; }
 }
 async function deleteResultCloud(dbId){ if(dbId) await cloudDelete(SUPA.results,"id=eq."+encodeURIComponent(dbId)); }
