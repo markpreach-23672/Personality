@@ -690,7 +690,8 @@ function signOut(){AUTH.session=null;try{localStorage.removeItem("elc_session");
 function setChurch(c,owner){CHURCH.id=c.id;CHURCH.slug=c.slug;CHURCH.name=c.name;CHURCH.contactEmail=c.contact_email||null;CHURCH.owner=!!owner;}
 function slugify(s){return (s||"").toLowerCase().replace(/[^a-z0-9]+/g,"-").replace(/^-+|-+$/g,"").slice(0,40)||"church";}
 async function fetchChurchBySlug(slug){
-  const rows=await cloudSelect(SUPA.churches,"slug=eq."+encodeURIComponent(slug)+"&select=*");
+  const s=encodeURIComponent(slug);
+  const rows=await cloudSelect(SUPA.churches,"or=(slug.eq."+s+",slug_aliases.cs.%7B"+s+"%7D)&select=*");
   return Array.isArray(rows)&&rows[0]?rows[0]:null;
 }
 async function fetchMyChurch(){
@@ -731,8 +732,8 @@ async function deleteCustomTest(id){
   await cloudDelete(SUPA.tests,"id=eq."+encodeURIComponent(id));
 }
 
-function rowToResult(r){return {id:r.client_id,dbId:r.id,testId:r.test_id,testName:r.test_name,name:r.person_name,role:r.role||"",kind:r.kind||"self",subject:r.subject_name||null,date:r.created_at,pct:r.scores,ranking:r.ranking,leading:r.leading_types,quiet:r.quiet_types};}
-function resultToRow(r){return {client_id:r.id,test_id:r.testId,test_name:r.testName,person_name:r.name,role:r.role||null,kind:r.kind||"self",subject_name:(r.kind==="observer"?r.subject:null),church_id:CHURCH.id,scores:r.pct,ranking:r.ranking,leading_types:r.leading,quiet_types:r.quiet};}
+function rowToResult(r){return {id:r.client_id,dbId:r.id,testId:r.test_id,testName:r.test_name,name:r.person_name,email:r.email||"",role:r.role||"",kind:r.kind||"self",subject:r.subject_name||null,date:r.created_at,pct:r.scores,ranking:r.ranking,leading:r.leading_types,quiet:r.quiet_types};}
+function resultToRow(r){return {client_id:r.id,test_id:r.testId,test_name:r.testName,person_name:r.name,email:r.email||null,role:r.role||null,kind:r.kind||"self",subject_name:(r.kind==="observer"?r.subject:null),church_id:CHURCH.id,scores:r.pct,ranking:r.ranking,leading_types:r.leading,quiet_types:r.quiet};}
 
 async function fetchResults(){ // admin-only; RLS returns just this church's rows
   const rows=await cloudSelect(SUPA.results,"select=*&order=created_at.desc");
@@ -1285,7 +1286,7 @@ function renderStart(){
       <label class="field"><span class="lab">Your name <span class="muted">(kept private from the leader)</span></span><input type="text" id="pname" placeholder="First and last name" autocomplete="name"></label>
     `:`
       <label class="field"><span class="lab">Your name</span><input type="text" id="pname" placeholder="First and last name" autocomplete="name"></label>
-      ${t.profile?`<label class="field"><span class="lab">Your email <span class="muted">(so we can send you your profile)</span></span><input type="text" id="pemail" placeholder="you@example.com" autocomplete="email"></label>`:""}
+      <label class="field"><span class="lab">Your email <span class="muted">(we'll send you a copy of your results)</span></span><input type="email" id="pemail" placeholder="you@example.com" autocomplete="email"></label>
       <label class="field"><span class="lab">Ministry or role <span class="muted">(optional)</span></span><input type="text" id="prole" placeholder="e.g. Youth, Ushers, Worship, Sunday School"></label>
     `}
     <div style="display:flex;gap:12px;margin-top:8px;flex-wrap:wrap"><button class="btn ${observer?'gold':''}" onclick="beginTest()">Begin &rarr;</button><button class="btn ghost" onclick="go('home')">Cancel</button></div>
@@ -1303,7 +1304,7 @@ function beginTest(){
   }
   const emEl=document.getElementById("pemail");
   const email=emEl?(emEl.value||"").trim():"";
-  if(t.profile&&email&&!/.+@.+\..+/.test(email)){emEl.focus();emEl.style.borderColor="var(--c-rally)";return;}
+  if(!observer&&emEl&&!/.+@.+\..+/.test(email)){emEl.focus();emEl.style.borderColor="var(--c-rally)";return;}
   STATE.answers=new Array(t.questions.length).fill(null);
   STATE.person={name,email,role:observer?"":(document.getElementById("prole").value||"").trim()};
   STATE.kind=observer?"observer":"self";STATE.subject=subject;
@@ -1502,6 +1503,37 @@ function typeBlock(ty,scoreLabel){
     <dl>${ty.bring?`<dt>You bring</dt><dd>${esc(ty.bring)}</dd>`:""}${ty.team?`<dt>On a team</dt><dd>${esc(ty.team)}</dd>`:""}${ty.watch?`<dt>Gentle watch-out</dt><dd>${esc(ty.watch)}</dd>`:""}</dl>
     ${ty.verse?`<div class="verse">\u201c${esc(ty.verse)}\u201d<cite>${esc(ty.verseRef||"")}</cite></div>`:""}</div>`;
 }
+function buildEmailSummaryHtml(t,r){
+  if(t.profile){
+    const secHtml=(t.sections||[]).map(sec=>{
+      const picks=(r.picks[sec.key]||[]).map(id=>{const o=t.optionMap[id];
+        return `<div style="margin:8px 0"><b>${esc(o.name)}</b> (${r.pct[id]}%)<br><span style="color:#555">${esc(o.desc)}</span></div>`;}).join("");
+      return `<h3 style="margin:18px 0 4px;font-size:15px">${esc(sec.name)}</h3>${picks}`;
+    }).join("");
+    return `<div>${secHtml}</div>`;
+  }
+  const by=id=>t.types.find(x=>x.id===id)||{};
+  const bars=(r.ranking||[]).map(id=>{const ty=by(id);return `<div style="margin:6px 0"><b>${esc(ty.name||id)}</b>: ${r.pct[id]}%</div>`;}).join("");
+  const leadNames=(r.leading||[]).map(id=>esc(by(id).name||id)).join(", ");
+  const quietNames=(r.quiet||[]).map(id=>esc(by(id).name||id)).join(", ");
+  return `<div>
+    ${leadNames?`<p><b>Leading strengths:</b> ${leadNames}</p>`:""}
+    ${bars}
+    ${quietNames?`<p style="color:#888;margin-top:10px"><b>Quieter strengths:</b> ${quietNames}</p>`:""}
+  </div>`;
+}
+async function sendReportEmail(r,t){
+  if(!CLOUD||!CHURCH.id||!r.email)return {ok:false,error:"missing church or email"};
+  try{
+    const resp=await fetch(SUPA.url+"/functions/v1/send-report",{
+      method:"POST",
+      headers:H(),
+      body:JSON.stringify({churchId:CHURCH.id,studentName:r.name,studentEmail:r.email,testName:r.testName||(t&&t.name)||"assessment",summaryHtml:buildEmailSummaryHtml(t,r)})
+    });
+    const data=await resp.json().catch(()=>null);
+    return {ok:!!(resp.ok&&data&&data.ok),data};
+  }catch(e){return {ok:false,error:e.message};}
+}
 async function addToTeam(){
   const btn=document.getElementById("saveBtn"),msg=document.getElementById("savemsg");
   const observer=STATE.result.kind==="observer", admin=mode()==="admin";
@@ -1509,15 +1541,20 @@ async function addToTeam(){
   const res=await saveResultCloud(STATE.result);
   store.resultsCache=null;
   if(res.ok){
+    let emailed=false;
+    if(!observer){
+      const t=findTest(STATE.result.testId);
+      try{const er=await sendReportEmail(STATE.result,t);emailed=!!er.ok;}catch(e){emailed=false;}
+    }
     if(observer){
       btn.innerHTML=res.duplicate?"Already submitted":"Feedback submitted ✓";
       msg.innerHTML=`Thank you. Your feedback for ${esc(STATE.result.subject)} was recorded and combined with others'.`;
     }else if(admin){
       btn.innerHTML=res.duplicate?"Already saved":"Saved to the team ✓";
-      msg.innerHTML=`${esc(STATE.result.name)} is now part of the team. <a href="#" onclick="go('synth');return false;">View the team synthesis &rarr;</a>`;
+      msg.innerHTML=`${esc(STATE.result.name)} is now part of the team. <a href="#" onclick="go('synth');return false;">View the team synthesis &rarr;</a>${emailed?` A copy has been emailed to ${esc(STATE.result.email||"you")} and to your church's leaders.`:""}`;
     }else{
       btn.innerHTML=res.duplicate?"Already sent":"Sent to your church ✓";
-      msg.innerHTML=`Thank you, ${esc((STATE.result.name||"").split(/\s+/)[0])}. Your result was sent to ${esc(CHURCH.name||"your church")}'s leaders. You can print or download your own copy above.`;
+      msg.innerHTML=`Thank you, ${esc((STATE.result.name||"").split(/\s+/)[0])}. Your result was sent to ${esc(CHURCH.name||"your church")}'s leaders.${emailed?` A copy has also been emailed to ${esc(STATE.result.email||"you")}.`:" You can print or download your own copy above."}`;
     }
   }else{
     btn.disabled=false;btn.innerHTML=observer?"Submit feedback":(admin?"Add me to the team":"Send to my church");
