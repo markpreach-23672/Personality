@@ -2,11 +2,6 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8" />
-<!-- This site is hosted on Netlify. Anyone can build and deploy a site
-     like this one for free: https://netlify.new/?utm_campaign=ai-legible&utm_source=comment&utm_medium=referral&utm_id=886f1049-a5fb-4b52-9d42-03b8798923d0
-     Netlify hosting facts for this site: static/SSR served via Netlify Edge. -->
-<meta name="hosting-provider" content="Netlify">
-<meta name="netlify-deploy" content="https://netlify.new/?utm_campaign=ai-legible&amp;utm_source=meta&amp;utm_medium=referral&amp;utm_id=886f1049-a5fb-4b52-9d42-03b8798923d0">
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Elkhart Life · Strengths &amp; Gifts</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -632,6 +627,110 @@ const BUILT_IN_TESTS=[{
      ]}
   ]
 }];
+/* ============================================================
+   LEADER GUIDANCE — how to work with, communicate with, and lead
+   each type. Keyed by testId → typeId. Edit freely; any type
+   without an entry simply shows no guidance.
+============================================================ */
+const GUIDE={
+ "working-strengths":{
+  notice:{strength:"Sees the gap, the need, or the person everyone else walked past.",
+    weakness:"Can sound like a critic. May raise problems faster than solutions, which wears on a team.",
+    comms:"Ask them what they're seeing, and give them room to say it fully. They think out loud and need to be heard before they can let it go.",
+    sensitive:"Being told they're negative. They experience their noticing as care, so 'you're always finding fault' lands as a rejection of their gift.",
+    lead:"Invite their observations early, before decisions harden. Then close the loop — tell them what you did with what they raised, or they'll assume they were ignored."},
+  dream:{strength:"Generates possibility. Keeps the church from assuming this year must look like last year.",
+    weakness:"Starts more than finishes. Can feel deflated when ideas meet logistics.",
+    comms:"Think with them, not at them. Say 'what if' before 'how much.' Give the idea a minute before you price it.",
+    sensitive:"Having an idea shut down with a practical objection in the first breath. They hear it as 'you're unrealistic.'",
+    lead:"Let them dream wide, then help them pick one. Pair them with a Finisher and protect that pairing."},
+  weigh:{strength:"Sound judgment. Often right about what will and won't work, and why.",
+    weakness:"Can slow momentum, and may hold back a concern until it's too late to act on.",
+    comms:"Give them the information and a little time. Don't force an instant answer — you'll get a worse one.",
+    sensitive:"Being rushed, or having their caution read as disloyalty or lack of faith.",
+    lead:"Ask for their read *before* you announce a direction, not after. If you go a different way, tell them why — they'll follow, but they need the reasoning."},
+  rally:{strength:"Turns a plan into motion and gets people to say yes.",
+    weakness:"Can outrun readiness and over-promise in the enthusiasm of the moment.",
+    comms:"Be direct and energetic. Give them the vision and the ask together.",
+    sensitive:"Flat, unenthusiastic responses. Silence reads to them as rejection.",
+    lead:"Give them something real to rally. Check the plan with a Weigher first so their enthusiasm isn't spent on something that stalls."},
+  help:{strength:"Carries the practical load and makes everyone else's work possible.",
+    weakness:"Says yes past their limit, then burns out quietly without complaining.",
+    comms:"Ask about them, not just the task. They won't volunteer that they're overloaded.",
+    sensitive:"Being taken for granted, or only ever hearing from leadership when something's needed.",
+    lead:"Name their contribution out loud and specifically. Watch their load for them, and give them permission to say no."},
+  finish:{strength:"Gets it across the line. What they take, they complete.",
+    weakness:"Can get stuck cleaning up other people's unfinished work, and resent it.",
+    comms:"Be clear and concrete: what's done look like, and by when. Vagueness frustrates them.",
+    sensitive:"Shifting expectations and last-minute changes after they've committed.",
+    lead:"Protect them from becoming the church's default finisher. Give clear scope, then leave them alone to work."}
+ },
+ "four-colors":{
+  scarlet:{strength:"Decisive and driven. Moves things forward when others hesitate.",
+    weakness:"Can run over people in the push to get results.",
+    comms:"Be brief, direct, and lead with the point. Don't bury the ask in preamble.",
+    sensitive:"Feeling controlled, micromanaged, or having their competence questioned.",
+    lead:"Give them a goal and authority, not step-by-step instructions. Address conflict with them head-on — they'd rather have it out than let it sit."},
+  amber:{strength:"Brings warmth and energy. Draws people in and makes serving fun.",
+    weakness:"Can lose interest in follow-through and dislike unpleasant conversations.",
+    comms:"Talk face-to-face, keep it personable. A quick call beats a formal email.",
+    sensitive:"Public criticism or being left out. Rejection hits them harder than it looks.",
+    lead:"Give them people-facing work and affirm them genuinely. Pair them with someone detail-oriented rather than nagging them about details."},
+  indigo:{strength:"Thorough and thoughtful. Catches what others miss and holds high standards.",
+    weakness:"Can be slow to act, hard on themselves, and discouraged by imperfection.",
+    comms:"Give details, context, and advance notice. Put it in writing and let them process before responding.",
+    sensitive:"Sloppy work, surprise changes, and criticism of their standards.",
+    lead:"Respect their preparation time. Praise specifics, not generalities — vague encouragement reads as insincere to them."},
+  evergreen:{strength:"Steady, loyal, and patient. The calm that holds a team together.",
+    weakness:"Avoids conflict, may agree outwardly while disagreeing inwardly, and resists change.",
+    comms:"Gentle and unhurried. Ask directly what they think, then wait — they won't push into a gap.",
+    sensitive:"Conflict, pressure, and sudden change. They'll go quiet rather than push back.",
+    lead:"Give plenty of warning before changes. Check that their 'yes' is a real yes, and make it safe to disagree with you."}
+ },
+ "serving-strengths":{
+  seeker:{strength:"Asks the question no one else thought to ask.",
+    weakness:"Can stall progress by reopening settled matters.",
+    comms:"Give them the 'why' behind decisions, not just the 'what.'",
+    sensitive:"Having their questions treated as obstruction.",
+    lead:"Bring them in at the start of planning, where their questions cost nothing and help most."},
+  maker:{strength:"Creates from nothing. Solves problems with a new approach.",
+    weakness:"Loses interest once the creating is done and the maintaining starts.",
+    comms:"Give them a problem, not a prescription. Leave room in the assignment.",
+    sensitive:"Having their work heavily edited without conversation.",
+    lead:"Hand off maintenance to someone else and keep pointing them at the next new thing."},
+  sifter:{strength:"Reads people and plans accurately, often before the evidence is in.",
+    weakness:"May not speak up unless asked, so the insight gets lost.",
+    comms:"Ask them directly — 'what's your gut on this?' They rarely volunteer it.",
+    sensitive:"Having a correct instinct dismissed because they couldn't fully explain it.",
+    lead:"Build their read into your decision-making routinely, so it isn't a special occasion."},
+  sparker:{strength:"Creates momentum and gets people moving together.",
+    weakness:"Energy can fade once the exciting part passes.",
+    comms:"Enthusiasm and a clear ask. Give them a stage and a cause.",
+    sensitive:"Being met with apathy, or being told to tone it down.",
+    lead:"Use them to launch things, then hand the ongoing work to a Completer."},
+  responder:{strength:"First to say yes and genuinely glad to help.",
+    weakness:"Overcommits and struggles to say no, even when depleted.",
+    comms:"Check in on them personally. Ask how they're doing before what they can do.",
+    sensitive:"Being used rather than valued, or having their help go unnoticed.",
+    lead:"Say no on their behalf sometimes. Thank them specifically and publicly."},
+  completer:{strength:"Finishes at a high standard, reliably.",
+    weakness:"Can become rigid about process and frustrated by others' loose ends.",
+    comms:"Clear expectations, firm deadlines, no moving targets.",
+    sensitive:"Changing the plan late, or having their thoroughness called slow.",
+    lead:"Define done, then let them run. Don't hand them someone else's mess without acknowledging it."}
+ }
+};
+function guideFor(testId,typeId){return (GUIDE[testId]||{})[typeId]||null;}
+
+/* A plain word about what these results are — and aren't. Shown on every
+   report, and at more length on the leadership summaries. */
+const HUMILITY_SHORT="These results describe patterns, not people. Read them as a starting point for conversation — \u201cdoes this fit you?\u201d — rather than a verdict about who someone is.";
+const HUMILITY_LEADER="This guidance is drawn from established thinking about temperament and team dynamics. It is practical and pastoral, but it is interpretive, not clinical \u2014 and it is based on how each person answered on one day, about themselves. Treat every line here as a conversation starter with a real person, never a label or a verdict. The tool is at its best when it prompts \u201cdoes this fit you?\u201d and worst when it decides someone in advance. People are always freer than their profile, and the Spirit is not bound by any of it.";
+function humilityNote(kind){
+  const text=kind==="leader"?HUMILITY_LEADER:HUMILITY_SHORT;
+  return `<div class="callout" style="margin-top:18px;border-left:3px solid var(--gold)"><b>A word about these results.</b><br>${text}</div>`;
+}
+
 const SWATCH_CHOICES=["#C0912B","#7A5EA6","#2F7E76","#C25A6B","#5A8A57","#3E6699","#B5872A","#9A6A3A","#4B4560"];
 
 /* Section-based (profile) tests: flatten their sections into one question list,
@@ -653,7 +752,9 @@ BUILT_IN_TESTS.forEach(t=>{
    - Congregants submit anonymously (write-only) tagged to a church.
 ============================================================ */
 const AUTH={session:null};
-const CHURCH={id:null,slug:null,name:null,contactEmail:null,owner:false};
+const DEFAULT_DEPARTMENTS=["Worship","Youth","Children","Hospitality & Greeters","Ushers","Media & Tech","Prayer","Outreach","Administration","Small Groups","Facilities"];
+const CHURCH={id:null,slug:null,name:null,contactEmail:null,owner:false,departments:null};
+function depts(){return (CHURCH.departments&&CHURCH.departments.length)?CHURCH.departments:DEFAULT_DEPARTMENTS;}
 const store={custom:[], resultsCache:null, cloudErr:null};
 
 function _lset(k,v){try{localStorage.setItem(k,JSON.stringify(v));}catch(e){}}
@@ -687,11 +788,10 @@ async function refreshSession(){
 function signOut(){AUTH.session=null;try{localStorage.removeItem("elc_session");}catch(e){}CHURCH.id=CHURCH.slug=CHURCH.name=null;CHURCH.owner=false;store.custom=[];store.resultsCache=null;}
 
 /* ---- churches ---- */
-function setChurch(c,owner){CHURCH.id=c.id;CHURCH.slug=c.slug;CHURCH.name=c.name;CHURCH.contactEmail=c.contact_email||null;CHURCH.owner=!!owner;}
+function setChurch(c,owner){CHURCH.id=c.id;CHURCH.slug=c.slug;CHURCH.name=c.name;CHURCH.contactEmail=c.contact_email||null;CHURCH.departments=(c.departments&&c.departments.length)?c.departments:null;CHURCH.owner=!!owner;}
 function slugify(s){return (s||"").toLowerCase().replace(/[^a-z0-9]+/g,"-").replace(/^-+|-+$/g,"").slice(0,40)||"church";}
 async function fetchChurchBySlug(slug){
-  const s=encodeURIComponent(slug);
-  const rows=await cloudSelect(SUPA.churches,"or=(slug.eq."+s+",slug_aliases.cs.%7B"+s+"%7D)&select=*");
+  const rows=await cloudSelect(SUPA.churches,"slug=eq."+encodeURIComponent(slug)+"&select=*");
   return Array.isArray(rows)&&rows[0]?rows[0]:null;
 }
 async function fetchMyChurch(){
@@ -709,7 +809,12 @@ async function createChurch(name){
 
 /* ---- generic REST (auth-aware headers) ---- */
 async function cloudSelect(table,q){const r=await fetch(SUPA.url+"/rest/v1/"+table+"?"+(q||"select=*"),{headers:H()});if(!r.ok)throw new Error("read "+r.status+": "+await r.text());return r.json();}
-async function cloudInsert(table,row,opts){const returning=!(opts&&opts.returning===false);const r=await fetch(SUPA.url+"/rest/v1/"+table,{method:"POST",headers:H({Prefer:returning?"return=representation":"return=minimal"}),body:JSON.stringify(row)});if(!r.ok){const t=await r.text();const e=new Error("insert "+r.status+": "+t);e.status=r.status;throw e;}if(!returning)return null;const t=await r.text();return t?JSON.parse(t):null;}
+async function cloudInsert(table,row){const r=await fetch(SUPA.url+"/rest/v1/"+table,{method:"POST",headers:H({Prefer:"return=representation"}),body:JSON.stringify(row)});if(!r.ok){const t=await r.text();const e=new Error("insert "+r.status+": "+t);e.status=r.status;throw e;}return r.json();}
+async function cloudUpdate(table,q,patch){const r=await fetch(SUPA.url+"/rest/v1/"+table+"?"+q,{method:"PATCH",headers:H({Prefer:"return=representation"}),body:JSON.stringify(patch)});if(!r.ok)throw new Error("update "+r.status+": "+await r.text());return r.json();}
+async function saveDepartments(list){
+  const rows=await cloudUpdate(SUPA.churches,"id=eq."+CHURCH.id,{departments:list});
+  CHURCH.departments=list.length?list:null;return rows;
+}
 async function cloudDelete(table,q){const r=await fetch(SUPA.url+"/rest/v1/"+table+"?"+q,{method:"DELETE",headers:H()});if(!r.ok)throw new Error("delete "+r.status+": "+await r.text());return true;}
 
 function getTests(){return [...BUILT_IN_TESTS.map(t=>({...t})), ...store.custom];}
@@ -732,8 +837,12 @@ async function deleteCustomTest(id){
   await cloudDelete(SUPA.tests,"id=eq."+encodeURIComponent(id));
 }
 
-function rowToResult(r){return {id:r.client_id,dbId:r.id,testId:r.test_id,testName:r.test_name,name:r.person_name,email:r.email||"",role:r.role||"",kind:r.kind||"self",subject:r.subject_name||null,date:r.created_at,pct:r.scores,ranking:r.ranking,leading:r.leading_types,quiet:r.quiet_types};}
-function resultToRow(r){return {client_id:r.id,test_id:r.testId,test_name:r.testName,person_name:r.name,email:r.email||null,role:r.role||null,kind:r.kind||"self",subject_name:(r.kind==="observer"?r.subject:null),church_id:CHURCH.id,scores:r.pct,ranking:r.ranking,leading_types:r.leading,quiet_types:r.quiet};}
+function rowToResult(r){
+  const pct=Object.assign({},r.scores||{});
+  const picks=pct._picks||null; if(picks)delete pct._picks;
+  return {id:r.client_id,dbId:r.id,testId:r.test_id,testName:r.test_name,name:r.person_name,email:r.email||"",role:r.role||"",kind:r.kind||"self",subject:r.subject_name||null,departments:(Array.isArray(r.departments)&&r.departments.length)?r.departments:(r.department?[r.department]:[]),date:r.created_at,pct,picks,ranking:r.ranking,leading:r.leading_types,quiet:r.quiet_types};
+}
+function resultToRow(r){return {client_id:r.id,test_id:r.testId,test_name:r.testName,person_name:r.name,email:(r.email||null),role:r.role||null,departments:((r.departments&&r.departments.length)?r.departments:null),department:((r.departments&&r.departments.length)?r.departments[0]:null),kind:r.kind||"self",subject_name:(r.kind==="observer"?r.subject:null),church_id:CHURCH.id,scores:(r.picks?Object.assign({},r.pct,{_picks:r.picks}):r.pct),ranking:r.ranking,leading_types:r.leading,quiet_types:r.quiet};}
 
 async function fetchResults(){ // admin-only; RLS returns just this church's rows
   const rows=await cloudSelect(SUPA.results,"select=*&order=created_at.desc");
@@ -742,8 +851,18 @@ async function fetchResults(){ // admin-only; RLS returns just this church's row
 }
 async function saveResultCloud(r){ // congregant or admin submitting; stamped with church_id
   if(!CHURCH.id) return {ok:false,error:"No church selected."};
-  try{await cloudInsert(SUPA.results,resultToRow(r),{returning:false});return {ok:true};}
+  try{await cloudInsert(SUPA.results,resultToRow(r));return {ok:true};}
   catch(e){ if(e.status===409) return {ok:true,duplicate:true}; return {ok:false,error:e.message}; }
+}
+async function sendProfileEmail(clientId,bodyText){
+  const r=await fetch(SUPA.url+"/functions/v1/send-profile",{
+    method:"POST",
+    headers:{apikey:SUPA.key,Authorization:"Bearer "+bearer(),"Content-Type":"application/json"},
+    body:JSON.stringify({client_id:clientId,body:bodyText})
+  });
+  const d=await r.json().catch(()=>({}));
+  if(!r.ok)throw new Error(d.error||("send failed "+r.status));
+  return d;
 }
 async function deleteResultCloud(dbId){ if(dbId) await cloudDelete(SUPA.results,"id=eq."+encodeURIComponent(dbId)); }
 
@@ -891,9 +1010,15 @@ function personLeadership(rs){
   const t=findTest("ministry-leadership");
   return {top:r.leading.map(id=>{const ty=t.types.find(x=>x.id===id);return ty?ty.name:id;})};
 }
+function personShape(rs){
+  const r=rs.find(x=>x.testId==="shape");if(!r||!r.picks)return null;
+  const t=findTest("shape");if(!t||!t.optionMap)return null;
+  const nm=ids=>(ids||[]).map(id=>{const o=t.optionMap[id];return o?o.name:id;});
+  return {gifts:nm(r.picks.S),heart:nm(r.picks.H),abilities:nm(r.picks.A),personality:nm(r.picks.P),experiences:nm(r.picks.E)};
+}
 function combinePerson(name,all){
   const rs=personResults(name,all);
-  return {name,taken:rs.map(r=>({id:r.testId,name:r.testName})),spine:personSpine(rs),color:personColor(rs),leadership:personLeadership(rs),results:rs};
+  return {name,taken:rs.map(r=>({id:r.testId,name:r.testName})),spine:personSpine(rs),color:personColor(rs),leadership:personLeadership(rs),shape:personShape(rs),results:rs};
 }
 function personNarrative(P){
   const bits=[];
@@ -905,6 +1030,12 @@ function personNarrative(P){
   }
   if(P.color)bits.push(`Temperament leans ${P.color.name}${P.color.word?" ("+P.color.word+")":""}.`);
   if(P.leadership)bits.push(`In leadership, strongest at ${listJoin(P.leadership.top)}.`);
+  if(P.shape){
+    const s=P.shape;
+    if(s.gifts.length&&s.heart.length)bits.push(`Gifted in ${listJoin(s.gifts)}, with a heart for ${listJoin(s.heart)}.`);
+    else if(s.gifts.length)bits.push(`Gifted in ${listJoin(s.gifts)}.`);
+    if(s.abilities.length)bits.push(`Brings practical skill in ${listJoin(s.abilities)}.`);
+  }
   return bits.join(" ");
 }
 
@@ -928,7 +1059,13 @@ function combineTeam(all){
   function strongestIn(role){let best=null;profiles.forEach(p=>{if(p.spine){const v=p.spine.avg[role];if(best===null||v>best.v)best={name:p.name,v};}});return best;}
   const pair=(()=>{const im=strongestIn("imagining"),fi=strongestIn("finishing");
     if(im&&fi&&im.name!==fi.name)return {a:im.name,b:fi.name};return null;})();
+  // SHAPE: where gifts and hearts cluster across the body
+  const tally=(key)=>{const m={};profiles.forEach(p=>{if(p.shape)(p.shape[key]||[]).forEach(v=>{(m[v]=m[v]||[]).push(p.name);});});
+    return Object.keys(m).map(k=>({name:k,people:m[k]})).sort((a,b)=>b.people.length-a.people.length);};
+  const shapeGifts=tally("gifts"),shapeHearts=tally("heart"),shapeAbilities=tally("abilities");
+  const hasShape=profiles.some(p=>p.shape);
   return {profiles,spineCov,spineGaps,colorMix,outgoing,reserved,leaders,pair,
+    shapeGifts,shapeHearts,shapeAbilities,hasShape,
     hasSpine:profiles.some(p=>p.spine),hasColor:profiles.some(p=>p.color)};
 }
 function teamNarrative(T){
@@ -936,6 +1073,9 @@ function teamNarrative(T){
   const strong=T.spineCov.filter(x=>x.leaders.length>0).slice(0,2).map(x=>x.role.label);
   if(strong.length)bits.push(`Across our strengths assessments, the team is richest in ${listJoin(strong)}.`);
   if(T.spineGaps.length)bits.push(`No one currently leads in ${listJoin(T.spineGaps.map(x=>x.role.label))} — a place to grow or invite others in.`);
+  if(T.hasShape&&T.shapeHearts.length&&T.shapeHearts[0].people.length>1){
+    bits.push(`The most shared heart on the team is ${T.shapeHearts[0].name} (${T.shapeHearts[0].people.length} people).`);
+  }
   if(T.hasColor){
     if(T.outgoing>T.reserved*1.6)bits.push("Temperament skews outgoing — plenty of energy and initiative; make room for the quieter, steadier voices.");
     else if(T.reserved>T.outgoing*1.6)bits.push("Temperament skews reserved — thoughtful and steady; lean on your outgoing members to start and rally.");
@@ -950,18 +1090,58 @@ function renderCombined(){
     <div class="panel"><p><span class="spin"></span>Gathering everyone's results…</p></div>`;
   loadCombined();
 }
+/* ---- department scope ---- */
+/* A person may serve on several teams, and may have answered differently on
+   different assessments — so their teams are the union across all their rows. */
+function personDeptMap(rows){
+  const m={};
+  rows.filter(r=>r.kind!=="observer").forEach(r=>{
+    const k=r.name.toLowerCase();m[k]=m[k]||new Set();
+    (r.departments||[]).forEach(d=>{if(d)m[k].add(d);});
+  });
+  return m;
+}
+function deptsOf(name,rows){const s=personDeptMap(rows)[(name||"").toLowerCase()];return s?[...s]:[];}
+function scopeDept(rows){
+  if(DEPT==="all")return rows;
+  const m=personDeptMap(store.resultsCache||rows);
+  return rows.filter(r=>{
+    const set=m[r.name.toLowerCase()];
+    if(DEPT==="")return !set||set.size===0;       // unassigned
+    return !!set&&set.has(DEPT);
+  });
+}
+function setDept(d){DEPT=d;render();}
+function deptBar(all){
+  const self=all.filter(r=>r.kind!=="observer");
+  const map=personDeptMap(all);
+  const counts={};let unassigned=0;
+  Object.keys(map).forEach(k=>{const set=map[k];if(!set||set.size===0){unassigned++;return;}set.forEach(d=>{counts[d]=(counts[d]||0)+1;});});
+  // include any team names in the data that aren't on the current list
+  const extra=Object.keys(counts).filter(d=>!depts().includes(d));
+  const present=depts().filter(d=>counts[d]).concat(extra);
+  if(!present.length&&!unassigned)return "";
+  const people=n=>n+" "+(n===1?"person":"people");
+  let btns=[`<button class="btn sm ${DEPT==='all'?'':'ghost'}" onclick="setDept('all')">All teams (${people(new Set(self.map(r=>r.name.toLowerCase())).size)})</button>`];
+  present.forEach(d=>{btns.push(`<button class="btn sm ${DEPT===d?'':'ghost'}" onclick="setDept('${esc(d).replace(/'/g,"\\'")}')">${esc(d)} (${counts[d]})</button>`);});
+  if(unassigned)btns.push(`<button class="btn sm ${DEPT===''?'':'ghost'}" onclick="setDept('')">Unassigned (${unassigned})</button>`);
+  return `<div class="toolbar" style="margin-bottom:14px">${btns.join("")}</div>`;
+}
+function deptNote(){return DEPT==="all"?"":`<div class="callout info" style="margin-bottom:16px">Showing <b>${DEPT===""?"people with no team assigned":esc(DEPT)}</b> only. <a href="#" onclick="setDept('all');return false;">Show all teams</a></div>`;}
+
 async function loadCombined(){
   let all;
   try{all=await fetchResults();}catch(e){return app().innerHTML=`<div class="sec-head"><div><h2>Whole Picture</h2></div></div><div class="panel"><div class="callout warn"><b>Couldn't reach the central store.</b><br>${esc(e.message)}</div><button class="btn" style="margin-top:16px" onclick="renderCombined()">Try again</button></div>`;}
   store.resultsCache=all;
-  const people=allPeople(all);
+  const scoped=scopeDept(all);
+  const people=allPeople(scoped);
   if(people.length===0){
     app().innerHTML=`<div class="sec-head"><div><h2>Whole Picture</h2></div></div><div class="panel empty"><svg width="54" height="54" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="8" r="3.5"/><path d="M5 20c0-3.5 3-6 7-6s7 2.5 7 6"/></svg><p>No results yet.<br>Once your team takes the assessments, their combined picture appears here.</p><button class="btn" onclick="go('home')" style="margin-top:6px">Go to assessments</button></div>`;return;
   }
   if(COMBINED_MODE==="person"&&(!COMBINED_PERSON||!people.some(n=>n.toLowerCase()===COMBINED_PERSON.toLowerCase())))COMBINED_PERSON=people[0];
   const toggle=`<div class="toolbar"><button class="btn sm ${COMBINED_MODE==='team'?'':'ghost'}" onclick="setCombined('team')">Whole team</button><button class="btn sm ${COMBINED_MODE==='person'?'':'ghost'}" onclick="setCombined('person')">Each person</button><div class="spacer"></div><button class="btn sm ghost" onclick="window.print()">Print / Save PDF</button></div>`;
-  const body=COMBINED_MODE==="team"?combinedTeamHTML(all,people):combinedPersonHTML(all,people);
-  app().innerHTML=`<div class="sec-head"><div><h2>Whole Picture</h2><p>Every assessment, woven together — many members, one body.</p></div></div>${toggle}${body}`;
+  const body=COMBINED_MODE==="team"?combinedTeamHTML(scoped,people):combinedPersonHTML(scoped,people);
+  app().innerHTML=`<div class="sec-head"><div><h2>Whole Picture</h2><p>Every assessment, woven together — many members, one body.</p></div></div>${deptBar(all)}${deptNote()}${toggle}${body}`;
   requestAnimationFrame(()=>{document.querySelectorAll('.fill').forEach(f=>{setTimeout(()=>f.style.width=f.dataset.w+"%",60);});});
 }
 function setCombined(mode){COMBINED_MODE=mode;renderCombined();}
@@ -975,13 +1155,17 @@ function combinedTeamHTML(all,people){
     <div class="bars">${T.spineCov.map(x=>`<div class="bar"><div class="name">${esc(x.role.label)}</div><div class="track"><div class="fill" data-w="${people.length?Math.round(x.leaders.length/people.length*100):0}" style="background:${x.role.color}"></div></div><div class="pct">${x.leaders.length}</div></div>`).join("")}</div>`:"";
   const colorMix=T.hasColor?`<h3>Temperament mix</h3><div class="coverage">${["scarlet","amber","indigo","evergreen"].filter(id=>T.colorMix[id]).map(id=>{const c=T.colorMix[id];return `<div class="cov-row"><div class="cname"><span class="sw" style="background:${c.color}"></span>${esc(c.name)}</div><div class="dots">${c.people.map(n=>`<span class="p" title="${esc(n)}">${initials(n)}</span>`).join("")}</div><span class="cov-flag ok">${c.people.length}</span></div>`;}).join("")}</div>`:"";
   const lead=T.leaders.length?`<h3>Leadership</h3><p class="muted">${listJoin(T.leaders)} ${T.leaders.length===1?"has":"have"} a leadership profile. <a href="#" onclick="go('leaders');return false;">See 360° feedback &rarr;</a></p>`:"";
+  const cluster=(title,rows,color)=>rows.length?`<h3>${title}</h3><div class="coverage">${rows.slice(0,6).map(x=>`<div class="cov-row"><div class="cname"><span class="sw" style="background:${color}"></span>${esc(x.name)}</div><div class="dots">${x.people.map(n=>`<span class="p" title="${esc(n)}">${initials(n)}</span>`).join("")}</div><span class="cov-flag ok">${x.people.length}</span></div>`).join("")}</div>`:"";
+  const shapeBlock=T.hasShape?cluster("Spiritual gifts across the body",T.shapeGifts,"#7A5EA6")
+    +cluster("Where hearts lean",T.shapeHearts,"#C25A6B")
+    +cluster("Practical abilities on hand",T.shapeAbilities,"#C0912B"):"";
   const pairing=T.pair?`<div class="rec"><b>A complementary pairing</b>${esc(T.pair.a)} (strongest at Imagining) and ${esc(T.pair.b)} (strongest at Finishing) make a natural idea-to-done pair — put them on the same project.</div>`:"";
   const roster=`<h3>The people</h3><div class="people">${people.map(n=>{const P=combinePerson(n,all);
     const chips=(P.spine?P.spine.top.map(id=>`<span class="mini" style="background:${(SPINE.find(s=>s.id===id)||{}).color||'#888'}">${esc(spineLabel(id))}</span>`).join(""):"")+(P.color?`<span class="mini" style="background:${P.color.color}">${esc(P.color.name)}</span>`:"");
     return `<button class="pcard" style="text-align:left;cursor:pointer;border:1px solid var(--line)" onclick="pickPerson('${esc(n).replace(/'/g,"\\'")}')"><div class="pn">${esc(n)}</div><div class="pr">${P.taken.length} assessment${P.taken.length===1?"":"s"}</div><div class="pl">${chips}</div></button>`;}).join("")}</div>`;
   return `<div class="team-stats"><div class="stat"><div class="n">${people.length}</div><div class="l">people</div></div><div class="stat"><div class="n">${totalAssess}</div><div class="l">assessments taken</div></div><div class="stat"><div class="n">${Math.round(totalAssess/people.length*10)/10}</div><div class="l">avg per person</div></div></div>
     <div class="panel syn" style="margin-top:18px"><p class="lede">${esc(teamNarrative(T))||"As people complete more than one assessment, the woven picture grows richer."}</p>
-    ${spineBars}${colorMix}${lead}${pairing?'<h3>What this means for the team</h3>'+pairing:""}${roster}</div>`;
+    ${spineBars}${colorMix}${shapeBlock}${lead}${pairing?'<h3>What this means for the team</h3>'+pairing:""}${humilityNote("leader")}${roster}</div>`;
 }
 
 function combinedPersonHTML(all,people){
@@ -994,14 +1178,43 @@ function combinedPersonHTML(all,people){
     ${P.spine.agreement?`<p class="hint">${P.spine.agreement==="strong"?"Both strengths assessments agree closely — a dependable read.":P.spine.agreement==="partial"?"The two strengths assessments mostly agree.":"The two strengths assessments point different directions — worth reflecting on which fits."}</p>`:P.spine.spineTests.length===1?'<p class="hint">Based on one strengths assessment. Taking the other would sharpen this.</p>':""}`:"";
   const color=P.color?`<h3>Temperament</h3><p><span class="chip"><span class="sw" style="background:${P.color.color}"></span>${esc(P.color.name)}</span> ${P.color.word?`<span class="muted">— brings ${esc(P.color.word)}</span>`:""}</p>`:"";
   const leadership=P.leadership?`<h3>Leadership</h3><p class="muted">Strongest at ${listJoin(P.leadership.top)}. <a href="#" onclick="go('feedback',{fbSubject:'${esc(P.name).replace(/'/g,"\\'")}',fbTest:'ministry-leadership'});return false;">360° feedback &rarr;</a></p>`:"";
+  const shapeRow=(label,vals,color)=>vals&&vals.length?`<div class="cov-row"><div class="cname"><span class="sw" style="background:${color}"></span>${label}</div><div class="dots"><span class="muted" style="font-size:14px">${esc(listJoin(vals))}</span></div></div>`:"";
+  const shape=P.shape?`<h3>SHAPE for ministry</h3><div class="coverage">
+      ${shapeRow("Spiritual Gifts",P.shape.gifts,"#7A5EA6")}
+      ${shapeRow("Heart",P.shape.heart,"#C25A6B")}
+      ${shapeRow("Abilities",P.shape.abilities,"#C0912B")}
+      ${shapeRow("Personality",P.shape.personality,"#2F7E76")}
+      ${shapeRow("Experiences",P.shape.experiences,"#3E6699")}
+    </div>`:"";
+  const first=(P.name||"").split(/\s+/)[0];
+  const gCards=[];
+  P.results.filter(r=>r.kind!=="observer").forEach(r=>{
+    const t=findTest(r.testId);if(!t)return;
+    (r.leading||[]).forEach(id=>{
+      const g=guideFor(r.testId,id);if(!g)return;
+      const ty=t.types.find(x=>x.id===id);if(!ty)return;
+      if(gCards.some(c=>c.key===r.testId+":"+id))return;
+      gCards.push({key:r.testId+":"+id,ty,g,test:t.name});
+    });
+  });
+  const working=gCards.length?`<h3>Working with ${esc(first)}</h3>
+    <p class="hint" style="margin-top:0">Drawn from ${esc(first)}'s leading types. Read this before a one-on-one.</p>
+    ${humilityNote("leader")}
+    ${gCards.map(c=>`<div class="tblock" style="border-top-color:${c.ty.color};margin-bottom:14px">
+      <h4><span style="display:inline-block;width:12px;height:12px;border-radius:50%;background:${c.ty.color}"></span>${esc(c.ty.name)}
+        <span style="margin-left:auto;font-family:'Public Sans',sans-serif;font-size:12px;color:var(--ink-faint)">${esc(c.test)}</span></h4>
+      <dl><dt>Communicate</dt><dd>${esc(c.g.comms)}</dd>
+      <dt>Be careful</dt><dd>${esc(c.g.sensitive)}</dd>
+      <dt>Lead them</dt><dd>${esc(c.g.lead)}</dd></dl></div>`).join("")}`:"";
   return `${picker}<div class="panel syn">
     <div class="report-head" style="grid-template-columns:1fr">
       <div><div class="eyebrow">Combined profile</div><h2 style="font-size:30px">${esc(P.name)}</h2>
+      ${(function(){const d=deptsOf(P.name,all);return d.length?`<p class="muted" style="margin:4px 0 0">Serves on ${esc(listJoin(d))}</p>`:"";})()}
       <div class="lead-types" style="margin-top:10px">${takenChips}</div></div>
     </div>
     <p class="lede" style="margin-top:16px">${esc(personNarrative(P))||"Complete an assessment to begin this profile."}</p>
     ${windows?`<div style="display:flex;gap:16px;flex-wrap:wrap;justify-content:center;margin:18px 0">${windows}</div>`:""}
-    ${spine}${color}${leadership}
+    ${spine}${color}${leadership}${shape}${working}
   </div>`;
 }
 
@@ -1009,7 +1222,7 @@ function combinedPersonHTML(all,people){
    ROUTER / STATE
 ============================================================ */
 let STATE={screen:"home",testId:null,answers:[],person:null,result:null,builder:null,saveState:null};
-let PAGE_IDX=0,TEAM_FILTER="all",SYN_TEST=null,COMBINED_MODE="team",COMBINED_PERSON=null;
+let PAGE_IDX=0,TEAM_FILTER="all",SYN_TEST=null,COMBINED_MODE="team",COMBINED_PERSON=null,DEPT="all";
 const app=()=>document.getElementById("app");
 function go(screen,opts={}){STATE.screen=screen;Object.assign(STATE,opts);window.scrollTo({top:0});render();}
 function goHome(){go(mode()==="marketing"?"marketing":"home");}
@@ -1286,8 +1499,14 @@ function renderStart(){
       <label class="field"><span class="lab">Your name <span class="muted">(kept private from the leader)</span></span><input type="text" id="pname" placeholder="First and last name" autocomplete="name"></label>
     `:`
       <label class="field"><span class="lab">Your name</span><input type="text" id="pname" placeholder="First and last name" autocomplete="name"></label>
-      <label class="field"><span class="lab">Your email <span class="muted">(we'll send you a copy of your results)</span></span><input type="email" id="pemail" placeholder="you@example.com" autocomplete="email"></label>
-      <label class="field"><span class="lab">Ministry or role <span class="muted">(optional)</span></span><input type="text" id="prole" placeholder="e.g. Youth, Ushers, Worship, Sunday School"></label>
+      ${t.profile?`<label class="field"><span class="lab">Your email <span class="muted">(so we can send you your profile)</span></span><input type="text" id="pemail" placeholder="you@example.com" autocomplete="email"></label>`:""}
+      <label class="field"><span class="lab">Which teams do you serve on? <span class="muted">(choose any that apply)</span></span>
+        <div id="pdept" style="display:flex;flex-wrap:wrap;gap:8px;margin-top:4px">
+          ${depts().map((d,i)=>`<label for="dept_${i}" style="display:inline-flex;align-items:center;gap:7px;border:1px solid var(--line);border-radius:999px;padding:8px 14px;cursor:pointer;font-size:14px;background:#fff">
+            <input type="checkbox" id="dept_${i}" class="deptbox" value="${esc(d)}" style="margin:0;width:15px;height:15px;cursor:pointer">${esc(d)}</label>`).join("")}
+        </div>
+        <span class="hint" style="margin-top:6px;display:block">Leave blank if you're not on a team yet.</span></label>
+      <label class="field"><span class="lab">Your role <span class="muted">(optional)</span></span><input type="text" id="prole" placeholder="e.g. Vocalist, Small group leader"></label>
     `}
     <div style="display:flex;gap:12px;margin-top:8px;flex-wrap:wrap"><button class="btn ${observer?'gold':''}" onclick="beginTest()">Begin &rarr;</button><button class="btn ghost" onclick="go('home')">Cancel</button></div>
   </div>`;
@@ -1304,9 +1523,10 @@ function beginTest(){
   }
   const emEl=document.getElementById("pemail");
   const email=emEl?(emEl.value||"").trim():"";
-  if(!observer&&emEl&&!/.+@.+\..+/.test(email)){emEl.focus();emEl.style.borderColor="var(--c-rally)";return;}
+  if(t.profile&&email&&!/.+@.+\..+/.test(email)){emEl.focus();emEl.style.borderColor="var(--c-rally)";return;}
   STATE.answers=new Array(t.questions.length).fill(null);
-  STATE.person={name,email,role:observer?"":(document.getElementById("prole").value||"").trim()};
+  const picked=observer?[]:[...document.querySelectorAll(".deptbox:checked")].map(b=>b.value);
+  STATE.person={name,email,departments:picked,role:observer?"":(document.getElementById("prole").value||"").trim()};
   STATE.kind=observer?"observer":"self";STATE.subject=subject;
   PAGE_IDX=0;go("take");
 }
@@ -1347,7 +1567,7 @@ function takeBack(){if(PAGE_IDX>0)pageStep(-1);else go('start',{testId:STATE.tes
 function pageStep(d){const t=findTest(STATE.testId);const mp=Math.ceil(t.questions.length/PAGE)-1;PAGE_IDX=Math.max(0,Math.min(mp,PAGE_IDX+d));window.scrollTo({top:0});renderTake();}
 function finishTest(){
   const t=findTest(STATE.testId);const res=scoreTest(t,STATE.answers);
-  STATE.result={id:"r_"+Date.now()+"_"+Math.random().toString(36).slice(2,7),testId:t.id,testName:t.name,name:STATE.person.name,email:STATE.person.email||"",role:STATE.person.role,kind:STATE.kind||"self",subject:STATE.subject||null,date:new Date().toISOString(),...res};
+  STATE.result={id:"r_"+Date.now()+"_"+Math.random().toString(36).slice(2,7),testId:t.id,testName:t.name,name:STATE.person.name,email:STATE.person.email||"",role:STATE.person.role,departments:STATE.person.departments||[],kind:STATE.kind||"self",subject:STATE.subject||null,date:new Date().toISOString(),...res};
   STATE.saveState="idle";go("report");
 }
 
@@ -1404,6 +1624,7 @@ function renderReport(){
     <div class="tblocks">${leadBlocks}</div>
     <div class="callout" style="margin-top:22px"><b>Your quieter strengths: ${quietNames}.</b> These aren't weaknesses — they're where you'll shine brightest alongside teammates who lead there. A healthy body needs every part.</div>`}
     ${canGet360?`<div class="callout info" style="margin-top:14px"><b>Want to see how your team experiences your leadership?</b> Ask the people you lead to open ${esc(t.name)}, choose “A leader I follow,” and enter your name. Their feedback appears beside this self-rating under <a href="#" onclick="go('leaders');return false;">For Leaders → Leader feedback</a>.</div>`:""}
+    ${humilityNote("short")}
     <div class="report-actions" style="display:flex;gap:12px;flex-wrap:wrap;margin-top:26px;align-items:center">
       <button class="btn gold" id="saveBtn" onclick="addToTeam()">${mode()==="admin"?"Add me to the team":"Send to my church"}</button>
       <button class="btn ghost" onclick="window.print()">Print / Save PDF</button>
@@ -1448,6 +1669,8 @@ function shapeEmailText(r,t){
     });
     L.push("");
   });
+  L.push("A word about these results: this is a portrait, not a verdict. It describes patterns from how you answered on one day — read it as a starting point for conversation, not a label.");
+  L.push("");
   L.push("“As every man hath received the gift, even so minister the same one to another.” — 1 Peter 4:10 (KJV)");
   L.push("");
   L.push((CHURCH.name||"")+" · Church Strengths");
@@ -1485,6 +1708,7 @@ function renderProfileReport(r,t){
     </div>
     ${secHTML}
     <div class="callout" style="margin-top:22px">This is a portrait, not a score. No part of it is better than another — together they show where you'd serve with the most joy and the most fruit.</div>
+    ${humilityNote("short")}
     <div class="report-actions" style="display:flex;gap:12px;flex-wrap:wrap;margin-top:26px;align-items:center">
       <button class="btn gold" id="saveBtn" onclick="addToTeam()">${mode()==="admin"?"Add me to the team":"Send to my church"}</button>
       <button class="btn" onclick="emailShape()">Email my profile</button>
@@ -1503,36 +1727,22 @@ function typeBlock(ty,scoreLabel){
     <dl>${ty.bring?`<dt>You bring</dt><dd>${esc(ty.bring)}</dd>`:""}${ty.team?`<dt>On a team</dt><dd>${esc(ty.team)}</dd>`:""}${ty.watch?`<dt>Gentle watch-out</dt><dd>${esc(ty.watch)}</dd>`:""}</dl>
     ${ty.verse?`<div class="verse">\u201c${esc(ty.verse)}\u201d<cite>${esc(ty.verseRef||"")}</cite></div>`:""}</div>`;
 }
-function buildEmailSummaryHtml(t,r){
-  if(t.profile){
-    const secHtml=(t.sections||[]).map(sec=>{
-      const picks=(r.picks[sec.key]||[]).map(id=>{const o=t.optionMap[id];
-        return `<div style="margin:8px 0"><b>${esc(o.name)}</b> (${r.pct[id]}%)<br><span style="color:#555">${esc(o.desc)}</span></div>`;}).join("");
-      return `<h3 style="margin:18px 0 4px;font-size:15px">${esc(sec.name)}</h3>${picks}`;
-    }).join("");
-    return `<div>${secHtml}</div>`;
-  }
-  const by=id=>t.types.find(x=>x.id===id)||{};
-  const bars=(r.ranking||[]).map(id=>{const ty=by(id);return `<div style="margin:6px 0"><b>${esc(ty.name||id)}</b>: ${r.pct[id]}%</div>`;}).join("");
-  const leadNames=(r.leading||[]).map(id=>esc(by(id).name||id)).join(", ");
-  const quietNames=(r.quiet||[]).map(id=>esc(by(id).name||id)).join(", ");
-  return `<div>
-    ${leadNames?`<p><b>Leading strengths:</b> ${leadNames}</p>`:""}
-    ${bars}
-    ${quietNames?`<p style="color:#888;margin-top:10px"><b>Quieter strengths:</b> ${quietNames}</p>`:""}
-  </div>`;
-}
-async function sendReportEmail(r,t){
-  if(!CLOUD||!CHURCH.id||!r.email)return {ok:false,error:"missing church or email"};
+/* For profile assessments with an email address, send the written profile
+   to the person and copy the church. Failure here never blocks the save. */
+async function autoEmailProfile(msg){
+  const r=STATE.result,t=findTest(r.testId);
+  if(!t||!t.sections||!r.email)return;
+  const line=document.createElement("span");
+  line.innerHTML=`<br><span class="muted"><span class="spin"></span>Emailing your profile…</span>`;
+  msg.appendChild(line);
   try{
-    const resp=await fetch(SUPA.url+"/functions/v1/send-report",{
-      method:"POST",
-      headers:H(),
-      body:JSON.stringify({churchId:CHURCH.id,studentName:r.name,studentEmail:r.email,testName:r.testName||(t&&t.name)||"assessment",summaryHtml:buildEmailSummaryHtml(t,r)})
-    });
-    const data=await resp.json().catch(()=>null);
-    return {ok:!!(resp.ok&&data&&data.ok),data};
-  }catch(e){return {ok:false,error:e.message};}
+    const out=await sendProfileEmail(r.id,shapeEmailText(r,t));
+    line.innerHTML=out.already
+      ? `<br><span class="muted">Your profile was already emailed to ${esc(r.email)}.</span>`
+      : `<br>Your profile was emailed to <b>${esc(r.email)}</b>${out.cc?` and copied to ${esc(CHURCH.name||"your church")}`:""}. ✓`;
+  }catch(e){
+    line.innerHTML=`<br><span style="color:var(--c-rally)">We couldn't email your profile automatically (${esc(e.message)}). Use “Email my profile” below to send it yourself.</span>`;
+  }
 }
 async function addToTeam(){
   const btn=document.getElementById("saveBtn"),msg=document.getElementById("savemsg");
@@ -1541,20 +1751,17 @@ async function addToTeam(){
   const res=await saveResultCloud(STATE.result);
   store.resultsCache=null;
   if(res.ok){
-    let emailed=false;
-    if(!observer){
-      const t=findTest(STATE.result.testId);
-      try{const er=await sendReportEmail(STATE.result,t);emailed=!!er.ok;}catch(e){emailed=false;}
-    }
     if(observer){
       btn.innerHTML=res.duplicate?"Already submitted":"Feedback submitted ✓";
       msg.innerHTML=`Thank you. Your feedback for ${esc(STATE.result.subject)} was recorded and combined with others'.`;
     }else if(admin){
       btn.innerHTML=res.duplicate?"Already saved":"Saved to the team ✓";
-      msg.innerHTML=`${esc(STATE.result.name)} is now part of the team. <a href="#" onclick="go('synth');return false;">View the team synthesis &rarr;</a>${emailed?` A copy has been emailed to ${esc(STATE.result.email||"you")} and to your church's leaders.`:""}`;
+      msg.innerHTML=`${esc(STATE.result.name)} is now part of the team. <a href="#" onclick="go('synth');return false;">View the team synthesis &rarr;</a>`;
+      autoEmailProfile(msg);
     }else{
       btn.innerHTML=res.duplicate?"Already sent":"Sent to your church ✓";
-      msg.innerHTML=`Thank you, ${esc((STATE.result.name||"").split(/\s+/)[0])}. Your result was sent to ${esc(CHURCH.name||"your church")}'s leaders.${emailed?` A copy has also been emailed to ${esc(STATE.result.email||"you")}.`:" You can print or download your own copy above."}`;
+      msg.innerHTML=`Thank you, ${esc((STATE.result.name||"").split(/\s+/)[0])}. Your result was sent to ${esc(CHURCH.name||"your church")}'s leaders. You can print or download your own copy above.`;
+      autoEmailProfile(msg);
     }
   }else{
     btn.disabled=false;btn.innerHTML=observer?"Submit feedback":(admin?"Add me to the team":"Send to my church");
@@ -1573,13 +1780,13 @@ async function loadTeam(){
   let all;
   try{all=await fetchResults();}catch(e){store.cloudErr=e.message;return renderTeamError(e.message);}
   store.resultsCache=all;
-  const results=all.filter(r=>r.kind!=="observer"); // team picture = self-profiles only
+  const results=scopeDept(all.filter(r=>r.kind!=="observer")); // team picture = self-profiles only, scoped to department
   const tests=getTests();
   const used=tests.filter(t=>results.some(r=>r.testId===t.id));
   if(TEAM_FILTER!=="all"&&!used.some(t=>t.id===TEAM_FILTER))TEAM_FILTER="all";
   const scoped=TEAM_FILTER==="all"?results:results.filter(r=>r.testId===TEAM_FILTER);
   if(results.length===0){
-    app().innerHTML=`<div class="sec-head"><div><h2>Team View</h2><p>Everyone who completes an assessment and taps “Add me to the team” shows up here.</p></div></div>
+    app().innerHTML=`<div class="sec-head"><div><h2>Team View</h2><p>Everyone who completes an assessment and taps “Add me to the team” shows up here.</p></div></div>${deptBar(all)}${deptNote()}
     <div class="panel empty"><svg width="54" height="54" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="9" cy="8" r="3.2"/><circle cx="17" cy="9" r="2.6"/><path d="M3.5 19c0-3 2.6-5 5.5-5s5.5 2 5.5 5"/><path d="M15.5 14c2.4.2 4 2 4 4"/></svg><p>No team members yet.<br>Have your team take the assessment.</p><button class="btn" onclick="go('home')" style="margin-top:6px">Go to assessments</button></div>`;return;
   }
   const uniqueNames=new Set(results.map(r=>r.name.toLowerCase())).size;
@@ -1588,9 +1795,10 @@ async function loadTeam(){
   const covTest=TEAM_FILTER==="all"?getTests()[0]:findTest(TEAM_FILTER);
   const people=scoped.map(r=>{const t=findTest(r.testId);
     const chips=r.leading.map(id=>{const ty=t&&t.types.find(x=>x.id===id);return `<span class="mini" style="background:${ty?ty.color:'#999'}">${ty?esc(ty.name):id}</span>`;}).join("");
-    return `<div class="pcard"><div class="pn">${esc(r.name)}</div><div class="pr">${r.role?esc(r.role)+" · ":""}${esc(t?t.name:r.testName)}</div><div class="pl">${chips}</div></div>`;}).join("");
+    return `<div class="pcard"><div class="pn">${esc(r.name)}</div><div class="pr">${(r.departments&&r.departments.length)?esc(r.departments.join(", "))+" · ":""}${r.role?esc(r.role)+" · ":""}${esc(t?t.name:r.testName)}</div><div class="pl">${chips}</div></div>`;}).join("");
   app().innerHTML=`
   <div class="sec-head"><div><h2>Team View</h2><p>A living picture of the strengths on our team — where we're covered, and where we could grow.</p></div></div>
+  ${deptBar(all)}${deptNote()}
   <div class="team-stats"><div class="stat"><div class="n">${uniqueNames}</div><div class="l">people</div></div><div class="stat"><div class="n">${results.length}</div><div class="l">assessments taken</div></div><div class="stat"><div class="n">${used.length}</div><div class="l">assessments in use</div></div></div>
   <div class="toolbar" style="margin-top:22px">${filterBtns}<div class="spacer"></div><button class="btn sm ghost" onclick="exportCSV()">Export CSV</button><button class="btn sm gold" onclick="go('synth',{testId:'${covTest.id}'})">Synthesis report &rarr;</button></div>
   ${coveragePanel(covTest,scoped.filter(r=>r.testId===covTest.id))}
@@ -1627,7 +1835,7 @@ async function loadSynth(){
   let all;
   try{all=await fetchResults();}catch(e){return app().innerHTML=`<div class="sec-head"><div><h2>Team Synthesis</h2></div></div><div class="panel"><div class="callout warn"><b>Couldn't reach the central store.</b><br>${esc(e.message)}</div><button class="btn" style="margin-top:16px" onclick="renderSynth()">Try again</button></div>`;}
   store.resultsCache=all;
-  const results=all.filter(r=>r.kind!=="observer"); // synthesis = self-profiles only
+  const results=scopeDept(all.filter(r=>r.kind!=="observer")); // synthesis = self-profiles only, scoped to department
   const tests=getTests();const used=tests.filter(t=>results.some(r=>r.testId===t.id));
   if(used.length===0){
     app().innerHTML=`<div class="sec-head"><div><h2>Team Synthesis</h2></div></div><div class="panel empty"><svg width="54" height="54" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 19V5m0 14h16M8 16l3-4 3 2 4-6"/></svg><p>No results yet.<br>Once your team completes assessments, the synthesis appears here.</p><button class="btn" onclick="go('home')" style="margin-top:6px">Go to assessments</button></div>`;return;
@@ -1638,6 +1846,7 @@ async function loadSynth(){
   app().innerHTML=`
   <div class="sec-head"><div><h2>Team Synthesis</h2><p>${esc(test.name)} · drawn from ${S.people} result${S.people===1?"":"s"} across ${S.names} ${S.names===1?"person":"people"}.</p></div>
     <div style="display:flex;gap:10px"><button class="btn sm ghost" onclick="window.print()">Print / Save PDF</button></div></div>
+  ${deptBar(all)}${deptNote()}
   ${picker}
   <div class="panel syn">
     <p class="lede">${esc(synthLede(S))}</p>
@@ -1647,10 +1856,33 @@ async function loadSynth(){
     <p class="hint">Bar length = how many people lead in that strength (their top two).</p>
     <h3>What this means for the team</h3>
     ${synthRecs(S).map(r=>`<div class="rec"><b>${esc(r.title)}</b>${esc(r.body)}</div>`).join("")}
+    ${guidanceBlock(test,S)}
     <h3>Coverage at a glance</h3>
     ${coveragePanelInline(test,S)}
+    ${humilityNote("leader")}
   </div>`;
   requestAnimationFrame(()=>{document.querySelectorAll('.fill').forEach(f=>{setTimeout(()=>f.style.width=f.dataset.w+"%",60);});});
+}
+/* Leader guidance for the types actually present on this team */
+function guidanceBlock(test,S){
+  const present=test.types.filter(ty=>(S.per[ty.id]||{leaders:[]}).leaders.length>0&&guideFor(test.id,ty.id));
+  if(!present.length)return "";
+  const cards=present.map(ty=>{
+    const g=guideFor(test.id,ty.id),who=S.per[ty.id].leaders;
+    return `<div class="tblock" style="border-top-color:${ty.color};margin-bottom:14px">
+      <h4><span style="display:inline-block;width:12px;height:12px;border-radius:50%;background:${ty.color}"></span>${esc(ty.name)}
+        <span style="margin-left:auto;font-family:'Public Sans',sans-serif;font-size:12px;color:var(--ink-faint);font-weight:600">${who.map(esc).join(", ")}</span></h4>
+      <dl>
+        <dt>Strength</dt><dd>${esc(g.strength)}</dd>
+        <dt>Watch for</dt><dd>${esc(g.weakness)}</dd>
+        <dt>How they like to be communicated with</dt><dd>${esc(g.comms)}</dd>
+        <dt>Where they're easily bruised</dt><dd>${esc(g.sensitive)}</dd>
+        <dt>Leading them well</dt><dd>${esc(g.lead)}</dd>
+      </dl></div>`;}).join("");
+  return `<h3>Working with your people</h3>
+    <p class="hint" style="margin-top:0">Practical guidance for the strengths actually represented on this team — and who brings each one.</p>
+    ${humilityNote("leader")}
+    <div style="margin-top:10px">${cards}</div>`;
 }
 function setSyn(id){SYN_TEST=id;renderSynth();}
 function pctOfPeople(x,S){return S.people?Math.round(x.leaders.length/S.people*100):0;}
@@ -1716,6 +1948,13 @@ function renderLeaders(){
       <div><b>${esc(t.name)}</b> <span class="muted">· ${t.types.length} strengths · ${t.questions.length} questions</span><br><span class="muted" style="font-size:13px">${t.builtIn?"Built in — always available":"Shared with the team"}</span></div>
       <div style="display:flex;gap:8px"><button class="btn sm ghost" onclick="go('start',{testId:'${t.id}'})">Preview</button>${t.builtIn?"":`<button class="btn sm ghost" onclick="removeTest('${t.id}')">Delete</button>`}</div></div>`).join("")}
   </div>
+  <div class="panel narrow" style="margin-bottom:20px">
+    <h3 style="font-size:21px;margin-bottom:6px">Teams &amp; departments</h3>
+    <p class="muted">People pick their team when they take an assessment. Edit the list here — one per line.</p>
+    <label class="field"><textarea id="deptList" rows="8" style="width:100%;padding:12px 14px;border:1px solid var(--line);border-radius:10px;font:inherit;font-size:15px">${esc(depts().join("\n"))}</textarea></label>
+    <div style="display:flex;gap:10px;flex-wrap:wrap"><button class="btn" id="deptBtn" onclick="doSaveDepartments()">Save teams</button><button class="btn ghost" onclick="resetDepartments()">Restore default list</button></div>
+    <p class="hint" id="deptMsg"></p>
+  </div>
   <div class="panel narrow" style="margin-bottom:20px" id="feedbackPanel">
     <h3 style="font-size:21px;margin-bottom:6px">Leader feedback (360°)</h3>
     <p class="muted">See a leader's self-rating beside how the people they lead experience them. <span id="fbCount"><span class="spin"></span>Loading…</span></p>
@@ -1728,6 +1967,18 @@ function renderLeaders(){
     <div class="callout" style="margin-top:16px">Anyone with this site's link can view and add results, so keep the link to your team. When you're ready, this can be locked behind a sign-in or team passcode.</div>
   </div>`;
   loadFeedbackList();
+}
+async function doSaveDepartments(){
+  const el=document.getElementById("deptList"),msg=document.getElementById("deptMsg"),btn=document.getElementById("deptBtn");
+  const list=(el.value||"").split("\n").map(x=>x.trim()).filter(Boolean);
+  if(!list.length)return flag(msg,"Add at least one team, or restore the default list.");
+  btn.disabled=true;btn.innerHTML='<span class="spin"></span>Saving…';
+  try{await saveDepartments(list);btn.disabled=false;btn.innerHTML="Save teams";msg.innerHTML="Saved ✓ — these now appear when people take an assessment.";}
+  catch(e){btn.disabled=false;btn.innerHTML="Save teams";flag(msg,e.message);}
+}
+async function resetDepartments(){
+  const el=document.getElementById("deptList");el.value=DEFAULT_DEPARTMENTS.join("\n");
+  const msg=document.getElementById("deptMsg");msg.innerHTML="Default list restored — press Save teams to keep it.";
 }
 async function loadFeedbackList(){
   const countEl=document.getElementById("fbCount"),listEl=document.getElementById("fbList");
