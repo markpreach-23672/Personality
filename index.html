@@ -665,6 +665,38 @@ const GUIDE={
     sensitive:"Shifting expectations and last-minute changes after they've committed.",
     lead:"Protect them from becoming the church's default finisher. Give clear scope, then leave them alone to work."}
  },
+ "ministry-leadership":{
+  anchor:{strength:"Leads from a full well. Decisions are prayed over, not just reasoned out.",
+    weakness:"Can retreat into preparation when action is needed, or assume others share their rhythm.",
+    comms:"Unhurried conversation. Give them space to reflect before they respond.",
+    sensitive:"Having their devotional life treated as optional, or being scheduled so tightly it's squeezed out.",
+    lead:"Protect their rest and study time rather than admiring it. Ask what God has been saying to them, not just what's done."},
+  example:{strength:"What they say and how they live match. People trust them because of it.",
+    weakness:"Can hold themselves to a standard that becomes self-punishing, and struggle to admit weakness.",
+    comms:"Straight and sincere. They notice flattery and discount it.",
+    sensitive:"Any hint of hypocrisy pointed at them — it strikes at the thing they most guard.",
+    lead:"Model owning your own mistakes in front of them; it gives them permission to be human too."},
+  vision:{strength:"Keeps the 'why' in front of people so work doesn't become mere activity.",
+    weakness:"May stay at altitude and leave people unclear on this week's next step.",
+    comms:"Start with purpose and direction, then get to details. Details-first loses them.",
+    sensitive:"Having their vision called impractical, or watching the church drift into maintenance.",
+    lead:"Ask them to name one concrete step under the vision. Pair them with a strong Handoff or Finisher."},
+  venture:{strength:"Willing to try, change, and stop doing what no longer works.",
+    weakness:"Can change things faster than people can absorb, and undervalue what's worth keeping.",
+    comms:"Bring them problems, not just approvals. They come alive with room to experiment.",
+    sensitive:"Being told 'we've always done it this way' without a reason.",
+    lead:"Give them a sandbox — a defined place to innovate — so change is safe rather than unsettling."},
+  handoff:{strength:"Gives real responsibility away and raises people up rather than hoarding tasks.",
+    weakness:"May hand off before someone's ready, or lose track of what they delegated.",
+    comms:"Clear on outcomes, light on method. Tell them what success looks like.",
+    sensitive:"Having authority they delegated quietly taken back, or being second-guessed publicly.",
+    lead:"Ask who they're developing right now. Back their delegation instead of overruling it in front of others."},
+  blessing:{strength:"Notices and names what others do, especially the unseen work.",
+    weakness:"May avoid hard feedback so as not to discourage, letting problems grow.",
+    comms:"Warm and personal. They read tone as much as words.",
+    sensitive:"A cold or purely transactional exchange, and seeing faithful people overlooked.",
+    lead:"Give them permission and a script for the hard conversation, so encouragement and honesty can live together."}
+ },
  "four-colors":{
   scarlet:{strength:"Decisive and driven. Moves things forward when others hesitate.",
     weakness:"Can run over people in the push to get results.",
@@ -720,7 +752,18 @@ const GUIDE={
     lead:"Define done, then let them run. Don't hand them someone else's mess without acknowledging it."}
  }
 };
-function guideFor(testId,typeId){return (GUIDE[testId]||{})[typeId]||null;}
+const SHAPE_GUIDE={
+  "S:teaching":{strength:"Makes truth clear and gives people something to hold onto.",weakness:"Can over-explain, or prize being right over being understood.",comms:"Give them time to prepare; don't spring a teaching request on them last minute.",sensitive:"Being corrected publicly on content, or having their preparation rushed.",lead:"Tell them who they're teaching and what those people need, not just the topic."},
+  "S:shepherding":{strength:"Stays with people over the long haul and notices who's drifting.",weakness:"Carries others' burdens home and can quietly run dry.",comms:"Ask about the people they're carrying, then ask about them.",sensitive:"Being moved off people they've invested in, or seeing someone fall through the cracks.",lead:"Cap how many people they're responsible for, and check their own soul care."},
+  "S:serving":{strength:"Meets the practical need so the ministry can actually happen.",weakness:"Says yes past capacity and rarely asks for help.",comms:"Be concrete about the need; they respond to specifics, not appeals.",sensitive:"Being treated as labor rather than a person, or going unthanked.",lead:"Name their work publicly and watch their load for them."},
+  "S:giving":{strength:"Provides generously and gladly, often before being asked.",weakness:"Can assume money solves what really needs presence or change.",comms:"Be transparent about where resources go; vagueness erodes their trust fast.",sensitive:"Feeling their generosity is expected, or seeing funds handled carelessly.",lead:"Report back on what their giving accomplished, and never take it for granted."},
+  "S:leading":{strength:"Sets direction and moves people toward it.",weakness:"Can run ahead of the team and mistake momentum for agreement.",comms:"Direct and decisive. Give them the goal and the boundaries.",sensitive:"Being micromanaged or having authority undermined after it was given.",lead:"Define the lane clearly, then let them lead inside it."},
+  "S:mercy":{strength:"Moves toward hurting people instead of away.",weakness:"Can absorb others' pain and struggle to set limits.",comms:"Gentle and unhurried; they read tone closely.",sensitive:"Harshness toward the struggling, or hearing people discussed as problems.",lead:"Give them permission to step back, and pair them with someone who holds structure."},
+  "S:encouraging":{strength:"Says the thing that puts strength back into someone.",weakness:"May soften a message until the hard part disappears.",comms:"Personal and affirming; they give what they'd like to receive.",sensitive:"Cynicism, and having their encouragement dismissed as naive.",lead:"Ask them to pair encouragement with one honest word — it's a skill they can grow."},
+  "S:intercession":{strength:"Carries people to God faithfully, usually unseen.",weakness:"Can withdraw into prayer where action is also required.",comms:"Quiet, unhurried, one-to-one. Tell them what to pray for specifically.",sensitive:"Having prayer treated as a formality or a lesser contribution.",lead:"Bring them real requests and report answers back. Give their ministry visible honor."}
+};
+function guideFor(testId,typeId){
+  if(testId==="shape")return SHAPE_GUIDE[typeId]||null;return (GUIDE[testId]||{})[typeId]||null;}
 
 /* A plain word about what these results are — and aren't. Shown on every
    report, and at more length on the leadership summaries. */
@@ -811,6 +854,16 @@ async function createChurch(name){
 async function cloudSelect(table,q){const r=await fetch(SUPA.url+"/rest/v1/"+table+"?"+(q||"select=*"),{headers:H()});if(!r.ok)throw new Error("read "+r.status+": "+await r.text());return r.json();}
 async function cloudInsert(table,row){const r=await fetch(SUPA.url+"/rest/v1/"+table,{method:"POST",headers:H({Prefer:"return=representation"}),body:JSON.stringify(row)});if(!r.ok){const t=await r.text();const e=new Error("insert "+r.status+": "+t);e.status=r.status;throw e;}return r.json();}
 async function cloudUpdate(table,q,patch){const r=await fetch(SUPA.url+"/rest/v1/"+table+"?"+q,{method:"PATCH",headers:H({Prefer:"return=representation"}),body:JSON.stringify(patch)});if(!r.ok)throw new Error("update "+r.status+": "+await r.text());return r.json();}
+async function setPersonDepartments(name,list){
+  const rows=(store.resultsCache||[]).filter(r=>r.name.toLowerCase()===name.toLowerCase());
+  const patch={departments:list.length?list:null,department:list.length?list[0]:null};
+  for(const r of rows){
+    if(!r.dbId)continue;
+    await cloudUpdate(SUPA.results,"id=eq."+encodeURIComponent(r.dbId),patch);
+    r.departments=list.slice();
+  }
+  return rows.length;
+}
 async function saveDepartments(list){
   const rows=await cloudUpdate(SUPA.churches,"id=eq."+CHURCH.id,{departments:list});
   CHURCH.departments=list.length?list:null;return rows;
@@ -1849,22 +1902,82 @@ async function loadSynth(){
   ${deptBar(all)}${deptNote()}
   ${picker}
   <div class="panel syn">
-    <p class="lede">${esc(synthLede(S))}</p>
+    ${test.sections?"":`<p class="lede">${esc(synthLede(S))}</p>`}
+    ${test.sections?shapeSynthBody(test,S.rel):`
     ${S.phase?phaseBlock(S):""}
     <h3>Strength distribution</h3>
     <div class="bars">${S.ranked.map(x=>`<div class="bar"><div class="name">${esc(x.type.name)}</div><div class="track"><div class="fill" data-w="${pctOfPeople(x,S)}" style="background:${x.type.color}"></div></div><div class="pct">${x.leaders.length}</div></div>`).join("")}</div>
     <p class="hint">Bar length = how many people lead in that strength (their top two).</p>
     <h3>What this means for the team</h3>
     ${synthRecs(S).map(r=>`<div class="rec"><b>${esc(r.title)}</b>${esc(r.body)}</div>`).join("")}
-    ${guidanceBlock(test,S)}
     <h3>Coverage at a glance</h3>
-    ${coveragePanelInline(test,S)}
+    ${coveragePanelInline(test,S)}`}
+    ${guidanceBlock(test,S)}
     ${humilityNote("leader")}
   </div>`;
   requestAnimationFrame(()=>{document.querySelectorAll('.fill').forEach(f=>{setTimeout(()=>f.style.width=f.dataset.w+"%",60);});});
 }
+/* SHAPE: rank the five letters is meaningless — what a leader needs is where
+   gifts, hearts and abilities cluster, and who brings each. */
+function shapeClusters(test,rel){
+  const out={};
+  test.sections.forEach(sec=>{
+    const m={};
+    rel.forEach(r=>{(r.picks&&r.picks[sec.key]||[]).forEach(id=>{
+      const o=test.optionMap[id];if(!o)return;(m[id]=m[id]||{name:o.name,desc:o.desc,people:[]}).people.push(r.name);});});
+    out[sec.key]=Object.keys(m).map(id=>({id,...m[id]})).sort((a,b)=>b.people.length-a.people.length);
+  });
+  return out;
+}
+function shapeSynthBody(test,rel){
+  const C=shapeClusters(test,rel);
+  const names=[...new Set(rel.map(r=>r.name))];
+  const block=(sec)=>{
+    const rows=C[sec.key];
+    if(!rows.length)return "";
+    return `<h3>${esc(sec.name)}</h3><p class="hint" style="margin-top:0">${esc(sec.lead)}</p>
+      <div class="coverage">${rows.map(x=>`<div class="cov-row"><div class="cname">${esc(x.name)}</div><div class="dots">${x.people.map(n=>`<span class="p" title="${esc(n)}">${initials(n)}</span>`).join("")}</div><span class="cov-flag ok">${x.people.length}</span></div>`).join("")}</div>`;
+  };
+  // gaps: gifts/abilities nobody brings
+  const missing=(sec)=>sec.options.filter(o=>!C[sec.key].some(x=>x.id===sec.key+":"+o.id)).map(o=>o.name);
+  const giftGaps=missing(test.sections[0]), abilGaps=missing(test.sections[2]);
+  const top=k=>C[k][0]?C[k][0].name:null;
+  const lede=[];
+  if(top("S"))lede.push(`The strongest gifting on this team is ${top("S")}.`);
+  if(top("H"))lede.push(`Hearts lean most toward ${top("H")}.`);
+  if(top("A"))lede.push(`The ability most on hand is ${top("A")}.`);
+  const recs=[];
+  if(giftGaps.length)recs.push({t:"Gifts no one brings",b:`No one on this team shows ${listJoin(giftGaps.slice(0,4))}. That's not a failure — it's where to invite someone in, or lean on another team.`});
+  if(abilGaps.length)recs.push({t:"Practical gaps",b:`Nobody here offers ${listJoin(abilGaps.slice(0,4))}. Worth knowing before you plan something that needs it.`});
+  const spread=C.H.length;
+  if(spread===1&&names.length>1)recs.push({t:"One shared heart",b:`Everyone's heart points the same direction. That's real unity — just make sure it doesn't narrow who you notice.`});
+  else if(spread>=4)recs.push({t:"Widely spread hearts",b:`Hearts are spread across ${spread} directions. Rich, but name a shared focus so effort doesn't scatter.`});
+  return `<p class="lede">${esc(lede.join(" ")||"As people complete this assessment, the team's shape appears here.")}</p>
+    ${test.sections.map(block).join("")}
+    ${recs.length?`<h3>What this means for the team</h3>${recs.map(r=>`<div class="rec"><b>${esc(r.t)}</b>${esc(r.b)}</div>`).join("")}`:""}`;
+}
+function shapeGuidanceBlock(test,S){
+  const rel=S.rel||[];
+  const C=shapeClusters(test,rel);
+  const cards=(C.S||[]).filter(x=>guideFor("shape",x.id)).map(x=>{
+    const g=guideFor("shape",x.id);
+    return `<div class="tblock" style="border-top-color:#7A5EA6;margin-bottom:14px">
+      <h4>${esc(x.name)}<span style="margin-left:auto;font-family:'Public Sans',sans-serif;font-size:12px;color:var(--ink-faint);font-weight:600">${x.people.map(esc).join(", ")}</span></h4>
+      <dl><dt>Strength</dt><dd>${esc(g.strength)}</dd>
+      <dt>Watch for</dt><dd>${esc(g.weakness)}</dd>
+      <dt>How they like to be communicated with</dt><dd>${esc(g.comms)}</dd>
+      <dt>Where they're easily bruised</dt><dd>${esc(g.sensitive)}</dd>
+      <dt>Leading them well</dt><dd>${esc(g.lead)}</dd></dl></div>`;}).join("");
+  if(!cards)return "";
+  return `<h3>Working with your people</h3>
+    <p class="hint" style="margin-top:0">Guidance for the spiritual gifts present on this team — and who brings each one.</p>
+    ${humilityNote("leader")}
+    <div style="margin-top:10px">${cards}</div>`;
+}
+
 /* Leader guidance for the types actually present on this team */
 function guidanceBlock(test,S){
+  if(test.sections)return shapeGuidanceBlock(test,S);
   const present=test.types.filter(ty=>(S.per[ty.id]||{leaders:[]}).leaders.length>0&&guideFor(test.id,ty.id));
   if(!present.length)return "";
   const cards=present.map(ty=>{
@@ -1955,6 +2068,11 @@ function renderLeaders(){
     <div style="display:flex;gap:10px;flex-wrap:wrap"><button class="btn" id="deptBtn" onclick="doSaveDepartments()">Save teams</button><button class="btn ghost" onclick="resetDepartments()">Restore default list</button></div>
     <p class="hint" id="deptMsg"></p>
   </div>
+  <div class="panel" style="margin-bottom:20px" id="assignPanel">
+    <h3 style="font-size:21px;margin-bottom:6px">Assign people to teams</h3>
+    <p class="muted">Tick the teams each person serves on. Changes apply to all of their results.</p>
+    <div id="assignList"><span class="spin"></span> Loading people…</div>
+  </div>
   <div class="panel narrow" style="margin-bottom:20px" id="feedbackPanel">
     <h3 style="font-size:21px;margin-bottom:6px">Leader feedback (360°)</h3>
     <p class="muted">See a leader's self-rating beside how the people they lead experience them. <span id="fbCount"><span class="spin"></span>Loading…</span></p>
@@ -1966,7 +2084,7 @@ function renderLeaders(){
     <div style="display:flex;gap:10px;flex-wrap:wrap"><button class="btn ghost" onclick="go('team')">Open Team View</button><button class="btn ghost" onclick="go('synth')">Open Synthesis</button></div>
     <div class="callout" style="margin-top:16px">Anyone with this site's link can view and add results, so keep the link to your team. When you're ready, this can be locked behind a sign-in or team passcode.</div>
   </div>`;
-  loadFeedbackList();
+  loadFeedbackList();loadAssignList();
 }
 async function doSaveDepartments(){
   const el=document.getElementById("deptList"),msg=document.getElementById("deptMsg"),btn=document.getElementById("deptBtn");
@@ -1979,6 +2097,39 @@ async function doSaveDepartments(){
 async function resetDepartments(){
   const el=document.getElementById("deptList");el.value=DEFAULT_DEPARTMENTS.join("\n");
   const msg=document.getElementById("deptMsg");msg.innerHTML="Default list restored — press Save teams to keep it.";
+}
+async function loadAssignList(){
+  const el=document.getElementById("assignList");if(!el)return;
+  let all;
+  try{all=await fetchResults();}catch(e){el.innerHTML=`<span style="color:var(--c-rally)">Couldn't load people (${esc(e.message)}).</span>`;return;}
+  store.resultsCache=all;
+  const people=allPeople(all);
+  if(!people.length){el.innerHTML='<p class="muted">No results yet.</p>';return;}
+  const map=personDeptMap(all);
+  el.innerHTML=people.map((n,i)=>{
+    const mine=map[n.toLowerCase()]?[...map[n.toLowerCase()]]:[];
+    const count=all.filter(r=>r.kind!=="observer"&&r.name.toLowerCase()===n.toLowerCase()).length;
+    return `<div style="padding:14px 0;border-bottom:1px solid var(--line)">
+      <div style="display:flex;justify-content:space-between;align-items:baseline;gap:10px;flex-wrap:wrap">
+        <div><b>${esc(n)}</b> <span class="muted" style="font-size:13px">· ${count} assessment${count===1?"":"s"}</span></div>
+        <button class="btn sm" onclick="saveAssign(${i},this)">Save</button></div>
+      <div style="display:flex;flex-wrap:wrap;gap:7px;margin-top:9px" data-person="${esc(n)}" id="assign_${i}">
+        ${depts().map(d=>`<label style="display:inline-flex;align-items:center;gap:6px;border:1px solid var(--line);border-radius:999px;padding:6px 12px;font-size:13px;cursor:pointer;background:${mine.includes(d)?'var(--paper-2)':'#fff'}">
+          <input type="checkbox" value="${esc(d)}" ${mine.includes(d)?"checked":""} style="margin:0;width:14px;height:14px;cursor:pointer">${esc(d)}</label>`).join("")}
+      </div>
+      <p class="hint" id="assignMsg_${i}" style="margin:6px 0 0"></p>
+    </div>`;}).join("");
+}
+async function saveAssign(i,btn){
+  const box=document.getElementById("assign_"+i),msg=document.getElementById("assignMsg_"+i);
+  const name=box.getAttribute("data-person");
+  const list=[...box.querySelectorAll("input:checked")].map(b=>b.value);
+  btn.disabled=true;btn.innerHTML='<span class="spin"></span>Saving…';
+  try{
+    const n=await setPersonDepartments(name,list);
+    btn.disabled=false;btn.innerHTML="Save";
+    msg.innerHTML=list.length?`Updated ${n} result${n===1?"":"s"} \u2014 ${esc(listJoin(list))}. \u2713`:`Cleared team assignment. \u2713`;
+  }catch(e){btn.disabled=false;btn.innerHTML="Save";msg.innerHTML=`<span style="color:var(--c-rally)">${esc(e.message)}</span>`;}
 }
 async function loadFeedbackList(){
   const countEl=document.getElementById("fbCount"),listEl=document.getElementById("fbList");
