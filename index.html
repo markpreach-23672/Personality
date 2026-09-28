@@ -201,7 +201,8 @@ const SUPA={
   key:"sb_publishable_7299SQkKN0CFTkheEaWuOA_9dNIQ1Kp",
   results:"assessment_results",
   tests:"assessments",
-  churches:"churches"
+  churches:"churches",
+  people:"church_people"
 };
 const CLOUD = !!(SUPA.url && SUPA.key);
 const PRICE="$100";
@@ -797,6 +798,7 @@ BUILT_IN_TESTS.forEach(t=>{
 const AUTH={session:null};
 const DEFAULT_DEPARTMENTS=["Worship","Youth","Children","Hospitality & Greeters","Ushers","Media & Tech","Prayer","Outreach","Administration","Small Groups","Facilities"];
 const CHURCH={id:null,slug:null,name:null,contactEmail:null,owner:false,departments:null};
+const ME={role:null,name:null,teams:[]};  // role: admin | leader | member
 function depts(){return (CHURCH.departments&&CHURCH.departments.length)?CHURCH.departments:DEFAULT_DEPARTMENTS;}
 const store={custom:[], resultsCache:null, cloudErr:null};
 
@@ -804,7 +806,12 @@ function _lset(k,v){try{localStorage.setItem(k,JSON.stringify(v));}catch(e){}}
 function _lget(k,f){try{const v=localStorage.getItem(k);return v?JSON.parse(v):f;}catch(e){return f;}}
 
 function loggedIn(){return !!(AUTH.session&&AUTH.session.access_token);}
-function mode(){return loggedIn()?"admin":(CHURCH.id?"congregant":"marketing");}
+function mode(){
+  if(!loggedIn())return CHURCH.id?"congregant":"marketing";
+  return ME.role==="admin"?"admin":(ME.role?"team":"admin");
+}
+function isAdmin(){return mode()==="admin";}
+function myTeams(){return ME.teams||[];}
 function bearer(){return loggedIn()?AUTH.session.access_token:SUPA.key;}
 function H(extra){return Object.assign({apikey:SUPA.key,Authorization:"Bearer "+bearer(),"Content-Type":"application/json"},extra||{});}
 
@@ -828,7 +835,7 @@ async function refreshSession(){
   try{return storeSession(await authFetch("token?grant_type=refresh_token",{refresh_token:s.refresh_token}));}
   catch(e){signOut();return null;}
 }
-function signOut(){AUTH.session=null;try{localStorage.removeItem("elc_session");}catch(e){}CHURCH.id=CHURCH.slug=CHURCH.name=null;CHURCH.owner=false;store.custom=[];store.resultsCache=null;}
+function signOut(){AUTH.session=null;ME.role=null;ME.teams=[];ME.name=null;DEPT="all";try{localStorage.removeItem("elc_session");}catch(e){}CHURCH.id=CHURCH.slug=CHURCH.name=null;CHURCH.owner=false;store.custom=[];store.resultsCache=null;}
 
 /* ---- churches ---- */
 function setChurch(c,owner){CHURCH.id=c.id;CHURCH.slug=c.slug;CHURCH.name=c.name;CHURCH.contactEmail=c.contact_email||null;CHURCH.departments=(c.departments&&c.departments.length)?c.departments:null;CHURCH.owner=!!owner;}
@@ -836,6 +843,16 @@ function slugify(s){return (s||"").toLowerCase().replace(/[^a-z0-9]+/g,"-").repl
 async function fetchChurchBySlug(slug){
   const rows=await cloudSelect(SUPA.churches,"slug=eq."+encodeURIComponent(slug)+"&select=*");
   return Array.isArray(rows)&&rows[0]?rows[0]:null;
+}
+async function fetchMyMembership(){
+  const email=(AUTH.session&&AUTH.session.user&&AUTH.session.user.email)||"";
+  if(!email)return null;
+  const rows=await cloudSelect(SUPA.people,"email=ilike."+encodeURIComponent(email)+"&select=*&limit=1");
+  return (Array.isArray(rows)&&rows[0])?rows[0]:null;
+}
+async function fetchChurchById(id){
+  const rows=await cloudSelect(SUPA.churches,"id=eq."+encodeURIComponent(id)+"&select=*&limit=1");
+  return (Array.isArray(rows)&&rows[0])?rows[0]:null;
 }
 async function fetchMyChurch(){
   const rows=await cloudSelect(SUPA.churches,"owner=eq."+AUTH.session.user.id+"&select=*&limit=1");
@@ -854,6 +871,19 @@ async function createChurch(name){
 async function cloudSelect(table,q){const r=await fetch(SUPA.url+"/rest/v1/"+table+"?"+(q||"select=*"),{headers:H()});if(!r.ok)throw new Error("read "+r.status+": "+await r.text());return r.json();}
 async function cloudInsert(table,row){const r=await fetch(SUPA.url+"/rest/v1/"+table,{method:"POST",headers:H({Prefer:"return=representation"}),body:JSON.stringify(row)});if(!r.ok){const t=await r.text();const e=new Error("insert "+r.status+": "+t);e.status=r.status;throw e;}return r.json();}
 async function cloudUpdate(table,q,patch){const r=await fetch(SUPA.url+"/rest/v1/"+table+"?"+q,{method:"PATCH",headers:H({Prefer:"return=representation"}),body:JSON.stringify(patch)});if(!r.ok)throw new Error("update "+r.status+": "+await r.text());return r.json();}
+async function fetchRoster(){
+  if(!CHURCH.id)return [];
+  return await cloudSelect(SUPA.people,"church_id=eq."+CHURCH.id+"&select=*&order=created_at.asc");
+}
+async function addRosterPerson(email,name,role,teams){
+  return await cloudInsert(SUPA.people,{church_id:CHURCH.id,email:email.trim(),name:name.trim()||null,role,departments:teams});
+}
+async function updateRosterPerson(id,patch){
+  return await cloudUpdate(SUPA.people,"id=eq."+encodeURIComponent(id),patch);
+}
+async function removeRosterPerson(id){
+  return await cloudDelete(SUPA.people,"id=eq."+encodeURIComponent(id));
+}
 async function setPersonDepartments(name,list){
   const rows=(store.resultsCache||[]).filter(r=>r.name.toLowerCase()===name.toLowerCase());
   const patch={departments:list.length?list:null,department:list.length?list[0]:null};
@@ -1156,6 +1186,12 @@ function personDeptMap(rows){
 }
 function deptsOf(name,rows){const s=personDeptMap(rows)[(name||"").toLowerCase()];return s?[...s]:[];}
 function scopeDept(rows){
+  if(mode()==="team"){
+    const mine=myTeams();
+    const pick=mine.includes(DEPT)?[DEPT]:mine;
+    const m=personDeptMap(store.resultsCache||rows);
+    return rows.filter(r=>{const set=m[r.name.toLowerCase()];return !!set&&pick.some(d=>set.has(d));});
+  }
   if(DEPT==="all")return rows;
   const m=personDeptMap(store.resultsCache||rows);
   return rows.filter(r=>{
@@ -1166,6 +1202,11 @@ function scopeDept(rows){
 }
 function setDept(d){DEPT=d;render();}
 function deptBar(all){
+  if(mode()==="team"){
+    const mine=myTeams();
+    if(mine.length<2)return `<div class="callout info" style="margin-bottom:16px">You're seeing <b>${esc(mine[0]||"your team")}</b>.</div>`;
+    return `<div class="toolbar" style="margin-bottom:14px">${mine.map(d=>`<button class="btn sm ${DEPT===d?'':'ghost'}" onclick="setDept('${esc(d).replace(/'/g,"\\'")}')">${esc(d)}</button>`).join("")}</div>`;
+  }
   const self=all.filter(r=>r.kind!=="observer");
   const map=personDeptMap(all);
   const counts={};let unassigned=0;
@@ -1180,7 +1221,7 @@ function deptBar(all){
   if(unassigned)btns.push(`<button class="btn sm ${DEPT===''?'':'ghost'}" onclick="setDept('')">Unassigned (${unassigned})</button>`);
   return `<div class="toolbar" style="margin-bottom:14px">${btns.join("")}</div>`;
 }
-function deptNote(){return DEPT==="all"?"":`<div class="callout info" style="margin-bottom:16px">Showing <b>${DEPT===""?"people with no team assigned":esc(DEPT)}</b> only. <a href="#" onclick="setDept('all');return false;">Show all teams</a></div>`;}
+function deptNote(){if(mode()==="team")return "";return DEPT==="all"?"":`<div class="callout info" style="margin-bottom:16px">Showing <b>${DEPT===""?"people with no team assigned":esc(DEPT)}</b> only. <a href="#" onclick="setDept('all');return false;">Show all teams</a></div>`;}
 
 async function loadCombined(){
   let all;
@@ -1293,9 +1334,10 @@ function renderChrome(){
     bt.innerHTML=`<b>Church Strengths</b><span>Many members, one body</span>`;
     ft.innerHTML=`Church Strengths · <span class="muted">Assessments for ministry teams</span>`;
   }
-  if(m==="admin"){
+  if(m==="admin"||m==="team"){
     const active=({start:"home",take:"home",report:"home",builder:"leaders",feedback:"leaders"})[STATE.screen]||STATE.screen;
-    nav.innerHTML=NAV_ADMIN.map(n=>`<button class="${active===n.id?'active':''}" onclick="go('${n.id}')">${n.label}</button>`).join("")
+    const items=m==="admin"?NAV_ADMIN:NAV_ADMIN.filter(n=>n.id!=="leaders");
+    nav.innerHTML=items.map(n=>`<button class="${active===n.id?'active':''}" onclick="go('${n.id}')">${n.label}</button>`).join("")
       +`<button onclick="doSignOut()" title="Sign out" style="color:var(--ink-faint)">Sign out</button>`;
   }else if(m==="congregant"){
     nav.innerHTML=`<button onclick="go('login')" style="color:var(--ink-faint)">Church admin</button>`;
@@ -1306,7 +1348,12 @@ function renderChrome(){
 
 function render(){
   // gate admin-only screens
-  if(ADMIN_ONLY.includes(STATE.screen)&&mode()!=="admin"){STATE.screen=CHURCH.id?"home":"login";}
+  const m0=mode();
+  const TEAM_ALLOWED=["team","synth","combined","feedback"];
+  if(ADMIN_ONLY.includes(STATE.screen)){
+    if(m0==="team"&&!TEAM_ALLOWED.includes(STATE.screen))STATE.screen="home";
+    else if(m0!=="admin"&&m0!=="team")STATE.screen=CHURCH.id?"home":"login";
+  }
   renderChrome();
   const s=STATE.screen;
   if(s==="marketing")return renderMarketing();
@@ -1355,7 +1402,7 @@ async function doSignup(){
       msg.innerHTML=`<span style="color:var(--c-weigh)">Account created. Please check <b>${esc(email)}</b> to confirm your address, then <a href="#" onclick="go('login');return false;">log in</a> to finish setting up ${esc(church)}.</span>`;
       _lset("elc_pending_church",church);return;
     }
-    const c=await createChurch(church); setChurch(c,true); await refreshTests();
+    const c=await createChurch(church); ME.role="admin"; setChurch(c,true); await refreshTests();
     go("home");
   }catch(e){ btn.disabled=false;btn.innerHTML="Create account";
     flag(msg, /already registered|exists/i.test(e.message)?"That email already has an account — try logging in.":e.message); }
@@ -1375,10 +1422,17 @@ async function doLogin(){
   try{
     await signIn(email,pass);
     let mine=await fetchMyChurch();
-    if(!mine){ const pending=_lget("elc_pending_church",null);
-      if(pending){ mine=await createChurch(pending); try{localStorage.removeItem("elc_pending_church");}catch(e){} } }
-    if(mine){ setChurch(mine,true); await refreshTests(); go("home"); }
-    else { go("newchurch"); }
+    if(mine){ ME.role="admin";ME.teams=[];ME.name=null; setChurch(mine,true); await refreshTests(); return go("home"); }
+    const member=await fetchMyMembership();
+    if(member){
+      const ch=await fetchChurchById(member.church_id);
+      if(ch){ ME.role=member.role||"member";ME.name=member.name||null;ME.teams=member.departments||[];
+        setChurch(ch,false); DEPT=(ME.teams[0]||"all"); await refreshTests(); return go("home"); }
+    }
+    const pending=_lget("elc_pending_church",null);
+    if(pending){ mine=await createChurch(pending); try{localStorage.removeItem("elc_pending_church");}catch(e){}
+      ME.role="admin"; setChurch(mine,true); await refreshTests(); return go("home"); }
+    go("newchurch");
   }catch(e){ btn.disabled=false;btn.innerHTML="Log in";
     flag(msg, /confirm/i.test(e.message)?"Please confirm your email first (check your inbox), then log in.":/invalid/i.test(e.message)?"Email or password is incorrect.":e.message); }
 }
@@ -1393,7 +1447,7 @@ async function doNewChurch(){
   const name=(v("n_church")||"").trim(),msg=document.getElementById("authmsg"),btn=document.getElementById("n_btn");
   if(!name)return flag(msg,"Please enter your church's name.");
   btn.disabled=true;btn.innerHTML='<span class="spin"></span>Creating…';
-  try{const c=await createChurch(name);setChurch(c,true);await refreshTests();go("home");}
+  try{const c=await createChurch(name);ME.role="admin";setChurch(c,true);await refreshTests();go("home");}
   catch(e){btn.disabled=false;btn.innerHTML="Create my church";flag(msg,e.message);}
 }
 function doSignOut(){signOut();go("marketing");}
@@ -1425,7 +1479,7 @@ function windowSVG(test,pcts){
 
 /* HOME (admin dashboard or congregant assessment page) */
 function renderHome(){
-  const admin=mode()==="admin";
+  const admin=mode()==="admin";const team=mode()==="team";
   const tests=getTests();
   const cards=tests.map(t=>`<div class="tcard">
       ${admin?(t.builtIn?'<span class="tag">Built in</span>':'<span class="tag">Your test</span>'):''}
@@ -1447,17 +1501,21 @@ function renderHome(){
         <button class="btn sm ghost" onclick="go('synth')">Team synthesis</button>
       </div>
     </div>`:"";
-  const heroCTA=admin?`
+  const heroCTA=team?`
+        <button class="btn gold" onclick="go('synth')">My team's synthesis</button>
+        <button class="btn ghost" onclick="go('combined')">Whole picture</button>`:admin?`
         <button class="btn gold" onclick="go('start',{testId:'${tests[0].id}',mode:null})">Take an assessment</button>
         <button class="btn ghost" onclick="go('combined')">The whole picture</button>`
     :`<button class="btn gold" onclick="go('start',{testId:'${tests[0].id}',mode:null})">Begin an assessment</button>`;
-  const heroLead=admin
+  const heroLead=team
+    ?`Welcome${ME.name?", "+esc(ME.name.split(/\s+/)[0]):""}. You're seeing ${esc(listJoin(myTeams()))}${myTeams().length>1?"":""} — how your people are wired, and how to lead them well.`
+    :admin
     ?`Your dashboard for ${esc(CHURCH.name||"your church")}. Share the link, gather results, and see how your team fits together.`
     :`Welcome. Take an assessment below to discover your strengths — your results go to ${esc(CHURCH.name||"your church")}'s leaders to help the whole team serve well together.`;
   app().innerHTML=`
   <section class="hero">
     <div>
-      <div class="eyebrow">${admin?"Church dashboard":esc(CHURCH.name||"")}</div>
+      <div class="eyebrow">${admin?"Church dashboard":team?"Team leader":esc(CHURCH.name||"")}</div>
       <h1>Many members,<br><em>one body.</em></h1>
       <p class="lead">${heroLead}</p>
       <blockquote class="verse">For the body is not one member, but many.<cite>1 Corinthians 12:14 (KJV)</cite></blockquote>
@@ -1466,7 +1524,7 @@ function renderHome(){
     <div>${windowSVG(BUILT_IN_TESTS[0],null)}</div>
   </section>
   ${adminTools}
-  <div class="sec-head"><div><h2>Assessments</h2><p>${admin?"Everyone's results save privately to your church.":"Choose one to begin."}</p></div></div>
+  <div class="sec-head"><div><h2>Assessments</h2><p>${admin?"Everyone's results save privately to your church.":team?"Take one yourself, or send your team the church link.":"Choose one to begin."}</p></div></div>
   <div class="grid">${cards}
     ${admin?`<div class="tcard add"><div class="swatches"><i style="background:var(--line)"></i><i style="background:var(--line)"></i><i style="background:var(--line)"></i></div>
       <h3>Add an assessment</h3><p class="desc">Build your own strengths or gifts test for the team to take.</p>
@@ -2068,6 +2126,18 @@ function renderLeaders(){
     <div style="display:flex;gap:10px;flex-wrap:wrap"><button class="btn" id="deptBtn" onclick="doSaveDepartments()">Save teams</button><button class="btn ghost" onclick="resetDepartments()">Restore default list</button></div>
     <p class="hint" id="deptMsg"></p>
   </div>
+  <div class="panel" style="margin-bottom:20px" id="rosterPanel">
+    <h3 style="font-size:21px;margin-bottom:6px">Team leader access</h3>
+    <p class="muted">Give a leader their own login. They'll see only the teams you tick here — nothing else from the church.</p>
+    <div style="display:grid;grid-template-columns:1fr 1fr auto;gap:10px;align-items:end;margin-bottom:8px">
+      <label class="field" style="margin:0"><span class="lab">Email</span><input type="text" id="r_email" placeholder="leader@example.com"></label>
+      <label class="field" style="margin:0"><span class="lab">Name</span><input type="text" id="r_name" placeholder="Casey Briano"></label>
+      <button class="btn" id="r_btn" onclick="doAddRoster()">Give access</button>
+    </div>
+    <div style="display:flex;flex-wrap:wrap;gap:7px;margin-bottom:6px" id="r_teams"></div>
+    <p class="hint" id="r_msg">They sign up at your site with this exact email address, then log in.</p>
+    <div id="rosterList" style="margin-top:14px"></div>
+  </div>
   <div class="panel" style="margin-bottom:20px" id="assignPanel">
     <h3 style="font-size:21px;margin-bottom:6px">Assign people to teams</h3>
     <p class="muted">Tick the teams each person serves on. Changes apply to all of their results.</p>
@@ -2084,7 +2154,7 @@ function renderLeaders(){
     <div style="display:flex;gap:10px;flex-wrap:wrap"><button class="btn ghost" onclick="go('team')">Open Team View</button><button class="btn ghost" onclick="go('synth')">Open Synthesis</button></div>
     <div class="callout" style="margin-top:16px">Anyone with this site's link can view and add results, so keep the link to your team. When you're ready, this can be locked behind a sign-in or team passcode.</div>
   </div>`;
-  loadFeedbackList();loadAssignList();
+  loadFeedbackList();loadAssignList();loadRoster();
 }
 async function doSaveDepartments(){
   const el=document.getElementById("deptList"),msg=document.getElementById("deptMsg"),btn=document.getElementById("deptBtn");
@@ -2097,6 +2167,40 @@ async function doSaveDepartments(){
 async function resetDepartments(){
   const el=document.getElementById("deptList");el.value=DEFAULT_DEPARTMENTS.join("\n");
   const msg=document.getElementById("deptMsg");msg.innerHTML="Default list restored — press Save teams to keep it.";
+}
+async function loadRoster(){
+  const wrap=document.getElementById("r_teams"),list=document.getElementById("rosterList");
+  if(!wrap)return;
+  wrap.innerHTML=depts().map(d=>`<label style="display:inline-flex;align-items:center;gap:6px;border:1px solid var(--line);border-radius:999px;padding:6px 12px;font-size:13px;cursor:pointer;background:#fff"><input type="checkbox" class="rbox" value="${esc(d)}" style="margin:0;width:14px;height:14px">${esc(d)}</label>`).join("");
+  let rows=[];
+  try{rows=await fetchRoster();}catch(e){list.innerHTML=`<span style="color:var(--c-rally)">${esc(e.message)}</span>`;return;}
+  if(!rows.length){list.innerHTML='<p class="muted" style="margin:0">No leaders have access yet.</p>';return;}
+  list.innerHTML=rows.map(r=>`<div style="display:flex;justify-content:space-between;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid var(--line);flex-wrap:wrap">
+    <div><b>${esc(r.name||r.email)}</b> <span class="muted" style="font-size:13px">· ${esc(r.email)} · ${esc(r.role)}</span><br>
+      <span class="muted" style="font-size:13px">${esc((r.departments||[]).join(", ")||"no teams yet")}</span></div>
+    <button class="btn sm ghost" onclick="doRemoveRoster('${r.id}')">Remove access</button>
+  </div>`).join("");
+}
+async function doAddRoster(){
+  const email=(v("r_email")||"").trim(),name=(v("r_name")||"").trim();
+  const teams=[...document.querySelectorAll(".rbox:checked")].map(b=>b.value);
+  const msg=document.getElementById("r_msg"),btn=document.getElementById("r_btn");
+  if(!/.+@.+\..+/.test(email))return flag(msg,"Enter a valid email address.");
+  if(!teams.length)return flag(msg,"Tick at least one team for them to see.");
+  btn.disabled=true;btn.innerHTML='<span class="spin"></span>Saving…';
+  try{
+    await addRosterPerson(email,name,"leader",teams);
+    btn.disabled=false;btn.innerHTML="Give access";
+    document.getElementById("r_email").value="";document.getElementById("r_name").value="";
+    document.querySelectorAll(".rbox").forEach(b=>b.checked=false);
+    msg.innerHTML=`Access granted to <b>${esc(email)}</b> for ${esc(listJoin(teams))}. Ask them to sign up at your site with that email, then log in. \u2713`;
+    loadRoster();
+  }catch(e){btn.disabled=false;btn.innerHTML="Give access";
+    flag(msg,/duplicate|unique/i.test(e.message)?"That email already has access.":e.message);}
+}
+async function doRemoveRoster(id){
+  if(!confirm("Remove this person's access? Their own assessment results are not deleted."))return;
+  try{await removeRosterPerson(id);loadRoster();}catch(e){alert(e.message);}
 }
 async function loadAssignList(){
   const el=document.getElementById("assignList");if(!el)return;
@@ -2313,7 +2417,11 @@ async function boot(){
       const sess=await refreshSession();
       if(sess){
         const mine=await fetchMyChurch();
-        if(mine){setChurch(mine,true);await refreshTests();return go("home");}
+        if(mine){ME.role="admin";setChurch(mine,true);await refreshTests();return go("home");}
+        const member=await fetchMyMembership();
+        if(member){const ch=await fetchChurchById(member.church_id);
+          if(ch){ME.role=member.role||"member";ME.name=member.name||null;ME.teams=member.departments||[];
+            setChurch(ch,false);DEPT=(ME.teams[0]||"all");await refreshTests();return go("home");}}
         return go("newchurch");
       }
     }catch(e){}
