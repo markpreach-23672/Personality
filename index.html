@@ -943,8 +943,11 @@ async function sendProfileEmail(clientId,bodyText){
     headers:{apikey:SUPA.key,Authorization:"Bearer "+bearer(),"Content-Type":"application/json"},
     body:JSON.stringify({client_id:clientId,body:bodyText})
   });
-  const d=await r.json().catch(()=>({}));
-  if(!r.ok)throw new Error(d.error||("send failed "+r.status));
+  // Read as text first: an empty or non-JSON body must not be mistaken for a
+  // failed send. The HTTP status is the source of truth.
+  let d={};
+  try{const raw=await r.text();if(raw)d=JSON.parse(raw);}catch(e){d={};}
+  if(!r.ok)throw new Error(d.error||("the server returned "+r.status));
   return d;
 }
 async function deleteResultCloud(dbId){ if(dbId) await cloudDelete(SUPA.results,"id=eq."+encodeURIComponent(dbId)); }
