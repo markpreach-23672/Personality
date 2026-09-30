@@ -1059,6 +1059,57 @@ const SPINE_MAP={
 };
 const COLOR_WORD={scarlet:"drive",amber:"warmth",indigo:"depth",evergreen:"steadiness"};
 
+/* ============================================================
+   LEADERSHIP PLAYBOOK content libraries (original)
+   Assembled deterministically from a person's own results.
+============================================================ */
+const IDENTITY={   // merged-spine top role -> how they lead
+  noticing:{label:"Discerning Watchman",line:"You lead by seeing. You notice the need, the drift, or the person before anyone names it, and you say so."},
+  imagining:{label:"Possibility Builder",line:"You lead by imagining. You see what could be and give people a picture worth moving toward."},
+  discerning:{label:"Steady Judge",line:"You lead by weighing. People bring you decisions because your read is sound and your counsel holds up."},
+  rallying:{label:"Mobilizer",line:"You lead by gathering. You turn an idea into motion and get people moving together."},
+  helping:{label:"Servant Anchor",line:"You lead by coming alongside. Your influence is built through presence and faithfulness, not position."},
+  finishing:{label:"Finisher",line:"You lead by completing. What you carry gets across the line, and people trust that about you."}
+};
+const PRESSURE={   // temperament -> what happens when the load gets heavy
+  scarlet:{drift:"You push harder and faster, and decisions start replacing conversations.",signs:["I decide without consulting.","I get short with people who slow me down.","I measure the day by what got done."],back:"Slow one decision on purpose and ask someone what they think before you act."},
+  amber:{drift:"You keep the energy up in public while avoiding what's heavy underneath.",signs:["I say yes to keep the peace.","I avoid the hard conversation.","I'm performing more than connecting."],back:"Name the thing you've been avoiding, to one person, this week."},
+  indigo:{drift:"You withdraw into analysis and hold yourself to a standard no one else set.",signs:["I replay conversations looking for what I did wrong.","I delay because it isn't ready yet.","I stop asking for help."],back:"Ship something at 80 percent and tell someone you did it on purpose."},
+  evergreen:{drift:"You go quiet, absorb the strain, and let resentment build where no one can see it.",signs:["I agree out loud and disagree inside.","I stop volunteering my opinion.","I feel run over but say nothing."],back:"Say the disagreement out loud while it is still small."}
+};
+const ROLE_PRESSURE={ // spine role -> the specific failure that strength invites
+  noticing:"Your noticing turns into criticism, and people start bracing when you speak.",
+  imagining:"You start new things instead of finishing the last one, and the team pays for it.",
+  discerning:"You go silent rather than say the hard read, and the decision goes badly without you.",
+  rallying:"You rally people toward something that isn't ready, and spend trust you'll need later.",
+  helping:"You carry everyone and tell no one you're empty.",
+  finishing:"You grind alone and grow bitter at the people who left it unfinished."
+};
+const LAUNCH={     // questions generated from a person's QUIETER roles
+  noticing:["Whose need does this actually meet — can I name a real person?","What am I not seeing because I'm close to it?"],
+  imagining:["Is there a better way to do this that I haven't considered?","Have I asked anyone for an alternative before committing?"],
+  discerning:["Who will tell me honestly if this is a bad idea?","What would have to be true for this to fail?"],
+  rallying:["Who needs to hear the why before I ask for a yes?","Who will carry this with me, and have I actually asked them?"],
+  helping:["What does this cost the people who have to do the work?","Who bears the load if this takes longer than I think?"],
+  finishing:["Who owns each piece, and by when?","What does finished look like, specifically?"]
+};
+const CONVICTION={ // one keepable conviction per role
+  noticing:"I will raise what I see early and gently, while it can still be received.",
+  imagining:"I will finish faithfully before I begin something new.",
+  discerning:"I will say the hard read out loud, in time for it to matter.",
+  rallying:"I will earn a yes with clarity, not only with enthusiasm.",
+  helping:"I will let people carry me the way I carry them.",
+  finishing:"I will define done before I begin, and ask for help before I resent it."
+};
+const REVIEW=[
+  {h:"People",q:["Did I invest in someone this week, not just manage them?","Did anyone leave a conversation with me feeling unseen?","Is there a hard conversation I keep postponing?"]},
+  {h:"Direction",q:["Did I make where we're going clearer, or muddier?","Did I spend any time thinking rather than reacting?"]},
+  {h:"Follow-through",q:["Did I finish what I started?","Did I hand off well, or just hand off?"]},
+  {h:"Character",q:["Was I teachable when corrected?","Did I admit a mistake quickly?"]},
+  {h:"Before God",q:["Did prayer lead my planning, or follow it?","Has my ministry flowed out of my walk with Christ?"]},
+  {h:"Home",q:["Did my family get the best of me, or the leftovers?","Did ministry create pressure at home I could have prevented?"]}
+];
+
 function spineLabel(id){return (SPINE.find(s=>s.id===id)||{}).label||id;}
 function personResults(name,all){return all.filter(r=>r.kind!=="observer"&&r.name.toLowerCase()===name.toLowerCase());}
 function allPeople(all){
@@ -1168,6 +1219,135 @@ function teamNarrative(T){
     else if(T.outgoing+T.reserved>0)bits.push("Temperament is balanced between outgoing and reserved — energy and ballast both present.");
   }
   return bits.join(" ");
+}
+
+/* ============================================================
+   LEADERSHIP PLAYBOOK — assembled from a person's own results
+============================================================ */
+function buildPlaybook(name,all){
+  const P=combinePerson(name,all);
+  if(!P.spine&&!P.color&&!P.leadership&&!P.shape)return null;
+  const first=(name||"").split(/\s+/)[0];
+  const topRole=P.spine?P.spine.top[0]:null;
+  const secondRole=P.spine?P.spine.top[1]:null;
+  const quiet=P.spine?P.spine.ranked.slice(-2):[];
+  const ident=topRole?IDENTITY[topRole]:null;
+
+  // Contributions + risks come from the guidance already written per type.
+  const contributions=[],risks=[];
+  P.results.filter(r=>r.kind!=="observer").forEach(r=>{
+    (r.leading||[]).forEach(id=>{
+      const g=guideFor(r.testId,id);if(!g)return;
+      const t=findTest(r.testId);const ty=t&&t.types.find(x=>x.id===id);
+      const label=ty?ty.name:(t&&t.optionMap&&t.optionMap[id]?t.optionMap[id].name:id);
+      if(!contributions.some(c=>c.text===g.strength))contributions.push({label,text:g.strength});
+      if(!risks.some(c=>c.text===g.weakness))risks.push({label,text:g.weakness});
+    });
+    if(r.testId==="shape"&&r.picks){(r.picks.S||[]).forEach(id=>{
+      const g=guideFor("shape",id);const t=findTest("shape");
+      if(!g||!t.optionMap[id])return;const label=t.optionMap[id].name;
+      if(!contributions.some(c=>c.text===g.strength))contributions.push({label,text:g.strength});
+      if(!risks.some(c=>c.text===g.weakness))risks.push({label,text:g.weakness});});}
+  });
+
+  // Blind spots from real 360 feedback, when it exists.
+  let feedback=null;
+  const obs=all.filter(r=>r.kind==="observer"&&r.subject&&r.subject.toLowerCase()===name.toLowerCase());
+  if(obs.length){
+    const F=leaderFeedback("ministry-leadership",name,all);
+    if(F.self)feedback={raters:F.obs.length,blind:F.blind.map(x=>x.type.name),hidden:F.hidden.map(x=>x.type.name)};
+  }
+
+  const launch=[];
+  quiet.forEach(rid=>(LAUNCH[rid]||[]).forEach(q=>launch.push(q)));
+  const convictions=[];
+  (P.spine?P.spine.top.concat(quiet):[]).forEach(rid=>{if(CONVICTION[rid]&&!convictions.includes(CONVICTION[rid]))convictions.push(CONVICTION[rid]);});
+
+  return {name,first,P,ident,topRole,secondRole,quiet,contributions,risks,feedback,launch,convictions,
+    pressure:P.color?PRESSURE[P.color.id]:null,
+    rolePressure:topRole?ROLE_PRESSURE[topRole]:null,
+    teams:deptsOf(name,all)};
+}
+function playbookText(B){
+  const L=[];const push=(x="")=>L.push(x);
+  push(`LEADERSHIP PLAYBOOK — ${B.name}`);
+  if(B.teams.length)push(B.teams.join(", "));
+  push(new Date().toLocaleDateString());push("");
+  if(B.ident){push("HOW YOU'RE WIRED");push(`${B.ident.label}. ${B.ident.line}`);push("");}
+  if(B.contributions.length){push("WHAT YOU BRING");B.contributions.forEach(c=>push(`  • ${c.label}: ${c.text}`));push("");}
+  if(B.risks.length){push("WHAT TO GUARD");B.risks.forEach(c=>push(`  • ${c.label}: ${c.text}`));push("");}
+  if(B.feedback){push("WHAT YOUR TEAM SEES");
+    if(B.feedback.blind.length)push(`  Possible blind spots: ${B.feedback.blind.join(", ")}`);
+    if(B.feedback.hidden.length)push(`  Strengths you undersell: ${B.feedback.hidden.join(", ")}`);
+    push("");}
+  if(B.launch.length){push("BEFORE YOU START SOMETHING NEW");B.launch.forEach(q=>push(`  [ ] ${q}`));push("");}
+  if(B.pressure||B.rolePressure){push("WHEN YOU'RE STRETCHED THIN");
+    if(B.pressure)push(`  ${B.pressure.drift}`);
+    if(B.rolePressure)push(`  ${B.rolePressure}`);
+    if(B.pressure)B.pressure.signs.forEach(x=>push(`  [ ] ${x}`));
+    if(B.pressure)push(`  Way back: ${B.pressure.back}`);
+    push("");}
+  push("A RHYTHM OF REVIEW");
+  REVIEW.forEach(sec=>{push(`  ${sec.h}`);sec.q.forEach(q=>push(`    [ ] ${q}`));});
+  push("");
+  if(B.convictions.length){push("CONVICTIONS TO KEEP");B.convictions.forEach((c,i)=>push(`  ${i+1}. ${c}`));push("");}
+  push("This playbook is assembled from your own assessment answers. It describes patterns, not limits — read it as a starting point for reflection and conversation, not a verdict.");
+  push("");push(`${CHURCH.name||""} · Church Strengths`);
+  return L.join("\n");
+}
+function renderPlaybook(){
+  app().innerHTML=`<button class="back" onclick="go('combined')">&larr; Whole Picture</button>
+    <div class="panel"><p><span class="spin"></span>Building the playbook…</p></div>`;
+  loadPlaybook();
+}
+async function loadPlaybook(){
+  let all;
+  try{all=await fetchResults();}catch(e){return app().innerHTML=`<button class="back" onclick="go('combined')">&larr; Back</button><div class="panel"><div class="callout warn">${esc(e.message)}</div></div>`;}
+  store.resultsCache=all;
+  const B=buildPlaybook(STATE.pbPerson,all);
+  if(!B)return app().innerHTML=`<button class="back" onclick="go('combined')">&larr; Back</button><div class="panel"><p class="muted">No assessment results for this person yet.</p></div>`;
+  const checks=arr=>arr.map(q=>`<div style="display:flex;gap:10px;align-items:flex-start;padding:5px 0"><span style="display:inline-block;width:14px;height:14px;border:1.5px solid var(--line);border-radius:3px;flex:none;margin-top:3px"></span><span>${esc(q)}</span></div>`).join("");
+  const part=(n,title,sub,body)=>`<div class="sec-head" style="margin:34px 0 8px"><div><div class="eyebrow">Part ${n}</div><h2 style="font-size:26px">${esc(title)}</h2>${sub?`<p>${esc(sub)}</p>`:""}</div></div>${body}`;
+  app().innerHTML=`
+  <button class="back" onclick="go('combined')">&larr; Whole Picture</button>
+  <div class="panel">
+    <div class="report-head" style="grid-template-columns:1fr">
+      <div><div class="eyebrow">Leadership Playbook</div><h2 style="font-size:32px">${esc(B.name)}</h2>
+      ${B.teams.length?`<p class="muted" style="margin:4px 0 0">${esc(listJoin(B.teams))}</p>`:""}
+      ${B.ident?`<p class="lede" style="margin-top:14px;font-family:'Fraunces',serif;font-size:19px"><b>${esc(B.ident.label)}.</b> ${esc(B.ident.line)}</p>`:""}</div>
+    </div>
+    ${B.contributions.length?part("I","What You Bring","When you're healthy, this is what the church gets.",
+      `<div class="tblocks">${B.contributions.map(c=>`<div class="tblock"><h4>${esc(c.label)}</h4><dl><dd style="margin-top:6px">${esc(c.text)}</dd></dl></div>`).join("")}</div>`):""}
+    ${B.risks.length?part("II","What to Guard","Every strength has a shadow it casts when left undisciplined.",
+      `<div class="tblocks">${B.risks.map(c=>`<div class="tblock" style="border-top-color:var(--c-rally)"><h4>${esc(c.label)}</h4><dl><dd style="margin-top:6px">${esc(c.text)}</dd></dl></div>`).join("")}</div>`):""}
+    ${B.feedback?part("III","What Your Team Sees",`From ${B.feedback.raters} ${B.feedback.raters===1?"person":"people"} who serve with you.`,
+      `${B.feedback.blind.length?`<div class="rec"><b>Possible blind spots</b>On ${esc(listJoin(B.feedback.blind))}, you rate yourself higher than your team does. Worth a curious conversation.</div>`:""}
+       ${B.feedback.hidden.length?`<div class="rec"><b>Strengths you undersell</b>On ${esc(listJoin(B.feedback.hidden))}, your team rates you higher than you rate yourself. Receive it.</div>`:""}
+       ${!B.feedback.blind.length&&!B.feedback.hidden.length?`<div class="rec"><b>Closely aligned</b>How you see yourself and how your team sees you line up well.</div>`:""}`):""}
+    ${B.launch.length?part(B.feedback?"IV":"III","Before You Start Something New","These questions are drawn from where you're naturally thinnest — not from a generic list.",
+      `<div class="panel" style="background:var(--paper-2);box-shadow:none">${checks(B.launch)}</div>`):""}
+    ${(B.pressure||B.rolePressure)?part(B.feedback?"V":"IV","When You're Stretched Thin","Who you become under load, and the way back.",
+      `${B.rolePressure?`<p style="margin:0 0 8px">${esc(B.rolePressure)}</p>`:""}
+       ${B.pressure?`<p style="margin:0 0 12px;color:var(--ink-soft)">${esc(B.pressure.drift)}</p>
+       <p style="font-weight:600;margin:0 0 4px">I know I'm drifting when…</p>
+       <div class="panel" style="background:var(--paper-2);box-shadow:none">${checks(B.pressure.signs)}</div>
+       <div class="callout" style="margin-top:12px"><b>The way back.</b> ${esc(B.pressure.back)}</div>`:""}`):""}
+    ${part(B.feedback?"VI":"V","A Rhythm of Review","Set a repeating time. Twenty minutes, every other week.",
+      REVIEW.map(sec=>`<h3>${esc(sec.h)}</h3><div class="panel" style="background:var(--paper-2);box-shadow:none;margin-bottom:10px">${checks(sec.q)}</div>`).join(""))}
+    ${B.convictions.length?part(B.feedback?"VII":"VI","Convictions to Keep","Drawn from your own wiring — refine them over time.",
+      `<ol style="padding-left:20px;line-height:1.9;font-family:'Fraunces',serif;font-size:17px">${B.convictions.map(c=>`<li>${esc(c)}</li>`).join("")}</ol>`):""}
+    ${humilityNote("leader")}
+    <div class="report-actions" style="display:flex;gap:12px;flex-wrap:wrap;margin-top:26px">
+      <button class="btn" onclick="window.print()">Print / Save PDF</button>
+      <button class="btn ghost" onclick="copyPlaybook(this)">Copy playbook</button>
+    </div>
+  </div>`;
+}
+function copyPlaybook(btn){
+  const B=buildPlaybook(STATE.pbPerson,store.resultsCache||[]);
+  if(!B)return;
+  try{navigator.clipboard.writeText(playbookText(B));btn.textContent="Copied ✓";setTimeout(()=>btn.textContent="Copy playbook",1600);}
+  catch(e){btn.textContent="Copy failed";}
 }
 
 /* ---- Whole Picture screen ---- */
@@ -1312,6 +1492,7 @@ function combinedPersonHTML(all,people){
     <p class="lede" style="margin-top:16px">${esc(personNarrative(P))||"Complete an assessment to begin this profile."}</p>
     ${windows?`<div style="display:flex;gap:16px;flex-wrap:wrap;justify-content:center;margin:18px 0">${windows}</div>`:""}
     ${spine}${color}${leadership}${shape}${working}
+    <div style="margin-top:22px"><button class="btn gold" onclick="go('playbook',{pbPerson:'${esc(P.name).replace(/'/g,"\\'")}'})">Open ${esc(first)}'s Leadership Playbook &rarr;</button></div>
   </div>`;
 }
 
@@ -1324,7 +1505,7 @@ const app=()=>document.getElementById("app");
 function go(screen,opts={}){STATE.screen=screen;Object.assign(STATE,opts);window.scrollTo({top:0});render();}
 function goHome(){go(mode()==="marketing"?"marketing":"home");}
 
-const ADMIN_ONLY=["team","synth","combined","leaders","feedback","builder"];
+const ADMIN_ONLY=["team","synth","combined","leaders","feedback","builder","playbook"];
 const NAV_ADMIN=[{id:"home",label:"Home"},{id:"combined",label:"Whole Picture"},{id:"synth",label:"Team Synthesis"},{id:"team",label:"Team View"},{id:"leaders",label:"For Leaders"}];
 
 function renderChrome(){
@@ -1338,7 +1519,7 @@ function renderChrome(){
     ft.innerHTML=`Church Strengths · <span class="muted">Assessments for ministry teams</span>`;
   }
   if(m==="admin"||m==="team"){
-    const active=({start:"home",take:"home",report:"home",builder:"leaders",feedback:"leaders"})[STATE.screen]||STATE.screen;
+    const active=({start:"home",take:"home",report:"home",builder:"leaders",feedback:"leaders",playbook:"combined"})[STATE.screen]||STATE.screen;
     const items=m==="admin"?NAV_ADMIN:NAV_ADMIN.filter(n=>n.id!=="leaders");
     nav.innerHTML=items.map(n=>`<button class="${active===n.id?'active':''}" onclick="go('${n.id}')">${n.label}</button>`).join("")
       +`<button onclick="doSignOut()" title="Sign out" style="color:var(--ink-faint)">Sign out</button>`;
@@ -1352,7 +1533,7 @@ function renderChrome(){
 function render(){
   // gate admin-only screens
   const m0=mode();
-  const TEAM_ALLOWED=["team","synth","combined","feedback"];
+  const TEAM_ALLOWED=["team","synth","combined","feedback","playbook"];
   if(ADMIN_ONLY.includes(STATE.screen)){
     if(m0==="team"&&!TEAM_ALLOWED.includes(STATE.screen))STATE.screen="home";
     else if(m0!=="admin"&&m0!=="team")STATE.screen=CHURCH.id?"home":"login";
@@ -1370,6 +1551,7 @@ function render(){
   if(s==="team")return renderTeam();
   if(s==="synth")return renderSynth();
   if(s==="combined")return renderCombined();
+  if(s==="playbook")return renderPlaybook();
   if(s==="leaders")return renderLeaders();
   if(s==="feedback")return renderFeedback();
   if(s==="builder")return renderBuilder();
