@@ -1792,6 +1792,7 @@ function renderMarketing(){
 
 /* START */
 function renderStart(){
+  STATE.noEmail=false;
   const t=findTest(STATE.testId);if(!t)return go("home");
   // For observer-enabled tests, offer a choice first.
   if(t.allowObserver && !STATE.mode){
@@ -1825,7 +1826,8 @@ function renderStart(){
       <label class="field"><span class="lab">Your name <span class="muted">(kept private from the leader)</span></span><input type="text" id="pname" placeholder="First and last name" autocomplete="name"></label>
     `:`
       <label class="field"><span class="lab">Your name</span><input type="text" id="pname" placeholder="First and last name" autocomplete="name"></label>
-      <label class="field"><span class="lab">Your email <span class="muted">(optional — we'll send you a copy)</span></span><input type="text" id="pemail" placeholder="you@example.com" autocomplete="email"></label>
+      <label class="field"><span class="lab">Your email</span><input type="text" id="pemail" placeholder="you@example.com" autocomplete="email">
+        <span class="hint" style="margin-top:6px;display:block">We'll email your results to you, and a copy to your church's leaders. <a href="#" onclick="skipEmail();return false;">I don't have an email address</a></span></label>
       <label class="field"><span class="lab">Which teams do you serve on? <span class="muted">(choose any that apply)</span></span>
         <div id="pdept" style="display:flex;flex-wrap:wrap;gap:8px;margin-top:4px">
           ${depts().map((d,i)=>`<label for="dept_${i}" style="display:inline-flex;align-items:center;gap:7px;border:1px solid var(--line);border-radius:999px;padding:8px 14px;cursor:pointer;font-size:14px;background:#fff">
@@ -1838,6 +1840,13 @@ function renderStart(){
   </div>`;
   setTimeout(()=>{const el=document.getElementById(observer?"psubject":"pname");if(el)el.focus();},50);
 }
+function skipEmail(){
+  STATE.noEmail=true;
+  const el=document.getElementById("pemail");
+  if(el){el.value="";el.style.borderColor="";
+    const h=el.parentNode.querySelector(".hint");
+    if(h)h.innerHTML=`No email — your results will go to your church's leaders only. You can still print or download a copy at the end.`;}
+}
 function beginTest(){
   const t=findTest(STATE.testId);const observer=STATE.mode==="observer";
   const el=document.getElementById("pname");const name=(el.value||"").trim();
@@ -1849,6 +1858,12 @@ function beginTest(){
   }
   const emEl=document.getElementById("pemail");
   const email=emEl?(emEl.value||"").trim():"";
+  if(emEl&&!observer&&!email&&!STATE.noEmail){
+    emEl.focus();emEl.style.borderColor="var(--c-rally)";
+    const h=emEl.parentNode.querySelector(".hint");
+    if(h)h.innerHTML=`<span style="color:var(--c-rally)">Please enter your email so we can send you your results — or choose “I don't have an email address”.</span>`;
+    return;
+  }
   if(email&&!/.+@.+\..+/.test(email)){emEl.focus();emEl.style.borderColor="var(--c-rally)";return;}
   STATE.answers=new Array(t.questions.length).fill(null);
   const picked=observer?[]:[...document.querySelectorAll(".deptbox:checked")].map(b=>b.value);
@@ -1983,6 +1998,15 @@ function shapeEmailText(r,t){
   if(r.role)L.push(r.role);
   L.push(new Date(r.date).toLocaleDateString());
   L.push("");
+  L.push("----------------------------------------");
+  L.push("ABOUT THIS ASSESSMENT");
+  L.push("SHAPE looks at five things God used to make you: your Spiritual gifts, your Heart (who and what stirs you), your Abilities, your Personality, and your Experiences. It is a portrait, not a score — no part of it is better than another.");
+  L.push("");
+  L.push("HOW TO READ IT");
+  L.push("Read it as a starting point for conversation — 'does this fit me?' — rather than a verdict about who you are. It is drawn from answers given on one day. People are always freer than their profile.");
+  L.push("----------------------------------------");
+  L.push("");
+  L.push("IN SHORT");
   L.push(profileNarrative(r,t));
   L.push("");
   t.sections.forEach(sec=>{
@@ -1995,6 +2019,19 @@ function shapeEmailText(r,t){
   });
   L.push("A word about these results: this is a portrait, not a verdict. It describes patterns from how you answered on one day — read it as a starting point for conversation, not a label.");
   L.push("");
+  const gl=[];
+  (r.picks&&r.picks.S||[]).forEach(id=>{const g=guideFor("shape",id);const o=t.optionMap[id];if(!g||!o)return;
+    gl.push(`  ${o.name.toUpperCase()}`);
+    gl.push(`    Strength: ${g.strength}`);
+    gl.push(`    Watch for: ${g.weakness}`);
+    gl.push(`    How they like to be communicated with: ${g.comms}`);
+    gl.push(`    Where they're easily bruised: ${g.sensitive}`);
+    gl.push(`    Leading them well: ${g.lead}`);gl.push("");});
+  if(gl.length){
+    L.push("FOR WHOEVER LEADS "+((r.name||"").split(/\s+/)[0]||"THIS PERSON").toUpperCase());
+    L.push("  Practical notes for a ministry leader. A conversation starter, never a label.");
+    L.push("");gl.forEach(x=>L.push(x));
+  }
   L.push("“As every man hath received the gift, even so minister the same one to another.” — 1 Peter 4:10 (KJV)");
   L.push("");
   L.push((CHURCH.name||"")+" · Church Strengths");
@@ -2016,25 +2053,59 @@ function copyShapeText(btn){
 function reportText(r,t){
   if(t.sections)return shapeEmailText(r,t);
   const L=[];const by=id=>t.types.find(x=>x.id===id)||{name:id};
+  const first=(r.name||"").split(/\s+/)[0];
   L.push(`${t.name.toUpperCase()} — ${r.name}`);
   if(r.departments&&r.departments.length)L.push(r.departments.join(", "));
   if(r.role)L.push(r.role);
-  L.push(new Date(r.date||Date.now()).toLocaleDateString());L.push("");
+  L.push(new Date(r.date||Date.now()).toLocaleDateString());
+  L.push("");L.push("----------------------------------------");
+  L.push("ABOUT THIS ASSESSMENT");
+  L.push(t.description||"");
+  L.push("");
+  L.push("HOW TO READ IT");
+  L.push("No result here is better than another. These are not grades, and nothing in them says one person matters more than another. The point is to notice how God has wired you, so you can serve where you're strongest and lean on others where you're not. Read it as a starting point for conversation — 'does this fit me?' — rather than a verdict. People are always freer than their profile.");
+  L.push("----------------------------------------");L.push("");
   if(t.tiers){
     const groups=[[t.tiers[0],r.leading],[t.tiers[1],[r.ranking[2],r.ranking[3]]],[t.tiers[2],r.quiet]];
-    groups.forEach(([tier,ids])=>{L.push(tier.name.toUpperCase()+" — "+tier.meaning);
+    groups.forEach(([tier,ids])=>{L.push(tier.name.toUpperCase());L.push("  "+tier.meaning);
       ids.forEach(id=>L.push(`  • ${by(id).name} (${r.pct[id]}%)`));L.push("");});
   }else{
-    L.push("LEADING");r.leading.forEach(id=>{const ty=by(id);L.push(`  • ${ty.name} (${r.pct[id]}%)${ty.tagline?" — "+ty.tagline:""}`);});
+    L.push("LEADING STRENGTHS");
+    r.leading.forEach(id=>{const ty=by(id);L.push(`  • ${ty.name} (${r.pct[id]}%)${ty.tagline?" — "+ty.tagline:""}`);});
     L.push("");L.push("FULL RANKING");
     r.ranking.forEach(id=>L.push(`  ${by(id).name}: ${r.pct[id]}%`));
-    L.push("");L.push("QUIETER");r.quiet.forEach(id=>L.push(`  • ${by(id).name}`));L.push("");
+    L.push("");
+    L.push("QUIETER STRENGTHS");
+    L.push(`  ${r.quiet.map(id=>by(id).name).join(" and ")} — not weaknesses, but places where ${first} will shine brightest alongside teammates who lead there.`);
+    L.push("");
   }
+  // what the leading strengths actually mean, in plain language
+  const meaning=[];
+  r.leading.forEach(id=>{const ty=by(id);if(!ty.bring&&!ty.team&&!ty.watch)return;
+    meaning.push(`  ${ty.name.toUpperCase()}`);
+    if(ty.bring)meaning.push(`    You bring: ${ty.bring}`);
+    if(ty.team)meaning.push(`    On a team: ${ty.team}`);
+    if(ty.watch)meaning.push(`    Gentle watch-out: ${ty.watch}`);
+    if(ty.verse)meaning.push(`    "${ty.verse}" — ${ty.verseRef||""}`);
+    meaning.push("");});
+  if(meaning.length){L.push("WHAT THESE STRENGTHS MEAN");L.push("");meaning.forEach(x=>L.push(x));}
+  // the part written for whoever leads this person
+  const lead=[];
   r.leading.forEach(id=>{const g=guideFor(t.id,id);if(!g)return;const ty=by(id);
-    L.push(`WORKING WITH ${ty.name.toUpperCase()}`);
-    L.push(`  Strength: ${g.strength}`);L.push(`  Watch for: ${g.weakness}`);
-    L.push(`  Communicate: ${g.comms}`);L.push(`  Careful: ${g.sensitive}`);L.push(`  Lead them: ${g.lead}`);L.push("");});
-  L.push("These results describe patterns, not people. Read them as a starting point for conversation, not a verdict.");
+    lead.push(`  ${ty.name.toUpperCase()}`);
+    lead.push(`    Strength: ${g.strength}`);
+    lead.push(`    Watch for: ${g.weakness}`);
+    lead.push(`    How they like to be communicated with: ${g.comms}`);
+    lead.push(`    Where they're easily bruised: ${g.sensitive}`);
+    lead.push(`    Leading them well: ${g.lead}`);
+    lead.push("");});
+  if(lead.length){
+    L.push("FOR WHOEVER LEADS "+(first||"THIS PERSON").toUpperCase());
+    L.push("  Practical notes for a ministry leader. Treat them as a conversation starter with a real person, never a label.");
+    L.push("");lead.forEach(x=>L.push(x));
+  }
+  L.push("----------------------------------------");
+  L.push("This report was generated from the answers given on one day. It describes patterns, not limits.");
   L.push("");L.push(`${CHURCH.name||""} · Church Strengths`);
   return L.join("\n");
 }
