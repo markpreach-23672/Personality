@@ -1819,12 +1819,13 @@ function renderStart(){
     <h2 style="font-size:32px;margin:6px 0 10px">${observer?"Rate a leader you follow":esc(t.name)}</h2>
     <p class="muted" style="font-size:16px">${observer?esc(t.observerLead||"Rate how often you've seen this leader do each of the following."):esc(t.description)}</p>
     <div class="callout" style="margin:18px 0 22px">${observer?"Your honest feedback is a gift. Answers are combined with others' — leaders see the group picture, not who said what.":"Answer honestly about how you naturally <b>are</b>, not how you think you should be. There are no better or worse strengths — the body needs every part."}</div>
+    ${observer?"":`<p class="hint" style="margin:-10px 0 18px">When you finish, your results are saved and sent to ${esc(CHURCH.name||"your church")}'s leaders automatically.</p>`}
     ${observer?`
       <label class="field"><span class="lab">Leader you're rating</span><input type="text" id="psubject" placeholder="The name of the person who leads you" autocomplete="off"></label>
       <label class="field"><span class="lab">Your name <span class="muted">(kept private from the leader)</span></span><input type="text" id="pname" placeholder="First and last name" autocomplete="name"></label>
     `:`
       <label class="field"><span class="lab">Your name</span><input type="text" id="pname" placeholder="First and last name" autocomplete="name"></label>
-      ${t.profile?`<label class="field"><span class="lab">Your email <span class="muted">(so we can send you your profile)</span></span><input type="text" id="pemail" placeholder="you@example.com" autocomplete="email"></label>`:""}
+      <label class="field"><span class="lab">Your email <span class="muted">(optional — we'll send you a copy)</span></span><input type="text" id="pemail" placeholder="you@example.com" autocomplete="email"></label>
       <label class="field"><span class="lab">Which teams do you serve on? <span class="muted">(choose any that apply)</span></span>
         <div id="pdept" style="display:flex;flex-wrap:wrap;gap:8px;margin-top:4px">
           ${depts().map((d,i)=>`<label for="dept_${i}" style="display:inline-flex;align-items:center;gap:7px;border:1px solid var(--line);border-radius:999px;padding:8px 14px;cursor:pointer;font-size:14px;background:#fff">
@@ -1848,7 +1849,7 @@ function beginTest(){
   }
   const emEl=document.getElementById("pemail");
   const email=emEl?(emEl.value||"").trim():"";
-  if(t.profile&&email&&!/.+@.+\..+/.test(email)){emEl.focus();emEl.style.borderColor="var(--c-rally)";return;}
+  if(email&&!/.+@.+\..+/.test(email)){emEl.focus();emEl.style.borderColor="var(--c-rally)";return;}
   STATE.answers=new Array(t.questions.length).fill(null);
   const picked=observer?[]:[...document.querySelectorAll(".deptbox:checked")].map(b=>b.value);
   STATE.person={name,email,departments:picked,role:observer?"":(document.getElementById("prole").value||"").trim()};
@@ -1893,7 +1894,7 @@ function pageStep(d){const t=findTest(STATE.testId);const mp=Math.ceil(t.questio
 function finishTest(){
   const t=findTest(STATE.testId);const res=scoreTest(t,STATE.answers);
   STATE.result={id:"r_"+Date.now()+"_"+Math.random().toString(36).slice(2,7),testId:t.id,testName:t.name,name:STATE.person.name,email:STATE.person.email||"",role:STATE.person.role,departments:STATE.person.departments||[],kind:STATE.kind||"self",subject:STATE.subject||null,date:new Date().toISOString(),...res};
-  STATE.saveState="idle";go("report");
+  STATE.saveState="idle";go("report");autoSubmit();
 }
 
 /* REPORT */
@@ -1914,11 +1915,10 @@ function renderReport(){
       </div>
       <div class="sec-head" style="margin:30px 0 6px"><div><h2 style="font-size:24px">Your ratings, practice by practice</h2></div></div>
       <div class="bars">${bars}</div>
-      <div class="report-actions" style="display:flex;gap:12px;flex-wrap:wrap;margin-top:26px;align-items:center">
-        <button class="btn gold" id="saveBtn" onclick="addToTeam()">Submit feedback</button>
-        <button class="btn ghost" onclick="go('home')">Cancel</button>
+      <p class="hint" id="submitmsg" style="margin-top:22px"></p>
+      <div class="report-actions" style="display:flex;gap:12px;flex-wrap:wrap;margin-top:12px;align-items:center">
+        <button class="btn ghost" onclick="goHome()">Done</button>
       </div>
-      <p class="hint" id="savemsg"></p>
     </div>`;
     requestAnimationFrame(()=>{document.querySelectorAll('.fill').forEach(f=>{setTimeout(()=>f.style.width=f.dataset.w+"%",60);});});
     return;
@@ -1950,13 +1950,12 @@ function renderReport(){
     <div class="callout" style="margin-top:22px"><b>Your quieter strengths: ${quietNames}.</b> These aren't weaknesses — they're where you'll shine brightest alongside teammates who lead there. A healthy body needs every part.</div>`}
     ${canGet360?`<div class="callout info" style="margin-top:14px"><b>Want to see how your team experiences your leadership?</b> Ask the people you lead to open ${esc(t.name)}, choose “A leader I follow,” and enter your name. Their feedback appears beside this self-rating under <a href="#" onclick="go('leaders');return false;">For Leaders → Leader feedback</a>.</div>`:""}
     ${humilityNote("short")}
-    <div class="report-actions" style="display:flex;gap:12px;flex-wrap:wrap;margin-top:26px;align-items:center">
-      <button class="btn gold" id="saveBtn" onclick="addToTeam()">${mode()==="admin"?"Add me to the team":"Send to my church"}</button>
+    <p class="hint" id="submitmsg" style="margin-top:22px"></p>
+    <div class="report-actions" style="display:flex;gap:12px;flex-wrap:wrap;margin-top:12px;align-items:center">
       <button class="btn ghost" onclick="window.print()">Print / Save PDF</button>
       <button class="btn ghost" onclick="downloadResult()">Download my copy</button>
       <button class="btn ghost" onclick="go('start',{testId:'${t.id}',mode:null})">Retake</button>
     </div>
-    <p class="hint" id="savemsg"></p>
   </div>`;
   requestAnimationFrame(()=>{document.querySelectorAll('.fill').forEach(f=>{setTimeout(()=>f.style.width=f.dataset.w+"%",60);});});
 }
@@ -2014,6 +2013,31 @@ function copyShapeText(btn){
   try{navigator.clipboard.writeText(shapeEmailText(r,t));btn.textContent="Copied ✓";setTimeout(()=>btn.textContent="Copy my profile",1600);}
   catch(e){btn.textContent="Copy failed";}
 }
+function reportText(r,t){
+  if(t.sections)return shapeEmailText(r,t);
+  const L=[];const by=id=>t.types.find(x=>x.id===id)||{name:id};
+  L.push(`${t.name.toUpperCase()} — ${r.name}`);
+  if(r.departments&&r.departments.length)L.push(r.departments.join(", "));
+  if(r.role)L.push(r.role);
+  L.push(new Date(r.date||Date.now()).toLocaleDateString());L.push("");
+  if(t.tiers){
+    const groups=[[t.tiers[0],r.leading],[t.tiers[1],[r.ranking[2],r.ranking[3]]],[t.tiers[2],r.quiet]];
+    groups.forEach(([tier,ids])=>{L.push(tier.name.toUpperCase()+" — "+tier.meaning);
+      ids.forEach(id=>L.push(`  • ${by(id).name} (${r.pct[id]}%)`));L.push("");});
+  }else{
+    L.push("LEADING");r.leading.forEach(id=>{const ty=by(id);L.push(`  • ${ty.name} (${r.pct[id]}%)${ty.tagline?" — "+ty.tagline:""}`);});
+    L.push("");L.push("FULL RANKING");
+    r.ranking.forEach(id=>L.push(`  ${by(id).name}: ${r.pct[id]}%`));
+    L.push("");L.push("QUIETER");r.quiet.forEach(id=>L.push(`  • ${by(id).name}`));L.push("");
+  }
+  r.leading.forEach(id=>{const g=guideFor(t.id,id);if(!g)return;const ty=by(id);
+    L.push(`WORKING WITH ${ty.name.toUpperCase()}`);
+    L.push(`  Strength: ${g.strength}`);L.push(`  Watch for: ${g.weakness}`);
+    L.push(`  Communicate: ${g.comms}`);L.push(`  Careful: ${g.sensitive}`);L.push(`  Lead them: ${g.lead}`);L.push("");});
+  L.push("These results describe patterns, not people. Read them as a starting point for conversation, not a verdict.");
+  L.push("");L.push(`${CHURCH.name||""} · Church Strengths`);
+  return L.join("\n");
+}
 function renderProfileReport(r,t){
   const secHTML=t.sections.map(sec=>{
     const picks=(r.picks[sec.key]||[]).map(id=>{const o=t.optionMap[id];
@@ -2034,14 +2058,12 @@ function renderProfileReport(r,t){
     ${secHTML}
     <div class="callout" style="margin-top:22px">This is a portrait, not a score. No part of it is better than another — together they show where you'd serve with the most joy and the most fruit.</div>
     ${humilityNote("short")}
-    <div class="report-actions" style="display:flex;gap:12px;flex-wrap:wrap;margin-top:26px;align-items:center">
-      <button class="btn gold" id="saveBtn" onclick="addToTeam()">${mode()==="admin"?"Add me to the team":"Send to my church"}</button>
-      <button class="btn" onclick="emailShape()">Email my profile</button>
-      <button class="btn ghost" onclick="copyShapeText(this)">Copy my profile</button>
+    <p class="hint" id="submitmsg" style="margin-top:22px"></p>
+    <div class="report-actions" style="display:flex;gap:12px;flex-wrap:wrap;margin-top:12px;align-items:center">
       <button class="btn ghost" onclick="window.print()">Print / Save PDF</button>
+      <button class="btn ghost" onclick="copyShapeText(this)">Copy my profile</button>
+      <button class="btn ghost" onclick="emailShape()">Email it myself</button>
     </div>
-    <p class="hint" id="savemsg"></p>
-    <p class="hint">“Email my profile” opens your mail app with your profile ready to send${CHURCH.contactEmail?" — your church is copied automatically":""}.</p>
   </div>`;
 }
 
@@ -2067,6 +2089,35 @@ async function autoEmailProfile(msg){
       : `<br>Your profile was emailed to <b>${esc(r.email)}</b>${out.cc?` and copied to ${esc(CHURCH.name||"your church")}`:""}. ✓`;
   }catch(e){
     line.innerHTML=`<br><span style="color:var(--c-rally)">We couldn't email your profile automatically (${esc(e.message)}). Use “Email my profile” below to send it yourself.</span>`;
+  }
+}
+/* Every completed assessment saves itself and is emailed to the church admin
+   (and to the person, when they gave an address). No button to press. */
+async function autoSubmit(){
+  const r=STATE.result;if(!r||STATE.submitted===r.id)return;
+  STATE.submitted=r.id;
+  const line=document.getElementById("submitmsg");
+  const set=h=>{const el=document.getElementById("submitmsg");if(el)el.innerHTML=h;};
+  set(`<span class="muted"><span class="spin"></span>Saving your results…</span>`);
+  const res=await saveResultCloud(r);
+  store.resultsCache=null;
+  if(!res.ok){
+    const why=/no church/i.test(res.error||"")
+      ? "This page isn't linked to a church, so there's nowhere to send it. Ask your church for their assessment link."
+      : "We couldn't save your results just now.";
+    return set(`<span style="color:var(--c-rally)">${esc(why)} You can still print or download your copy below.</span>`);
+  }
+  const t=findTest(r.testId);
+  const who=CHURCH.name||"your church";
+  if(r.kind==="observer"){return set(`Your feedback for <b>${esc(r.subject)}</b> was sent to ${esc(who)} ✓`);}
+  if(res.duplicate){return set(`<span class="muted">Already sent to ${esc(who)}.</span>`);}
+  set(`<span class="muted">Saved to ${esc(who)}. <span class="spin"></span>Sending a copy…</span>`);
+  try{
+    const out=await sendProfileEmail(r.id,reportText(r,t));
+    if(out.already)set(`<span class="muted">Sent to ${esc(who)} ✓</span>`);
+    else set(`Sent to <b>${esc(who)}</b>${r.email?` and emailed to <b>${esc(r.email)}</b>`:""} ✓`);
+  }catch(e){
+    set(`<span class="muted">Saved to ${esc(who)} ✓ <span style="color:var(--c-rally)">(the email copy didn't go out: ${esc(e.message)})</span></span>`);
   }
 }
 async function addToTeam(){
