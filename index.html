@@ -869,7 +869,17 @@ async function createChurch(name){
 
 /* ---- generic REST (auth-aware headers) ---- */
 async function cloudSelect(table,q){const r=await fetch(SUPA.url+"/rest/v1/"+table+"?"+(q||"select=*"),{headers:H()});if(!r.ok)throw new Error("read "+r.status+": "+await r.text());return r.json();}
-async function cloudInsert(table,row){const r=await fetch(SUPA.url+"/rest/v1/"+table,{method:"POST",headers:H({Prefer:"return=representation"}),body:JSON.stringify(row)});if(!r.ok){const t=await r.text();const e=new Error("insert "+r.status+": "+t);e.status=r.status;throw e;}return r.json();}
+async function cloudInsert(table,row,opts){
+  // Congregants may INSERT but not SELECT, so asking the database to return the
+  // saved row makes row-level security reject the whole statement. For those
+  // writes we ask for nothing back.
+  const minimal=opts&&opts.minimal;
+  const r=await fetch(SUPA.url+"/rest/v1/"+table,{method:"POST",headers:H({Prefer:minimal?"return=minimal":"return=representation"}),body:JSON.stringify(row)});
+  if(!r.ok){const t=await r.text();const e=new Error("insert "+r.status+": "+t);e.status=r.status;throw e;}
+  if(minimal)return [];
+  let out=[];try{const raw=await r.text();if(raw)out=JSON.parse(raw);}catch(e){out=[];}
+  return out;
+}
 async function cloudUpdate(table,q,patch){const r=await fetch(SUPA.url+"/rest/v1/"+table+"?"+q,{method:"PATCH",headers:H({Prefer:"return=representation"}),body:JSON.stringify(patch)});if(!r.ok)throw new Error("update "+r.status+": "+await r.text());return r.json();}
 async function fetchRoster(){
   if(!CHURCH.id)return [];
@@ -934,7 +944,7 @@ async function fetchResults(){ // admin-only; RLS returns just this church's row
 }
 async function saveResultCloud(r){ // congregant or admin submitting; stamped with church_id
   if(!CHURCH.id) return {ok:false,error:"No church selected."};
-  try{await cloudInsert(SUPA.results,resultToRow(r));return {ok:true};}
+  try{await cloudInsert(SUPA.results,resultToRow(r),{minimal:true});return {ok:true};}
   catch(e){ if(e.status===409) return {ok:true,duplicate:true}; return {ok:false,error:e.message}; }
 }
 async function sendProfileEmail(clientId,bodyText){
@@ -2080,7 +2090,10 @@ async function addToTeam(){
     }
   }else{
     btn.disabled=false;btn.innerHTML=observer?"Submit feedback":(admin?"Add me to the team":"Send to my church");
-    msg.innerHTML=`<span style="color:var(--c-rally)">Couldn't reach the server. ${observer?"Please try again in a moment.":"Try again, or use “Download my copy.”"}</span>`;
+    const why=/no church/i.test(res.error||"")
+      ? "This page isn't linked to a church, so there's nowhere to send it. Ask your church for their assessment link."
+      : "We couldn't save it just now.";
+    msg.innerHTML=`<span style="color:var(--c-rally)">${esc(why)} ${observer?"Please try again in a moment.":"Try again, or use “Download my copy.”"}</span>`;
   }
 }
 function downloadResult(){const r=STATE.result;dl(`${r.name.replace(/\s+/g,'_')}_${r.testId}.json`,JSON.stringify(r,null,2));}
