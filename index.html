@@ -1565,7 +1565,7 @@ function authShell(title,sub,inner){
 }
 function renderSignup(){
   app().innerHTML=authShell("Sign your church up","New church account",`
-    <div class="callout" style="margin-bottom:18px">${PRICE} per church. Create your account, name your church, and share your assessments with your congregation.</div>
+    <div class="callout" style="margin-bottom:18px">${PRICE} per church. Create your account, name your church, and share your assessments with your congregation.<br><span class="muted">Already have a church here? <a href="#" onclick="go('login');return false;">Log in instead</a> — signing up again won't show your existing results.</span></div>
     <label class="field"><span class="lab">Church name</span><input type="text" id="s_church" placeholder="e.g. Elkhart Life Church"></label>
     <label class="field"><span class="lab">Your email</span><input type="text" id="s_email" placeholder="you@church.org" autocomplete="email"></label>
     <label class="field"><span class="lab">Password</span><input type="password" id="s_pass" placeholder="At least 8 characters" autocomplete="new-password"></label>
@@ -1582,6 +1582,19 @@ async function doSignup(){
   try{
     await signUp(email,pass);
     let sess=null; try{sess=await signIn(email,pass);}catch(e){}
+    if(sess){
+      // This email may already run a church (or belong to a team). Never create a duplicate.
+      const existing=await fetchMyChurch();
+      if(existing){ ME.role="admin"; setChurch(existing,true); await refreshTests();
+        msg.innerHTML=`<span style="color:var(--c-weigh)">You already have an account for <b>${esc(existing.name)}</b> — taking you there.</span>`;
+        return setTimeout(()=>go("home"),900); }
+      const member=await fetchMyMembership();
+      if(member){ const ch=await fetchChurchById(member.church_id);
+        if(ch){ ME.role=member.role||"member";ME.name=member.name||null;ME.teams=member.departments||[];
+          setChurch(ch,false); DEPT=(ME.teams[0]||"all"); await refreshTests();
+          msg.innerHTML=`<span style="color:var(--c-weigh)">This email already has access to <b>${esc(ch.name)}</b> — taking you there.</span>`;
+          return setTimeout(()=>go("home"),900); } }
+    }
     if(!sess){ // email confirmation required
       btn.disabled=false;btn.innerHTML="Create account";
       msg.innerHTML=`<span style="color:var(--c-weigh)">Account created. Please check <b>${esc(email)}</b> to confirm your address, then <a href="#" onclick="go('login');return false;">log in</a> to finish setting up ${esc(church)}.</span>`;
@@ -1623,7 +1636,8 @@ async function doLogin(){
 }
 function renderNewChurch(){
   app().innerHTML=authShell("Name your church","One more step",`
-    <p class="muted">You're logged in. Give your church a name — this appears at the top of your page and in the link you share with your congregation.</p>
+    <p class="muted">You're logged in, but this account doesn't have a church yet. Give it a name — this appears at the top of your page and in the link you share with your congregation.</p>
+    <div class="callout" style="margin-bottom:16px"><b>Already set your church up?</b> You may have signed in with a different email than the one that created it. Sign out and log in with that address rather than creating a second church — a new church starts empty and won't show your existing results.</div>
     <label class="field"><span class="lab">Church name</span><input type="text" id="n_church" placeholder="e.g. Elkhart Life Church"></label>
     <div style="display:flex;gap:12px"><button class="btn gold" id="n_btn" onclick="doNewChurch()">Create my church</button><button class="btn ghost" onclick="doSignOut()">Sign out</button></div>`);
   setTimeout(()=>{const e=document.getElementById("n_church");if(e)e.focus();},50);
@@ -1632,8 +1646,13 @@ async function doNewChurch(){
   const name=(v("n_church")||"").trim(),msg=document.getElementById("authmsg"),btn=document.getElementById("n_btn");
   if(!name)return flag(msg,"Please enter your church's name.");
   btn.disabled=true;btn.innerHTML='<span class="spin"></span>Creating…';
-  try{const c=await createChurch(name);ME.role="admin";setChurch(c,true);await refreshTests();go("home");}
-  catch(e){btn.disabled=false;btn.innerHTML="Create my church";flag(msg,e.message);}
+  try{
+    const existing=await fetchMyChurch();   // guard against making a second one
+    if(existing){ ME.role="admin"; setChurch(existing,true); await refreshTests();
+      msg.innerHTML=`<span style="color:var(--c-weigh)">You already have <b>${esc(existing.name)}</b> — opening it instead of creating another.</span>`;
+      return setTimeout(()=>go("home"),900); }
+    const c=await createChurch(name);ME.role="admin";setChurch(c,true);await refreshTests();go("home");
+  }catch(e){btn.disabled=false;btn.innerHTML="Create my church";flag(msg,e.message);}
 }
 function doSignOut(){signOut();go("marketing");}
 function v(id){const e=document.getElementById(id);return e?e.value:"";}
