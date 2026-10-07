@@ -841,7 +841,7 @@ function signOut(){AUTH.session=null;ME.role=null;ME.teams=[];ME.name=null;DEPT=
 function setChurch(c,owner){CHURCH.id=c.id;CHURCH.slug=c.slug;CHURCH.name=c.name;CHURCH.contactEmail=c.contact_email||null;CHURCH.departments=(c.departments&&c.departments.length)?c.departments:null;CHURCH.owner=!!owner;}
 function slugify(s){return (s||"").toLowerCase().replace(/[^a-z0-9]+/g,"-").replace(/^-+|-+$/g,"").slice(0,40)||"church";}
 async function fetchChurchBySlug(slug){
-  const rows=await cloudSelect(SUPA.churches,"slug=eq."+encodeURIComponent(slug)+"&select=*");
+  const rows=await cloudSelect("churches_public","slug=eq."+encodeURIComponent(slug)+"&select=id,slug,name,departments");
   return Array.isArray(rows)&&rows[0]?rows[0]:null;
 }
 async function fetchMyMembership(){
